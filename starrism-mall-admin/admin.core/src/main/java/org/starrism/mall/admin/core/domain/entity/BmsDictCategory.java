@@ -1,8 +1,8 @@
-package org.starrism.mall.admin.api.domain.entity;
+package org.starrism.mall.admin.core.domain.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.starrism.mall.data.entity.BaseDataEntity;
+import org.starrism.mall.data.domain.entity.BaseDataEntity;
 
 import java.util.List;
 

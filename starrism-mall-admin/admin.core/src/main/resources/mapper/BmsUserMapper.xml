@@ -2,13 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.starrism.mall.admin.core.mapper.BmsUserMapper">
-    <resultMap id="BaseResultMap" type="org.starrism.mall.admin.api.domain.entity.BmsUser">
+    <resultMap id="BaseResultMap" type="org.starrism.mall.admin.core.domain.entity.BmsUser">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="username" jdbcType="VARCHAR" property="username"/>
         <result column="password" jdbcType="VARCHAR" property="password"/>
         <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
         <result column="email" jdbcType="VARCHAR" property="email"/>
         <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber"/>
+        <result column="sex" jdbcType="INTEGER" property="sex"/>
         <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl"/>
         <result column="enable_status" jdbcType="SMALLINT" property="enableStatus"/>
         <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
@@ -24,6 +25,7 @@
         nickname,
         email,
         phone_number,
+        sex,
         avatar_url,
         enable_status,
         add_time,
@@ -39,13 +41,14 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <insert id="addUser" parameterType="org.starrism.mall.admin.api.domain.entity.BmsUser">
+    <insert id="addUser" parameterType="org.starrism.mall.admin.core.domain.entity.BmsUser">
         insert into bms_user (id, username, `password`,
-                              nickname, email, phone_number,
+                              nickname, email, phone_number, sex,
                               avatar_url, enable_status, add_time,
-                              add_name, modify_time, modify_by)
+                              add_name, modify_time, modify_name)
         values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
                 #{nickname,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR},
+                #{sex,jdbcType=INTEGER},
                 #{avatarUrl,jdbcType=VARCHAR}, #{enableStatus,jdbcType=SMALLINT}, #{addTime,jdbcType=TIMESTAMP},
                 #{addName,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}, #{modifyName,jdbcType=VARCHAR})
     </insert>

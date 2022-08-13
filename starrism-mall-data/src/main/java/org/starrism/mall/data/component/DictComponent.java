@@ -1,6 +1,5 @@
-package org.starrism.mall.admin.core.service;
+package org.starrism.mall.data.component;
 
-import org.starrism.mall.data.component.DictComponent;
 import org.starrism.mall.data.domain.vo.DictVo;
 
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.List;
  * @author hedwing
  * @since 2022/8/13
  **/
-public interface BmsDictService extends DictComponent {
+public interface DictComponent {
     /**
      * 根据分类码查询字典
      *

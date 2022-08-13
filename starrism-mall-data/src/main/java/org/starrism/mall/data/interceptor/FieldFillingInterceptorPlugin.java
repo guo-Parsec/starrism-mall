@@ -14,7 +14,7 @@ import org.starrism.mall.common.enums.FillType;
 import org.starrism.mall.common.util.ReflectionUtil;
 import org.starrism.mall.common.util.StrUtil;
 import org.starrism.mall.data.component.SnowflakeWorker;
-import org.starrism.mall.data.entity.BaseEntity;
+import org.starrism.mall.data.domain.entity.BaseEntity;
 
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;

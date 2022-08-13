@@ -23,6 +23,14 @@ public class ReflectionUtil {
     private static final String SETTER_METHOD_PREFIX = "set";
     private static final String GETTER_METHOD_PREFIX = "get";
 
+    /**
+     * <p>获取全部属性 包括父类</p>
+     *
+     * @param clazz 类对象
+     * @return java.util.List<java.lang.reflect.Field>
+     * @author hedwing
+     * @since 2022/8/13
+     */
     public static List<Field> getAllFields(Class<?> clazz) {
         List<Field> fieldList = new ArrayList<>();
         while (clazz != null) {

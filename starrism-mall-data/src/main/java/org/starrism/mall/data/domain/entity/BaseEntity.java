@@ -1,4 +1,4 @@
-package org.starrism.mall.data.entity;
+package org.starrism.mall.data.domain.entity;
 
 import lombok.Getter;
 import lombok.Setter;

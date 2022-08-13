@@ -2,7 +2,7 @@ package org.starrism.mall.admin.core.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.starrism.mall.admin.api.domain.entity.BmsDictDetail;
+import org.starrism.mall.admin.core.domain.entity.BmsDictDetail;
 
 import java.util.List;
 

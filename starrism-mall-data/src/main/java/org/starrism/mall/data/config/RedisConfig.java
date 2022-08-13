@@ -47,7 +47,6 @@ public class RedisConfig {
     public KeyGenerator selfKeyGenerator() {
         final String prefix = "self";
         final String sp = ":";
-        System.out.println(11111111);
         return (target, method, params) -> {
             StringBuilder sb = new StringBuilder();
             sb.append(prefix).append(sp);

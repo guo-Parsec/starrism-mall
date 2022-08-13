@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.starrism.mall.admin.core.mapper.BmsDictDetailMapper">
-    <resultMap id="DictDetailMapper" type="org.starrism.mall.admin.api.domain.entity.BmsDictDetail">
+    <resultMap id="DictDetailMapper" type="org.starrism.mall.admin.core.domain.entity.BmsDictDetail">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="dict_category_id" jdbcType="BIGINT" property="dictCategoryId"/>
         <result column="dict_code" jdbcType="VARCHAR" property="dictCode"/>
@@ -50,5 +50,6 @@
         from bms_dict_detail
         where dict_category_id = #{categoryId,jdbcType=BIGINT}
           and enable_status = 0
+        order by sort;
     </select>
 </mapper>

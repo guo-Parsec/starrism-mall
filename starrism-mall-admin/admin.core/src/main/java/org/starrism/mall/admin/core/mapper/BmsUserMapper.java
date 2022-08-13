@@ -1,7 +1,7 @@
 package org.starrism.mall.admin.core.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.starrism.mall.admin.api.domain.entity.BmsUser;
+import org.starrism.mall.admin.core.domain.entity.BmsUser;
 
 /**
  * <p></p>

@@ -1,9 +1,12 @@
-package org.starrism.mall.admin.api.domain.entity;
+package org.starrism.mall.admin.core.domain.entity;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.starrism.mall.data.entity.BaseDataEntity;
+import org.springframework.stereotype.Component;
+import org.starrism.mall.admin.api.domain.vo.BmsUserVo;
+import org.starrism.mall.common.domain.Dict;
+import org.starrism.mall.data.domain.entity.BaseDataEntity;
 
 import java.util.Objects;
 
@@ -16,6 +19,7 @@ import java.util.Objects;
 @Setter
 @Getter
 @ToString
+@Component
 public class BmsUser extends BaseDataEntity {
     private static final long serialVersionUID = 3001411682177194704L;
 
@@ -30,6 +34,8 @@ public class BmsUser extends BaseDataEntity {
     public String phoneNumber;
 
     public String avatarUrl;
+
+    private Integer sex;
 
     public BmsUser() {
     }
@@ -65,5 +71,17 @@ public class BmsUser extends BaseDataEntity {
     @Override
     public BmsUser clone() throws CloneNotSupportedException {
         return (BmsUser) super.clone();
+    }
+
+    public BmsUserVo convert() {
+        BmsUserVo bmsUserVo = new BmsUserVo();
+        bmsUserVo.setId(this.id);
+        bmsUserVo.setUsername(username);
+        bmsUserVo.setNickname(nickname);
+        bmsUserVo.setEmail(email);
+        bmsUserVo.setPhoneNumber(phoneNumber);
+        bmsUserVo.setAvatarUrl(avatarUrl);
+        bmsUserVo.setSex(Dict.of(sex));
+        return bmsUserVo;
     }
 }

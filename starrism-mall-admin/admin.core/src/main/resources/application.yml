@@ -19,6 +19,18 @@ spring:
     multipart:
       enabled: true #开启文件上传
       max-file-size: 10MB #限制文件上传大小为10M
+  redis:
+    database: 0
+    host: 127.0.0.1 #1.15.57.220
+    port: 6379
+    password:
+  cache:
+    type: redis
+    redis:
+      use-key-prefix: true
+      key-prefix: "starrism:mall:"
+      time-to-live: 60000 # ms
+    cache-names: starrism
 feign:
   okhttp:
     enabled: true
@@ -34,3 +46,6 @@ mybatis:
   configuration:
     #默认开启驼峰命名法，可以不用设置该属性
     map-underscore-to-camel-case: true
+logging:
+  level:
+    org.starrism.mall: debug

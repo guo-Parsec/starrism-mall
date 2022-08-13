@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.starrism.mall.admin.core.mapper.BmsUserMapper">
+    <insert id="addUser" parameterType="org.starrism.mall.admin.api.BmsUser">
+        insert into bms_user (id, username, `password`,
+                              nickname, email, phone_number,
+                              avatar_url, enable_status, add_time,
+                              add_name, modify_time, modify_by)
+        values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+                #{nickname,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR},
+                #{avatarUrl,jdbcType=VARCHAR}, #{enableStatus,jdbcType=SMALLINT}, #{addTime,jdbcType=TIMESTAMP},
+                #{addName,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}, #{modifyName,jdbcType=VARCHAR})
+    </insert>
+</mapper>

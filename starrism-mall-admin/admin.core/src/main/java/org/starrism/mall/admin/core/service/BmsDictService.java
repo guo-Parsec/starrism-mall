@@ -1,6 +1,5 @@
-package org.starrism.mall.admin.core.repository;
+package org.starrism.mall.admin.core.service;
 
-import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 import org.starrism.mall.admin.api.domain.entity.BmsDictCategory;
@@ -20,14 +19,13 @@ import java.util.stream.Collectors;
  * @since 2022/8/13
  **/
 @Repository
-@CacheConfig(cacheNames = "dict")
-public class BmsDictRepository {
+public class BmsDictService {
     @Resource
     private BmsDictCategoryMapper dictCategoryMapper;
     @Resource
     private BmsDictDetailMapper dictDetailMapper;
 
-    @Cacheable(value = "dict", key = "'list'")
+    @Cacheable(key = "#categoryCode", cacheNames = "dict:categoryCode")
     public List<BmsDictVo> findDictByCategoryCode(String categoryCode) {
         BmsDictCategory category = dictCategoryMapper.findByCode(categoryCode);
         if (category == null) {
@@ -37,7 +35,7 @@ public class BmsDictRepository {
         return details.stream().map(detail -> {
             BmsDictVo bmsDictVo = new BmsDictVo();
             bmsDictVo.setDictCode(detail.getDictCode());
-            bmsDictVo.setDictCode(detail.getDictValue());
+            bmsDictVo.setDictValue(detail.getDictValue());
             bmsDictVo.setSort(detail.getSort());
             return bmsDictVo;
         }).collect(Collectors.toList());

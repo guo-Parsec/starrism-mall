@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.starrism.mall.admin.api.domain.entity.BmsUser;
 import org.starrism.mall.admin.api.domain.vo.BmsDictVo;
 import org.starrism.mall.admin.core.mapper.BmsUserMapper;
-import org.starrism.mall.admin.core.repository.BmsDictRepository;
+import org.starrism.mall.admin.core.service.BmsDictService;
 import org.starrism.mall.common.rest.CommonResult;
 
 import javax.annotation.Resource;
@@ -26,10 +26,10 @@ public class BmsUserController {
     @Resource
     private BmsUserMapper bmsUserMapper;
 
-    private BmsDictRepository dictRepository;
+    private BmsDictService dictRepository;
 
     @Autowired
-    public void setDictRepository(BmsDictRepository dictRepository) {
+    public void setDictRepository(BmsDictService dictRepository) {
         this.dictRepository = dictRepository;
     }
 

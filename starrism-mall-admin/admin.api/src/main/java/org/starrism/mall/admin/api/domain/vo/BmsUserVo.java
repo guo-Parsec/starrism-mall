@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.starrism.mall.common.annotation.DictData;
 import org.starrism.mall.common.domain.Dict;
+import org.starrism.mall.common.domain.Domainizable;
 
 /**
  * <p></p>
@@ -13,7 +14,8 @@ import org.starrism.mall.common.domain.Dict;
  **/
 @Setter
 @Getter
-public class BmsUserVo {
+public class BmsUserVo implements Domainizable {
+    private static final long serialVersionUID = 8539088195437264237L;
     private Long id;
 
     private String username;

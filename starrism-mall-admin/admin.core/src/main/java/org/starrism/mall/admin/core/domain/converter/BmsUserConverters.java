@@ -3,7 +3,6 @@ package org.starrism.mall.admin.core.domain.converter;
 import org.springframework.stereotype.Component;
 import org.starrism.mall.admin.api.domain.vo.BmsUserVo;
 import org.starrism.mall.admin.core.domain.entity.BmsUser;
-import org.starrism.mall.common.annotation.DictConverter;
 import org.starrism.mall.common.domain.BaseConverters;
 import org.starrism.mall.common.domain.Dict;
 import org.starrism.mall.common.support.Convertible;
@@ -25,7 +24,7 @@ public class BmsUserConverters implements BaseConverters {
      * @author hedwing
      * @since 2022/8/14
      */
-    public Convertible<BmsUser, BmsUserVo> userEntityToUserVoConverters(BmsUser bmsUser) {
+    Convertible<BmsUser, BmsUserVo> userEntityToUserVoConverters(BmsUser bmsUser) {
         return (source) -> {
             if (source == null) {
                 return new BmsUserVo();
@@ -42,7 +41,6 @@ public class BmsUserConverters implements BaseConverters {
         };
     }
 
-    @DictConverter
     public BmsUserVo userEntityToUserVo(BmsUser bmsUser) {
         return userEntityToUserVoConverters(bmsUser).convert(bmsUser);
     }

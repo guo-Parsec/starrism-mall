@@ -42,24 +42,134 @@ public class ReflectionUtil {
         return fieldList;
     }
 
+    /**
+     * <p>获取全部属性 包括父类</p>
+     *
+     * @param entity 对象
+     * @return java.util.List<java.lang.reflect.Field>
+     * @author hedwing
+     * @since 2022/8/14
+     */
     public static <T> List<Field> getAllFields(T entity) {
         return getAllFields(entity.getClass());
     }
 
+    /**
+     * <p>获取指定注解下的全部属性 包括父类</p>
+     *
+     * @param clazz           类对象
+     * @param annotationClass 指定注解类对象
+     * @return java.util.List<java.lang.reflect.Field>
+     * @author hedwing
+     * @since 2022/8/14
+     */
     public static List<Field> getAllFieldsByAnnotation(Class<?> clazz, Class<? extends Annotation> annotationClass) {
         List<Field> allFields = getAllFields(clazz);
         return allFields.stream().filter(field -> field.getAnnotation(annotationClass) != null)
                 .collect(Collectors.toList());
     }
 
+    /**
+     * <p>获取指定注解下的全部属性 包括父类</p>
+     *
+     * @param entity          对象
+     * @param annotationClass 指定注解类对象
+     * @return java.util.List<java.lang.reflect.Field>
+     * @author hedwing
+     * @since 2022/8/14
+     */
     public static <T> List<Field> getAllFieldsByAnnotation(T entity, Class<? extends Annotation> annotationClass) {
         return getAllFieldsByAnnotation(entity.getClass(), annotationClass);
     }
 
+    /**
+     * <p>获取指定注解下的全部属性 包括父类</p>
+     *
+     * @param entity     对象
+     * @param annotation 指定注解对象
+     * @return java.util.List<java.lang.reflect.Field>
+     * @author hedwing
+     * @since 2022/8/14
+     */
     public static <T> List<Field> getAllFieldsByAnnotation(T entity, Annotation annotation) {
         return getAllFieldsByAnnotation(entity.getClass(), annotation.getClass());
     }
 
+    /**
+     * <p>获取指定注解下的全部属性 包括父类</p>
+     *
+     * @param clazz           类对象
+     * @param annotationClass 指定注解类对象
+     * @return java.util.List<org.starrism.mall.common.util.ReflectionUtil.FieldAnnotationPair < A>>
+     * @author hedwing
+     * @since 2022/8/14
+     */
+    public static <A extends Annotation> List<FieldAnnotationPair<A>> getAnnotationPair(Class<?> clazz,
+                                                                                        Class<A> annotationClass) {
+        List<Field> allFields = getAllFields(clazz);
+        return allFields.stream().map(field -> {
+                    A annotation = field.getAnnotation(annotationClass);
+                    if (annotation != null) {
+                        return new FieldAnnotationPair<A>(field, annotation);
+                    }
+                    return null;
+                }).filter(Objects::nonNull)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * <p>获取指定注解下的全部属性 包括父类</p>
+     *
+     * @param entity           对象
+     * @param annotationClass 指定注解类对象
+     * @return java.util.List<org.starrism.mall.common.util.ReflectionUtil.FieldAnnotationPair < A>>
+     * @author hedwing
+     * @since 2022/8/14
+     */
+    public static <T, A extends Annotation> List<FieldAnnotationPair<A>> getAnnotationPair(T entity, Class<A> annotationClass) {
+        return getAnnotationPair(entity.getClass(), annotationClass);
+    }
+
+    public static class FieldAnnotationPair<A extends Annotation> {
+        private Field field;
+
+        private A annotation;
+
+        public FieldAnnotationPair() {
+        }
+
+        FieldAnnotationPair(Field field, A annotation) {
+            this.field = field;
+            this.annotation = annotation;
+        }
+
+        public Field getField() {
+            return field;
+        }
+
+        public void setField(Field field) {
+            this.field = field;
+        }
+
+        public A getAnnotation() {
+            return annotation;
+        }
+
+        public void setAnnotation(A annotation) {
+            this.annotation = annotation;
+        }
+    }
+
+
+    /**
+     * <p>通过setter为target的field属性赋值</p>
+     *
+     * @param field  属性
+     * @param target 对象
+     * @param value  赋值
+     * @author hedwing
+     * @since 2022/8/14
+     */
     public static void setField(Field field, @NonNull Object target, @NonNull Object value) {
         Class<?> clz = target.getClass();
         String name = field.getName();
@@ -75,12 +185,30 @@ public class ReflectionUtil {
         }
     }
 
+    /**
+     * <p>通过修改访问权限为target的field属性赋值</p>
+     *
+     * @param field  属性
+     * @param target 对象
+     * @param value  赋值
+     * @author hedwing
+     * @since 2022/8/14
+     */
     public static void setFieldByAccessible(Field field, @NonNull Object target, @NonNull Object value) {
         field.setAccessible(true);
         ReflectionUtils.setField(field, target, value);
         field.setAccessible(false);
     }
 
+    /**
+     * <p>通过getter获取target的field属性值</p>
+     *
+     * @param field  属性
+     * @param target 对象
+     * @return java.lang.Object
+     * @author hedwing
+     * @since 2022/8/14
+     */
     public static Object getFieldValue(Field field, @NonNull Object target) {
         try {
             field.setAccessible(true);
@@ -93,17 +221,5 @@ public class ReflectionUtil {
         } finally {
             field.setAccessible(false);
         }
-    }
-}
-
-class Stu {
-    private Long id;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 }

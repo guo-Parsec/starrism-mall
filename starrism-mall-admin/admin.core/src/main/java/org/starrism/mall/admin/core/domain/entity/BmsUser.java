@@ -4,8 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.stereotype.Component;
-import org.starrism.mall.admin.api.domain.vo.BmsUserVo;
-import org.starrism.mall.common.domain.Dict;
 import org.starrism.mall.data.domain.entity.BaseDataEntity;
 
 import java.util.Objects;
@@ -71,17 +69,5 @@ public class BmsUser extends BaseDataEntity {
     @Override
     public BmsUser clone() throws CloneNotSupportedException {
         return (BmsUser) super.clone();
-    }
-
-    public BmsUserVo convert() {
-        BmsUserVo bmsUserVo = new BmsUserVo();
-        bmsUserVo.setId(this.id);
-        bmsUserVo.setUsername(username);
-        bmsUserVo.setNickname(nickname);
-        bmsUserVo.setEmail(email);
-        bmsUserVo.setPhoneNumber(phoneNumber);
-        bmsUserVo.setAvatarUrl(avatarUrl);
-        bmsUserVo.setSex(Dict.of(sex));
-        return bmsUserVo;
     }
 }

@@ -18,4 +18,15 @@ public interface DictComponent {
      * @return 字典
      */
     List<DictVo> findDictByCategoryCode(String categoryCode);
+
+    /**
+     * <p>根据分类码与字典码查询字典</p>
+     *
+     * @param categoryCode 分类码
+     * @param dictCode     字典码
+     * @return org.starrism.mall.data.domain.vo.DictVo
+     * @author hedwing
+     * @since 2022/8/14
+     */
+    DictVo findDictByCodes(String categoryCode, String dictCode);
 }

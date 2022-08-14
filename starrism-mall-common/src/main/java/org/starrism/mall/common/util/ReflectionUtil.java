@@ -5,6 +5,7 @@ import org.apache.commons.beanutils.ConvertUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.util.ReflectionUtils;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * <p></p>
@@ -42,6 +44,20 @@ public class ReflectionUtil {
 
     public static <T> List<Field> getAllFields(T entity) {
         return getAllFields(entity.getClass());
+    }
+
+    public static List<Field> getAllFieldsByAnnotation(Class<?> clazz, Class<? extends Annotation> annotationClass) {
+        List<Field> allFields = getAllFields(clazz);
+        return allFields.stream().filter(field -> field.getAnnotation(annotationClass) != null)
+                .collect(Collectors.toList());
+    }
+
+    public static <T> List<Field> getAllFieldsByAnnotation(T entity, Class<? extends Annotation> annotationClass) {
+        return getAllFieldsByAnnotation(entity.getClass(), annotationClass);
+    }
+
+    public static <T> List<Field> getAllFieldsByAnnotation(T entity, Annotation annotation) {
+        return getAllFieldsByAnnotation(entity.getClass(), annotation.getClass());
     }
 
     public static void setField(Field field, @NonNull Object target, @NonNull Object value) {

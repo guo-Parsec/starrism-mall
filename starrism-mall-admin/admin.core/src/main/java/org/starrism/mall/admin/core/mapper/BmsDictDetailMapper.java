@@ -33,4 +33,16 @@ public interface BmsDictDetailMapper {
      * @since 2022/8/13
      */
     List<BmsDictDetail> findByCategory(Long categoryId);
+
+    /**
+     * <p>根据类别和字典码查询唯一字典</p>
+     *
+     * @param categoryId 类别id
+     * @param dictCode   字典码
+     * @return org.starrism.mall.admin.core.domain.entity.BmsDictDetail
+     * @author hedwing
+     * @since 2022/8/14
+     */
+    BmsDictDetail findByCodes(@Param("categoryId") Long categoryId,
+                              @Param("dictCode") String dictCode);
 }

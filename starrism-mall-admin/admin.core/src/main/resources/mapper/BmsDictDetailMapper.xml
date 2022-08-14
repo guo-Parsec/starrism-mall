@@ -52,4 +52,24 @@
           and enable_status = 0
         order by sort;
     </select>
+
+    <select id="findByCodes" resultMap="DictDetailMapper">
+        select id,
+               dict_category_id,
+               dict_code,
+               dict_value,
+               parent_id,
+               hierarchical_path,
+               sort,
+               enable_status,
+               add_time,
+               add_name,
+               modify_time,
+               modify_name
+        from bms_dict_detail
+        where dict_category_id = #{categoryId,jdbcType=BIGINT}
+          and dict_code = #{dictCode,jdbcType=VARCHAR}
+          and enable_status = 0
+        order by sort;
+    </select>
 </mapper>

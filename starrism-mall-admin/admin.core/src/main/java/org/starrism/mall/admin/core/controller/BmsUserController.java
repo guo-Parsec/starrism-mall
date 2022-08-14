@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.starrism.mall.admin.api.domain.vo.BmsUserVo;
+import org.starrism.mall.admin.core.domain.converter.BmsUserConverters;
 import org.starrism.mall.admin.core.domain.entity.BmsUser;
 import org.starrism.mall.admin.core.mapper.BmsUserMapper;
 import org.starrism.mall.admin.core.service.BmsDictService;
@@ -31,15 +32,23 @@ public class BmsUserController {
 
     private BmsDictService dictService;
 
+    private BmsUserConverters bmsUserConverters;
+
     @Autowired
     public void setDictRepository(BmsDictService dictService) {
         this.dictService = dictService;
     }
 
+    @Autowired
+    public void setBmsUserConverters(BmsUserConverters bmsUserConverters) {
+        this.bmsUserConverters = bmsUserConverters;
+    }
+
     @GetMapping(value = "/findById")
     public CommonResult<List<BmsUserVo>> addUser(@RequestParam Long id) {
         BmsUser user = bmsUserMapper.findById(id);
-        return CommonResult.success(Stream.of(user.convert()).collect(Collectors.toList()));
+        return CommonResult.success(Stream.of( bmsUserConverters.userEntityToUserVo(user))
+                .collect(Collectors.toList()));
     }
 
     @GetMapping(value = "/find")

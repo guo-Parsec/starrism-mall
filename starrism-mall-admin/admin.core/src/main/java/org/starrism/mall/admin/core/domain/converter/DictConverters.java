@@ -16,9 +16,6 @@ public class DictConverters {
 
     Convertible<BmsDictDetail, DictVo> dictDetailToVoConverter(BmsDictDetail detail) {
         return (source) -> {
-            if (source == null) {
-                return new DictVo();
-            }
             DictVo dictVo = new DictVo();
             dictVo.setDictCode(detail.getDictCode());
             dictVo.setDictValue(detail.getDictValue());

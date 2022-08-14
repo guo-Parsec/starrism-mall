@@ -26,9 +26,6 @@ public class BmsUserConverters implements BaseConverters {
      */
     Convertible<BmsUser, BmsUserVo> userEntityToUserVoConverters(BmsUser bmsUser) {
         return (source) -> {
-            if (source == null) {
-                return new BmsUserVo();
-            }
             BmsUserVo bmsUserVo = new BmsUserVo();
             bmsUserVo.setId(bmsUser.getId());
             bmsUserVo.setUsername(bmsUser.getUsername());

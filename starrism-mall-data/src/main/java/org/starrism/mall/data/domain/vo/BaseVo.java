@@ -1,6 +1,7 @@
 package org.starrism.mall.data.domain.vo;
 
 import org.starrism.mall.common.domain.Domainizable;
+import org.starrism.mall.data.domain.entity.BaseEntity;
 
 /**
  * <p></p>
@@ -8,7 +9,7 @@ import org.starrism.mall.common.domain.Domainizable;
  * @author hedwing
  * @since 2022/8/13
  **/
-public abstract class BaseVo implements Domainizable {
+public abstract class BaseVo extends BaseEntity implements Domainizable {
     private static final long serialVersionUID = -1255571960577933055L;
 
     @Override

@@ -28,4 +28,13 @@ public interface BmsMenuService {
      * @since 2022/8/21
      */
     List<BmsMenu> listAll();
+
+    /**
+     * <p>分页查询菜单数据</p>
+     * @param
+     * @return java.util.List<org.starrism.mall.admin.core.domain.entity.BmsMenu>
+     * @author hedwing
+     * @since 2022/8/21
+     */
+    List<BmsMenu> queryAll();
 }

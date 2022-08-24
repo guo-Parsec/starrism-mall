@@ -1,10 +1,10 @@
 package org.starrism.mall.data.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Getter;
 import lombok.Setter;
-import org.starrism.mall.common.annotation.Id;
 import org.starrism.mall.common.domain.Domainizable;
-import org.starrism.mall.common.enums.FillType;
 
 import java.util.Objects;
 
@@ -22,7 +22,7 @@ public abstract class BaseEntity implements Domainizable {
     /**
      * 主键ID
      */
-    @Id(idType = FillType.AUTO)
+    @TableId(type = IdType.AUTO)
     protected Long id;
 
     public BaseEntity() {

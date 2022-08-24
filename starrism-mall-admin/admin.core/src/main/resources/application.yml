@@ -42,12 +42,15 @@ feign:
         connectTimeout: 5000
         readTimeout: 5000
         loggerLevel: basic
-mybatis:
+mybatis-plus:
   # 指定 mapper.xml 的位置
   mapper-locations: classpath*:mapper/**/*Mapper.xml
   configuration:
     #默认开启驼峰命名法，可以不用设置该属性
     map-underscore-to-camel-case: true
+snowflake:
+  datacenter-id: 1
+  machine-id: 1
 logging:
   level:
     org.starrism.mall: debug

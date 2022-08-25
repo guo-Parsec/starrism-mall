@@ -17,6 +17,7 @@ public class DictConverters {
 
     Convertible<BmsDictDetail, DictVo> dictDetailToVoConverter(BmsDictDetail detail) {
         return (source) -> Builder.of(DictVo::new)
+                .with(DictVo::setId, detail.getId())
                 .with(DictVo::setDictCode, detail.getDictCode())
                 .with(DictVo::setDictValue, detail.getDictValue())
                 .with(DictVo::setSort, detail.getSort())

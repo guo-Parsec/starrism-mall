@@ -46,4 +46,16 @@ public class BmsMenuServiceImpl implements BmsMenuService {
     public List<BmsMenu> listAll() {
         return bmsMenuMapper.findAll();
     }
+
+    /**
+     * <p>分页查询菜单数据</p>
+     *
+     * @return java.util.List<org.starrism.mall.admin.core.domain.entity.BmsMenu>
+     * @author hedwing
+     * @since 2022/8/21
+     */
+    @Override
+    public List<BmsMenu> queryAll() {
+        return null;
+    }
 }

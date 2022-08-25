@@ -22,7 +22,7 @@ public abstract class BaseEntity implements Domainizable {
     /**
      * 主键ID
      */
-    @TableId(type = IdType.AUTO)
+    @TableId(type = IdType.ASSIGN_ID)
     protected Long id;
 
     public BaseEntity() {

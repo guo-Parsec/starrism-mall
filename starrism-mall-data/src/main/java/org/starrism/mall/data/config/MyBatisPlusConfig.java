@@ -7,9 +7,10 @@ import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerIntercept
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.starrism.mall.data.mybatisplus.inject.MySqlInjector;
 
 /**
- * <p></p>
+ * <p>mybatisPlus配置</p>
  *
  * @author hedwing
  * @since 2022/8/13
@@ -26,10 +27,14 @@ public class MyBatisPlusConfig {
         interceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
         // 自动分页
         PaginationInnerInterceptor pageInterceptor = new PaginationInnerInterceptor(DbType.MYSQL);
-        pageInterceptor.setMaxLimit(5000L);
-
+        pageInterceptor.setMaxLimit(500L);
         interceptor.addInnerInterceptor(pageInterceptor);
         return interceptor;
+    }
+
+    @Bean
+    public MySqlInjector mySqlInjector() {
+        return new MySqlInjector();
     }
 
 }

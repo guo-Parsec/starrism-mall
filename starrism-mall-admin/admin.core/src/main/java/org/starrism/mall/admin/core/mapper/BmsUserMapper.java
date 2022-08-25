@@ -2,6 +2,7 @@ package org.starrism.mall.admin.core.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.starrism.mall.admin.core.domain.entity.BmsUser;
+import org.starrism.mall.data.mapper.CoreMapper;
 
 /**
  * <p></p>
@@ -10,7 +11,7 @@ import org.starrism.mall.admin.core.domain.entity.BmsUser;
  * @since 2022/8/13
  **/
 @Mapper
-public interface BmsUserMapper {
+public interface BmsUserMapper extends CoreMapper<BmsUser> {
     /**
      * <p>根据主键获取数据</p>
      *

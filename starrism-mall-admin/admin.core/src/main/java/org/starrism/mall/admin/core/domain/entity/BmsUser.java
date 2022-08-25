@@ -1,9 +1,9 @@
 package org.starrism.mall.admin.core.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.stereotype.Component;
 import org.starrism.mall.data.domain.entity.BaseDataEntity;
 
 import java.util.Objects;
@@ -17,7 +17,7 @@ import java.util.Objects;
 @Setter
 @Getter
 @ToString
-@Component
+@TableName("bms_user")
 public class BmsUser extends BaseDataEntity {
     private static final long serialVersionUID = 3001411682177194704L;
 

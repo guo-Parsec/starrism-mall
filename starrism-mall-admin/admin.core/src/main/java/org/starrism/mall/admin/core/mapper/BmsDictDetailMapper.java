@@ -3,6 +3,7 @@ package org.starrism.mall.admin.core.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.starrism.mall.admin.core.domain.entity.BmsDictDetail;
+import org.starrism.mall.data.mapper.CoreMapper;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * @since 2022/8/13
  **/
 @Mapper
-public interface BmsDictDetailMapper {
+public interface BmsDictDetailMapper extends CoreMapper<BmsDictDetail> {
     /**
      * <p>根据主键查询字典</p>
      *

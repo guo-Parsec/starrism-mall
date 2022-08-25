@@ -1,5 +1,6 @@
 package org.starrism.mall.admin.core.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,6 +15,7 @@ import org.starrism.mall.data.domain.entity.AbstractDataEntityTree;
 @Setter
 @Getter
 @ToString
+@TableName("bms_menu")
 public class BmsMenu extends AbstractDataEntityTree<BmsMenu> {
     private static final long serialVersionUID = 1399980644943450383L;
 

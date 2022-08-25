@@ -1,5 +1,6 @@
 package org.starrism.mall.data.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Getter;
 import lombok.Setter;
 import org.starrism.mall.common.support.Treeable;
@@ -26,11 +27,13 @@ public class AbstractDataEntityTree<T> extends BaseDataEntity implements Treeabl
     /**
      * 上级元素
      */
+    @TableField(exist = false)
     protected T parent;
 
     /**
      * 子类元素集合
      */
+    @TableField(exist = false)
     protected List<T> children;
 
     /**

@@ -11,6 +11,7 @@
         <module>starrism-mall-common</module>
         <module>starrism-mall-data</module>
         <module>starrism-mall-admin</module>
+        <module>starrism-mall-gateway</module>
     </modules>
     <packaging>pom</packaging>
 

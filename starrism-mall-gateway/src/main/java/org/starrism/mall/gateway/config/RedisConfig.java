@@ -1,17 +1,14 @@
-package org.starrism.mall.data.config;
+package org.starrism.mall.gateway.config;
 
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Configuration;
 import org.starrism.mall.common.config.CommonRedisConfig;
 
 /**
- * <p></p>
+ * <p>redis配置</p>
  *
  * @author hedwing
- * @since 2022/8/13
+ * @since 2022/8/25
  **/
-@EnableCaching
 @Configuration
 public class RedisConfig extends CommonRedisConfig {
-
 }

@@ -37,6 +37,12 @@
         <dependency>
             <groupId>org.starrism</groupId>
             <artifactId>admin.api</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.starrism</groupId>
+                    <artifactId>starrism-mall-data</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

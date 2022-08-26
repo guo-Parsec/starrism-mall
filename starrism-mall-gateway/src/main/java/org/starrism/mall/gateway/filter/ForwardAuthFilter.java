@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -15,6 +16,7 @@ import reactor.core.publisher.Mono;
  * @author hedwing
  * @since 2022/8/27
  **/
+@Component
 public class ForwardAuthFilter implements GlobalFilter {
     private final Logger log = LoggerFactory.getLogger(ForwardAuthFilter.class);
 

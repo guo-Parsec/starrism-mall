@@ -164,6 +164,11 @@
                 <artifactId>admin.api</artifactId>
                 <version>${starrism.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.starrism</groupId>
+                <artifactId>auth.api</artifactId>
+                <version>${starrism.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

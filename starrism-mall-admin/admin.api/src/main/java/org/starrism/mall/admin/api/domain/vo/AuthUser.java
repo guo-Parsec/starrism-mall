@@ -1,8 +1,8 @@
 package org.starrism.mall.admin.api.domain.vo;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import org.starrism.mall.data.domain.vo.BaseVo;
+import lombok.Getter;
+import lombok.Setter;
+import org.starrism.mall.common.domain.Domainizable;
 
 import java.util.List;
 import java.util.Set;
@@ -13,9 +13,9 @@ import java.util.Set;
  * @author hedwing
  * @since 2022/8/27
  **/
-@Data
-@EqualsAndHashCode(callSuper = true)
-public class AuthUser extends BaseVo {
+@Setter
+@Getter
+public class AuthUser implements Domainizable {
     private static final long serialVersionUID = 7985972063033198360L;
     private BmsUserVo userInfo;
 

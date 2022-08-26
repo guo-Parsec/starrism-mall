@@ -30,6 +30,4 @@ public class BmsUserVo extends BaseVo {
 
     @DictData(categoryCode = "SEX")
     private Dict<Integer, String> sex;
-
-
 }

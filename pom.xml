@@ -12,6 +12,7 @@
         <module>starrism-mall-data</module>
         <module>starrism-mall-admin</module>
         <module>starrism-mall-gateway</module>
+        <module>starrism-mall-auth-center</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -38,10 +39,10 @@
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <guava.version>31.1-jre</guava.version>
-        <java-jwt.version>3.19.1</java-jwt.version>
         <jjwt.version>0.9.1</jjwt.version>
         <java-jwt.version>3.18.1</java-jwt.version>
         <fastJson.version>2.0.7</fastJson.version>
+        <sa-token.version>1.30.0</sa-token.version>
     </properties>
 
     <dependencyManagement>
@@ -122,12 +123,6 @@
                 <artifactId>commons-beanutils</artifactId>
                 <version>${commons-beanutils.version}</version>
             </dependency>
-            <!-- jwt -->
-            <dependency>
-                <groupId>com.auth0</groupId>
-                <artifactId>java-jwt</artifactId>
-                <version>${java-jwt.version}</version>
-            </dependency>
             <!-- fastJson -->
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -145,6 +140,29 @@
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt</artifactId>
                 <version>${jjwt.version}</version>
+            </dependency>
+            <!-- Sa-Token 权限认证（Servlet集成） -->
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-spring-boot-starter</artifactId>
+                <version>${sa-token.version}</version>
+            </dependency>
+            <!-- Sa-Token 权限认证（Reactor响应式集成）, 在线文档：http://sa-token.dev33.cn/ -->
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-reactor-spring-boot-starter</artifactId>
+                <version>${sa-token.version}</version>
+            </dependency>
+            <!-- Sa-Token 整合 Redis (使用jackson序列化方式) -->
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-dao-redis-jackson</artifactId>
+                <version>${sa-token.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.starrism</groupId>
+                <artifactId>admin.api</artifactId>
+                <version>${starrism.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

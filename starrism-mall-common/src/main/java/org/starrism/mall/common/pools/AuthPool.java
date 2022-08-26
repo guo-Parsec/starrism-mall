@@ -42,5 +42,9 @@ public interface AuthPool {
      * 请求来源
      */
     String FROM_SOURCE = "from-source";
+    /**
+     * 用户session
+     */
+    String USER_SESSION = "userInfo";
 
 }

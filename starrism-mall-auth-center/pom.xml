@@ -9,34 +9,18 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>starrism-mall-gateway</artifactId>
+    <artifactId>starrism-mall-auth-center</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>org.starrism</groupId>
-            <artifactId>starrism-mall-common</artifactId>
+            <artifactId>starrism-mall-data</artifactId>
             <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-web</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-aop</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.github.xiaoymin</groupId>
-                    <artifactId>knife4j-micro-spring-boot-starter</artifactId>
-                </exclusion>
                 <exclusion>
                     <groupId>org.projectlombok</groupId>
                     <artifactId>lombok</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.starrism</groupId>
-            <artifactId>admin.api</artifactId>
         </dependency>
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
@@ -48,16 +32,16 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-gateway</artifactId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-okhttp</artifactId>
         </dependency>
-        <!-- Sa-Token 权限认证（Reactor响应式集成）, 在线文档：http://sa-token.dev33.cn/ -->
+        <!-- Sa-Token 权限认证（Servlet集成） -->
         <dependency>
             <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-reactor-spring-boot-starter</artifactId>
+            <artifactId>sa-token-spring-boot-starter</artifactId>
         </dependency>
         <!-- Sa-Token 整合 Redis (使用jackson序列化方式) -->
         <dependency>
@@ -65,7 +49,5 @@
             <artifactId>sa-token-dao-redis-jackson</artifactId>
         </dependency>
     </dependencies>
-
-
 
 </project>

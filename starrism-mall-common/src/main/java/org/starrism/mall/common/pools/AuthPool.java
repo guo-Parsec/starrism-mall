@@ -7,6 +7,7 @@ package org.starrism.mall.common.pools;
  * @since 2022/8/25
  **/
 public interface AuthPool {
+
     /**
      * 认证信息Http请求头
      */
@@ -18,8 +19,28 @@ public interface AuthPool {
     String JWT_TOKEN_PREFIX = "Bearer ";
 
     /**
-     * 用户信息Http请求头
+     * 令牌秘钥
      */
-    String USER_TOKEN_HEADER = "bms_user";
+    String SECRET = "aGVkd2luZ3NlY3JldA==";
+
+    /**
+     * 用户id标识
+     */
+    String USER_ID = "LOGIN_USER_ID";
+
+    /**
+     * 用户标识
+     */
+    String USER_TOKEN_KEY = "LOGIN_USER_TOKEN";
+
+    /**
+     * 用户名称标识
+     */
+    String USER_NAME = "LOGIN_USERNAME";
+
+    /**
+     * 请求来源
+     */
+    String FROM_SOURCE = "from-source";
 
 }

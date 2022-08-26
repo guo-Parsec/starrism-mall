@@ -1,7 +1,7 @@
 package org.starrism.mall.common.support;
 
 /**
- * <p></p>
+ * <p>转换器</p>
  *
  * @author hedwing
  * @since 2022/8/14

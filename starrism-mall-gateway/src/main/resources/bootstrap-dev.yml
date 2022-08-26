@@ -6,5 +6,5 @@ spring:
         namespace: DEV
       config:
         server-addr: http://localhost:8848
-        file-extension: yaml
+        file-extension: yml
         namespace: DEV

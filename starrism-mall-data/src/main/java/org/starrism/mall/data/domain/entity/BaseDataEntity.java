@@ -1,11 +1,11 @@
 package org.starrism.mall.data.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.starrism.mall.common.annotation.Fill;
-import org.starrism.mall.common.enums.FillStrategy;
-import org.starrism.mall.common.enums.FillType;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -25,31 +25,29 @@ public abstract class BaseDataEntity extends BaseEntity {
     /**
      * 创建时间
      */
-    @Fill(strategy = FillStrategy.DATETIME, fillType = FillType.ALWAYS)
+    @TableField(fill = FieldFill.INSERT)
     protected LocalDateTime addTime;
 
     /**
      * 创建人
      */
-    @Fill(value = "admin", strategy = FillStrategy.VALUE, fillType = FillType.AUTO)
     protected String addName;
 
     /**
      * 修改时间
      */
-    @Fill(strategy = FillStrategy.DATETIME, fillType = FillType.ALWAYS)
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     protected LocalDateTime modifyTime;
 
     /**
      * 修改人
      */
-    @Fill(value = "admin", strategy = FillStrategy.VALUE, fillType = FillType.AUTO)
     protected String modifyName;
 
     /**
      * 启用状态(数据字典 0-启用 1-禁用)
      */
-    @Fill(value = "0", strategy = FillStrategy.VALUE, fillType = FillType.AUTO)
+    @TableLogic(value = "0", delval = "1")
     protected Integer enableStatus;
 
     public BaseDataEntity() {

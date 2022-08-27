@@ -1,5 +1,6 @@
 package org.starrism.mall.data.component;
 
+import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -17,7 +18,7 @@ import javax.annotation.PostConstruct;
  * @since 2022/8/12
  **/
 @Component
-public class SnowflakeWorker implements ApplicationContextAware {
+public class SnowflakeWorker implements IdentifierGenerator, ApplicationContextAware {
     private final static Logger logger = LoggerFactory.getLogger(SnowflakeWorker.class);
 
     private static ApplicationContext applicationContext;
@@ -181,4 +182,14 @@ public class SnowflakeWorker implements ApplicationContextAware {
     }
 
 
+    /**
+     * 生成Id
+     *
+     * @param entity 实体
+     * @return id
+     */
+    @Override
+    public Long nextId(Object entity) {
+        return SnowflakeWorker.getBean().nextId();
+    }
 }

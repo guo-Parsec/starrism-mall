@@ -1,4 +1,4 @@
-package org.starrism.mall.admin.api.domain.vo;
+package org.starrism.mall.common.domain.vo;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -30,6 +30,4 @@ public class BmsUserVo implements Domainizable {
 
     @DictData(categoryCode = "SEX")
     private Dict<Integer, String> sex;
-
-
 }

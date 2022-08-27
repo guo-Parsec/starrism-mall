@@ -1,5 +1,7 @@
 package org.starrism.mall.admin.core.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;
 import lombok.Setter;
 import org.starrism.mall.data.domain.entity.BaseDataEntity;
@@ -14,6 +16,7 @@ import java.util.List;
  **/
 @Getter
 @Setter
+@TableName("bms_dict_category")
 public class BmsDictCategory extends BaseDataEntity {
     private static final long serialVersionUID = -3429255454672506646L;
     /**
@@ -31,5 +34,6 @@ public class BmsDictCategory extends BaseDataEntity {
     */
     private Integer sort;
 
+    @TableField(exist = false)
     private List<BmsDictDetail> bmsDictDetails;
 }

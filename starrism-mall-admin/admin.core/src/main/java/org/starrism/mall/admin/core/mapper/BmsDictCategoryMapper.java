@@ -3,6 +3,7 @@ package org.starrism.mall.admin.core.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.starrism.mall.admin.core.domain.entity.BmsDictCategory;
+import org.starrism.mall.data.mapper.CoreMapper;
 
 /**
  * <p></p>
@@ -11,7 +12,7 @@ import org.starrism.mall.admin.core.domain.entity.BmsDictCategory;
  * @since 2022/8/13
  **/
 @Mapper
-public interface BmsDictCategoryMapper {
+public interface BmsDictCategoryMapper extends CoreMapper<BmsDictCategory> {
     /**
      * <p>根据类别码获取类别信息</p>
      *
@@ -21,4 +22,6 @@ public interface BmsDictCategoryMapper {
      * @since 2022/8/13
      */
     BmsDictCategory findByCode(@Param("dictCategoryCode") String dictCategoryCode);
+
+
 }

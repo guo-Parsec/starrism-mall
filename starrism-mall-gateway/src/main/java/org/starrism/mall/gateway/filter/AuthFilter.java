@@ -7,7 +7,6 @@ import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import org.starrism.mall.common.pools.AuthPool;
 import org.starrism.mall.common.rest.ResultCode;
@@ -25,7 +24,7 @@ import reactor.core.publisher.Mono;
  * @author hedwing
  * @since 2022/8/25
  **/
-@Component
+//@Component
 public class AuthFilter implements GlobalFilter, Ordered {
     private static final Logger log = LoggerFactory.getLogger(AuthFilter.class);
 
@@ -55,7 +54,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
             return unauthorizedResponse(exchange, "令牌已过期或令牌验证失败");
         }
         String userKey = TokenUtil.getUserKey(claims);
-        Boolean authSuccess = redisService.hasKey(userKey);
+        Boolean authSuccess = redisService.hasKey(getTokenKey(userKey));
         if (!authSuccess) {
             return unauthorizedResponse(exchange, "登录状态已过期");
         }

@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.server.ServerWebExchange;
 import org.starrism.mall.gateway.properties.IgnoreUrlProperties;
-import org.starrism.mall.gateway.support.StpProvider;
 
 /**
  * <p>[Sa-Token 权限认证] 配置类</p>
@@ -43,7 +42,7 @@ public class SaTokenConfig {
                     // 登录校验 -- 拦截所有路由，并排除 /auth/login 用于开放登录
                     SaRouter.match("/**", "/auth/login", StpUtil::checkLogin);
                     // 权限认证 -- 不同模块, 校验不同权限
-                    SaRouter.match("/admin/**", () -> StpProvider.checkClient("system"));
+//                    SaRouter.match("/admin/**", () -> StpProvider.checkClient("system"));
                 })
                 // 异常处理方法：每次setAuth函数出现异常时进入
                 .setError(e -> {

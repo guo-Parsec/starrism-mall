@@ -43,6 +43,7 @@
         <java-jwt.version>3.18.1</java-jwt.version>
         <fastJson.version>2.0.7</fastJson.version>
         <sa-token.version>1.30.0</sa-token.version>
+        <swagger.version>2.9.2</swagger.version>
     </properties>
 
     <dependencyManagement>
@@ -168,6 +169,17 @@
                 <groupId>org.starrism</groupId>
                 <artifactId>auth.api</artifactId>
                 <version>${starrism.version}</version>
+            </dependency>
+            <!-- swagger 包-->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

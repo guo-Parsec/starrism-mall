@@ -1,10 +1,10 @@
-package org.starrism.mall.admin.api.domain.vo;
+package org.starrism.mall.common.domain.vo;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.starrism.mall.common.annotation.DictData;
 import org.starrism.mall.common.domain.Dict;
-import org.starrism.mall.data.domain.vo.BaseVo;
+import org.starrism.mall.common.domain.Domainizable;
 
 /**
  * <p></p>
@@ -14,7 +14,7 @@ import org.starrism.mall.data.domain.vo.BaseVo;
  **/
 @Setter
 @Getter
-public class BmsUserVo extends BaseVo {
+public class BmsUserVo implements Domainizable {
     private static final long serialVersionUID = 8539088195437264237L;
     private Long id;
 

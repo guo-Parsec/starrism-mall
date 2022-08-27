@@ -5,13 +5,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.starrism.mall.admin.api.domain.vo.AuthUser;
-import org.starrism.mall.admin.api.domain.vo.BmsUserVo;
 import org.starrism.mall.admin.core.domain.converter.BmsUserConverters;
 import org.starrism.mall.admin.core.domain.entity.BmsUser;
 import org.starrism.mall.admin.core.mapper.BmsUserMapper;
 import org.starrism.mall.admin.core.service.BmsUserService;
 import org.starrism.mall.common.domain.Builder;
+import org.starrism.mall.common.domain.vo.AuthUser;
+import org.starrism.mall.common.domain.vo.BmsUserVo;
 import org.starrism.mall.data.domain.entity.BaseEntity;
 
 import javax.annotation.Resource;
@@ -40,7 +40,7 @@ public class BmsUserServiceImpl implements BmsUserService {
      * <p>根据用户名查询用户信息</p>
      *
      * @param username 用户名
-     * @return org.starrism.mall.admin.api.domain.vo.AuthUser
+     * @return org.starrism.mall.common.domain.vo.AuthUser
      * @author hedwing
      * @since 2022/8/27
      */

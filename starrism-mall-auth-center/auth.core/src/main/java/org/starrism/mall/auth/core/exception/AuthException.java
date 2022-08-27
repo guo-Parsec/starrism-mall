@@ -1,6 +1,7 @@
 package org.starrism.mall.auth.core.exception;
 
 import org.starrism.mall.auth.core.rest.AuthResultCode;
+import org.starrism.mall.common.exceptions.StarrismException;
 
 /**
  * <p>验证异常类</p>
@@ -8,23 +9,23 @@ import org.starrism.mall.auth.core.rest.AuthResultCode;
  * @author hedwing
  * @since 2022/8/27
  **/
-public class AuthException extends RuntimeException{
+public class AuthException extends StarrismException {
     private static final long serialVersionUID = 5333187782196229329L;
 
     private AuthResultCode authResultCode;
 
     public AuthException(AuthResultCode authResultCode) {
-        super(authResultCode.getMessage());
+        super(authResultCode);
         this.authResultCode = authResultCode;
     }
 
-    public AuthException(String message) {
-        super(message);
+    public AuthException(String message, AuthResultCode authResultCode) {
+        super(message, authResultCode);
         this.authResultCode = AuthResultCode.AUTHENTICATION_FAILED;
     }
 
-    public AuthException(String message, Throwable cause) {
-        super(message, cause);
+    public AuthException(String message, Throwable cause, AuthResultCode authResultCode) {
+        super(message, cause, authResultCode);
         this.authResultCode = AuthResultCode.AUTHENTICATION_FAILED;
     }
 

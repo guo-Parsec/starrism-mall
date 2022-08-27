@@ -2,7 +2,7 @@ package org.starrism.mall.auth.core.domain.vo;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.starrism.mall.admin.api.domain.vo.BmsUserVo;
+import org.starrism.mall.common.domain.vo.BmsUserVo;
 import org.starrism.mall.common.domain.Domainizable;
 import org.starrism.mall.common.domain.vo.AccessTokenVo;
 

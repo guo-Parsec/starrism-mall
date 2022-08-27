@@ -3,7 +3,7 @@ package org.starrism.mall.gateway.expand;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpUtil;
 import org.springframework.stereotype.Component;
-import org.starrism.mall.admin.api.domain.vo.AuthUser;
+import org.starrism.mall.common.domain.vo.AuthUser;
 import org.starrism.mall.common.pools.AuthPool;
 
 import java.util.ArrayList;

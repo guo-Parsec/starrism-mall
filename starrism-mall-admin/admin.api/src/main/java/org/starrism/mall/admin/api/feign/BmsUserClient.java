@@ -3,7 +3,7 @@ package org.starrism.mall.admin.api.feign;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.starrism.mall.admin.api.domain.vo.AuthUser;
+import org.starrism.mall.common.domain.vo.AuthUser;
 import org.starrism.mall.common.pools.AppPool;
 import org.starrism.mall.common.rest.CommonResult;
 

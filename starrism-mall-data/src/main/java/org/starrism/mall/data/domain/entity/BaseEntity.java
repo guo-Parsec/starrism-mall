@@ -64,4 +64,12 @@ public abstract class BaseEntity implements Domainizable {
     public BaseEntity clone() throws CloneNotSupportedException {
         return (BaseEntity) super.clone();
     }
+
+    public static boolean isEmpty(BaseEntity baseEntity) {
+        return baseEntity == null || baseEntity.getId() == null || baseEntity.getId().equals(0L);
+    }
+
+    public static boolean isNotEmpty(BaseEntity baseEntity) {
+        return !isEmpty(baseEntity);
+    }
 }

@@ -19,6 +19,8 @@ public class AuthUser implements Domainizable {
     private static final long serialVersionUID = 7985972063033198360L;
     private BmsUserVo userInfo;
 
+    private String password;
+
     private Set<String> roles;
 
     private Set<String> permissions;

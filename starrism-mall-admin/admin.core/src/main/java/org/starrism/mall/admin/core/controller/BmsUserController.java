@@ -2,21 +2,12 @@ package org.starrism.mall.admin.core.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.starrism.mall.admin.api.domain.vo.BmsUserVo;
-import org.starrism.mall.admin.core.domain.converter.BmsUserConverters;
-import org.starrism.mall.admin.core.domain.entity.BmsUser;
-import org.starrism.mall.admin.core.mapper.BmsUserMapper;
-import org.starrism.mall.admin.core.service.BmsDictService;
+import org.starrism.mall.admin.api.domain.vo.AuthUser;
+import org.starrism.mall.admin.core.service.BmsUserService;
 import org.starrism.mall.common.rest.CommonResult;
-import org.starrism.mall.data.domain.vo.DictVo;
-
-import javax.annotation.Resource;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * <p></p>
@@ -27,32 +18,14 @@ import java.util.stream.Stream;
 @RestController
 @RequestMapping(value = "/v1/bms/user")
 public class BmsUserController {
-    @Resource
-    private BmsUserMapper bmsUserMapper;
-
-    private BmsDictService dictService;
-
-    private BmsUserConverters bmsUserConverters;
-
+    BmsUserService bmsUserService;
     @Autowired
-    public void setDictRepository(BmsDictService dictService) {
-        this.dictService = dictService;
+    public void setBmsUserService(BmsUserService bmsUserService) {
+        this.bmsUserService = bmsUserService;
     }
 
-    @Autowired
-    public void setBmsUserConverters(BmsUserConverters bmsUserConverters) {
-        this.bmsUserConverters = bmsUserConverters;
-    }
-
-    @GetMapping(value = "/findById")
-    public CommonResult<List<BmsUserVo>> addUser(@RequestParam Long id) {
-        BmsUser user = bmsUserMapper.findById(id);
-        return CommonResult.success(Stream.of( bmsUserConverters.userEntityToUserVo(user))
-                .collect(Collectors.toList()));
-    }
-
-    @GetMapping(value = "/find")
-    public CommonResult<List<DictVo>> findDictByCode(@RequestParam String code) {
-        return CommonResult.success(dictService.findDictByCategoryCode(code));
+    @GetMapping(value = "/find/{username}")
+    public CommonResult<AuthUser> findUserByUsername(@PathVariable String username) {
+        return CommonResult.success(bmsUserService.findUserByUsername(username));
     }
 }

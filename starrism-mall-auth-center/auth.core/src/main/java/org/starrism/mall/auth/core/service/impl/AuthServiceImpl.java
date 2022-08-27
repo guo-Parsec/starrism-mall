@@ -52,6 +52,10 @@ public class AuthServiceImpl implements AuthService {
         String username = userLoginDto.getUsername();
         CommonResult<AuthUser> clientApi = bmsUserClient.findUserByUsername(username);
         AuthUser authUser = CommonResult.getSuccessData(clientApi);
+        if (authUser == null) {
+            log.error("cannot find user of username={}", username);
+            throw new AuthException(AuthResultCode.USERNAME_OR_PASSWORD_ERROR);
+        }
         BmsUserVo userInfo = authUser.getUserInfo();
         if (userInfo == null) {
             log.error("cannot find user of username={}", username);

@@ -13,9 +13,8 @@ import org.starrism.mall.common.rest.CommonResult;
  * @author hedwing
  * @since 2022/8/27
  **/
-@FeignClient(name = AppPool.APPLICATION_ADMIN_NAME)
+@FeignClient(name = AppPool.APPLICATION_ADMIN_NAME + "/admin")
 public interface BmsUserClient {
-    String URL_PREFIX = "/admin/v1/bms/user";
 
     /**
      * 根据用户名获取用户信息
@@ -25,7 +24,7 @@ public interface BmsUserClient {
      * @author guochengqiang
 
      */
-    @GetMapping(value = URL_PREFIX + "/find/{username}")
+    @GetMapping("/v1/bms/user/find/{username}")
     CommonResult<AuthUser> findUserByUsername(@PathVariable String username);
 
 }

@@ -14,6 +14,4 @@ public interface AppPool {
     String APPLICATION_GATEWAY_NAME = "starrism-mall-gateway";
 
     String ADMIN_URL_PREFIX = "/admin";
-
-    String
 }

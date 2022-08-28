@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.starrism.mall.common.util.SpringUtil;
 import org.starrism.mall.common.util.StrUtil;
+import org.starrism.mall.common.valid.Valid;
 import org.starrism.mall.data.domain.vo.DictVo;
 import org.starrism.mall.data.service.DictService;
 
@@ -14,7 +15,7 @@ import org.starrism.mall.data.service.DictService;
  * @author hedwing
  * @since 2022/8/28
  **/
-public class DictClient {
+public class DictClient implements Valid {
     private static final Logger log = LoggerFactory.getLogger(DictClient.class);
 
     /**

@@ -1,11 +1,10 @@
 package org.starrism.mall.admin.core.domain.converter;
 
 import org.springframework.stereotype.Component;
-import org.starrism.mall.common.domain.vo.BmsUserVo;
 import org.starrism.mall.admin.core.domain.entity.BmsUser;
 import org.starrism.mall.common.domain.BaseConverters;
 import org.starrism.mall.common.domain.Builder;
-import org.starrism.mall.common.domain.Dict;
+import org.starrism.mall.common.domain.vo.BmsUserVo;
 import org.starrism.mall.common.support.Convertible;
 import org.starrism.mall.data.domain.vo.CoreUser;
 
@@ -34,7 +33,7 @@ public class BmsUserConverters implements BaseConverters {
                 .with(BmsUserVo::setEmail, bmsUser.getEmail())
                 .with(BmsUserVo::setPhoneNumber, bmsUser.getPhoneNumber())
                 .with(BmsUserVo::setAvatarUrl, bmsUser.getAvatarUrl())
-                .with(BmsUserVo::setSex, Dict.of(bmsUser.getSex()))
+                .with(BmsUserVo::setSex, bmsUser.getSex())
                 .build();
     }
 

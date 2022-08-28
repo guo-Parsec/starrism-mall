@@ -26,10 +26,8 @@ public class BmsUserVo implements Domainizable {
 
     private String avatarUrl;
 
+    private Integer sex;
+
     private String sexName;
 
-    public String getSexName() {
-        System.out.println(12121212);
-        return sexName;
-    }
 }

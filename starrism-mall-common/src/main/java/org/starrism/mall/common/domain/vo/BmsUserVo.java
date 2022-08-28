@@ -2,8 +2,6 @@ package org.starrism.mall.common.domain.vo;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.starrism.mall.common.annotation.DictData;
-import org.starrism.mall.common.domain.Dict;
 import org.starrism.mall.common.domain.Domainizable;
 
 /**
@@ -27,9 +25,6 @@ public class BmsUserVo implements Domainizable {
     private String phoneNumber;
 
     private String avatarUrl;
-
-    @DictData(categoryCode = "SEX")
-    private Dict<Integer, String> sex;
 
     private String sexName;
 

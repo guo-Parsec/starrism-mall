@@ -7,6 +7,7 @@ import org.starrism.mall.common.domain.BaseConverters;
 import org.starrism.mall.common.domain.Builder;
 import org.starrism.mall.common.domain.Dict;
 import org.starrism.mall.common.support.Convertible;
+import org.starrism.mall.data.domain.vo.CoreUser;
 
 /**
  * <p></p>
@@ -37,7 +38,24 @@ public class BmsUserConverters implements BaseConverters {
                 .build();
     }
 
+    Convertible<BmsUser, CoreUser> toCoreUserConverters(BmsUser bmsUser) {
+        return (source) -> Builder.of(CoreUser::new)
+                .with(CoreUser::setId, bmsUser.getId())
+                .with(CoreUser::setUsername, bmsUser.getUsername())
+                .with(CoreUser::setNickname, bmsUser.getNickname())
+                .with(CoreUser::setEmail, bmsUser.getEmail())
+                .with(CoreUser::setPhoneNumber, bmsUser.getPhoneNumber())
+                .with(CoreUser::setAvatarUrl, bmsUser.getAvatarUrl())
+                .with(CoreUser::setPassword, bmsUser.getPassword())
+                .with(CoreUser::setSex, bmsUser.getSex())
+                .build();
+    }
+
     public BmsUserVo userEntityToUserVo(BmsUser bmsUser) {
         return userEntityToUserVoConverters(bmsUser).convert(bmsUser);
+    }
+
+    public CoreUser toCoreUser(BmsUser bmsUser) {
+        return toCoreUserConverters(bmsUser).convert(bmsUser);
     }
 }

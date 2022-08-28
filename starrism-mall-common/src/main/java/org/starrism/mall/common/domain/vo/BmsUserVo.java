@@ -30,4 +30,11 @@ public class BmsUserVo implements Domainizable {
 
     @DictData(categoryCode = "SEX")
     private Dict<Integer, String> sex;
+
+    private String sexName;
+
+    public String getSexName() {
+        System.out.println(12121212);
+        return sexName;
+    }
 }

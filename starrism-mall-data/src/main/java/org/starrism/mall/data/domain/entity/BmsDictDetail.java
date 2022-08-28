@@ -1,11 +1,10 @@
-package org.starrism.mall.admin.core.domain.entity;
+package org.starrism.mall.data.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.starrism.mall.data.domain.entity.BaseDataEntity;
 
 /**
  * <p>后台字典详情表</p>

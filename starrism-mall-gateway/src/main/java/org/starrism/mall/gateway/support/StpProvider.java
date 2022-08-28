@@ -1,8 +1,9 @@
 package org.starrism.mall.gateway.support;
 
 import cn.dev33.satoken.stp.StpUtil;
-import org.starrism.mall.common.domain.vo.AuthUser;
+import com.google.common.collect.Lists;
 import org.starrism.mall.common.pools.AuthPool;
+import org.starrism.mall.data.domain.vo.CoreUser;
 import org.starrism.mall.gateway.exceptions.NotClientException;
 
 import java.util.List;
@@ -33,11 +34,11 @@ public class StpProvider {
      * @return true: 拥有 false: 未拥有
      */
     public static boolean hasClient(String client) {
-        AuthUser authUser = (AuthUser) StpUtil.getSession().get(AuthPool.USER_SESSION);
-        if (authUser == null) {
+        CoreUser coreUser = (CoreUser) StpUtil.getSession().get(AuthPool.USER_SESSION);
+        if (coreUser == null) {
             return false;
         }
-        List<String> clients = authUser.getClients();
+        List<String> clients = Lists.newArrayList("*");
         if (clients == null || clients.size() == 0) {
             return false;
         }

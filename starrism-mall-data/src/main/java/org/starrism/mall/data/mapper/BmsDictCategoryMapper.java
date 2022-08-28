@@ -1,9 +1,8 @@
-package org.starrism.mall.admin.core.mapper;
+package org.starrism.mall.data.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.starrism.mall.admin.core.domain.entity.BmsDictCategory;
-import org.starrism.mall.data.mapper.CoreMapper;
+import org.starrism.mall.data.domain.entity.BmsDictCategory;
 
 /**
  * <p></p>

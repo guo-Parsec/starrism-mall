@@ -17,6 +17,7 @@ import org.starrism.mall.common.rest.CommonResult;
 import org.starrism.mall.common.util.ReflectionUtil;
 import org.starrism.mall.common.util.StrUtil;
 import org.starrism.mall.data.domain.vo.DictVo;
+import org.starrism.mall.data.service.DictService;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -109,7 +110,7 @@ public class InterceptResponse implements ResponseBodyAdvice<Object> {
             return;
         }
         String dictCode = String.valueOf(dict.getDictCode());
-        DictComponent bean = SpringBean.getBean(DictComponent.class);
+        DictService bean = SpringBean.getBean(DictService.class);
         if (StrUtil.isBlank(dictCode)) {
             log.warn("dict-filed [{}] dictCode cannot be empty", field.getName());
             return;

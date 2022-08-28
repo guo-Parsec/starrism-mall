@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.starrism.mall.common.domain.vo.AuthUser;
 import org.starrism.mall.admin.core.service.BmsUserService;
 import org.starrism.mall.common.rest.CommonResult;
+import org.starrism.mall.data.domain.vo.CoreUser;
 
 /**
  * <p></p>
@@ -29,7 +29,7 @@ public class BmsUserController {
 
     @ApiOperation(value = "根据用户名查询用户", notes = "用户名")
     @GetMapping(value = "/find/{username}")
-    public CommonResult<AuthUser> findUserByUsername(@PathVariable String username) {
+    public CommonResult<CoreUser> findUserByUsername(@PathVariable String username) {
         return CommonResult.success(bmsUserService.findUserByUsername(username));
     }
 }

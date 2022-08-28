@@ -3,8 +3,8 @@ package org.starrism.mall.gateway.expand;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpUtil;
 import org.springframework.stereotype.Component;
-import org.starrism.mall.common.domain.vo.AuthUser;
 import org.starrism.mall.common.pools.AuthPool;
+import org.starrism.mall.data.domain.vo.CoreUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +21,8 @@ public class StpInterfaceExpand  implements StpInterface {
     @Override
     public List<String> getPermissionList(Object o, String s) {
         // 返回此 loginId 拥有的权限码列表
-        AuthUser authUser = (AuthUser) StpUtil.getSession().get(AuthPool.USER_SESSION);
-        Set<String> permissions = authUser.getPermissions();
+        CoreUser coreUser = (CoreUser) StpUtil.getSession().get(AuthPool.USER_SESSION);
+        Set<String> permissions = coreUser.getPermissions();
         if (permissions == null) {
             return new ArrayList<>();
         }
@@ -32,8 +32,8 @@ public class StpInterfaceExpand  implements StpInterface {
     @Override
     public List<String> getRoleList(Object o, String s) {
         // 返回此 loginId 拥有的角色码列表
-        AuthUser authUser = (AuthUser) StpUtil.getSession().get(AuthPool.USER_SESSION);
-        Set<String> roles = authUser.getRoles();
+        CoreUser coreUser = (CoreUser) StpUtil.getSession().get(AuthPool.USER_SESSION);
+        Set<String> roles = coreUser.getRoles();
         if (roles == null) {
             return new ArrayList<>();
         }

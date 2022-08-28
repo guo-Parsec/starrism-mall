@@ -5,8 +5,8 @@ import cn.dev33.satoken.stp.StpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.starrism.mall.common.domain.vo.AuthUser;
 import org.starrism.mall.common.pools.AuthPool;
+import org.starrism.mall.data.domain.vo.CoreUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ public class CommonStpInterfaceImpl implements StpInterface {
      */
     @Override
     public List<String> getPermissionList(Object loginId, String loginType) {
-        AuthUser authUser = (AuthUser) StpUtil.getSession().get(AuthPool.USER_SESSION);
+        CoreUser authUser = (CoreUser) StpUtil.getSession().get(AuthPool.USER_SESSION);
         if (authUser != null) {
             Set<String> permissions = authUser.getPermissions();
             if (permissions == null) {

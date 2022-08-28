@@ -14,11 +14,10 @@ import org.starrism.mall.auth.core.rest.AuthResultCode;
 import org.starrism.mall.auth.core.service.AuthService;
 import org.starrism.mall.common.domain.Builder;
 import org.starrism.mall.common.domain.vo.AccessTokenVo;
-import org.starrism.mall.common.domain.vo.AuthUser;
-import org.starrism.mall.common.domain.vo.BmsUserVo;
 import org.starrism.mall.common.pools.AuthPool;
 import org.starrism.mall.common.rest.CommonResult;
 import org.starrism.mall.common.util.StrUtil;
+import org.starrism.mall.data.domain.vo.CoreUser;
 
 import javax.annotation.Resource;
 
@@ -50,27 +49,22 @@ public class AuthServiceImpl implements AuthService {
             throw new AuthException(AuthResultCode.USERNAME_OR_PASSWORD_ERROR);
         }
         String username = userLoginDto.getUsername();
-        CommonResult<AuthUser> clientApi = bmsUserClient.findUserByUsername(username);
-        AuthUser authUser = CommonResult.getSuccessData(clientApi);
-        if (authUser == null) {
+        CommonResult<CoreUser> clientApi = bmsUserClient.findUserByUsername(username);
+        CoreUser coreUser = CommonResult.getSuccessData(clientApi);
+        if (coreUser == null) {
             log.error("cannot find user of username={}", username);
             throw new AuthException(AuthResultCode.USERNAME_OR_PASSWORD_ERROR);
         }
-        BmsUserVo userInfo = authUser.getUserInfo();
-        if (userInfo == null) {
-            log.error("cannot find user of username={}", username);
-            throw new AuthException(AuthResultCode.USERNAME_OR_PASSWORD_ERROR);
-        }
-        String password = authUser.getPassword();
+        String password = coreUser.getPassword();
         String salePwd = SaSecureUtil.md5BySalt(userLoginDto.getPassword(), username);
         if (!password.equals(salePwd)) {
             log.error("Password for user {} does not match", username);
             throw new AuthException(AuthResultCode.USERNAME_OR_PASSWORD_ERROR);
         }
         // 密码校验成功后登录，一行代码实现登录
-        StpUtil.login(userInfo.getId());
+        StpUtil.login(coreUser.getId());
         // 将用户信息存储到Session中
-        StpUtil.getSession().set(AuthPool.USER_SESSION, authUser);
+        StpUtil.getSession().set(AuthPool.USER_SESSION, coreUser);
         // 获取当前登录用户Token信息
         saTokenInfo = StpUtil.getTokenInfo();
         AccessTokenVo accessToken = Builder.of(AccessTokenVo::new)
@@ -78,9 +72,7 @@ public class AuthServiceImpl implements AuthService {
                 .with(AccessTokenVo::setAccessTokenName, saTokenInfo.getTokenName())
                 .build();
         return Builder.of(AuthInfoVo::new)
-                .with(AuthInfoVo::setUserVo, userInfo)
-                .with(AuthInfoVo::setRoles, authUser.getRoles())
-                .with(AuthInfoVo::setPermissions, authUser.getPermissions())
+                .with(AuthInfoVo::setCoreUser, coreUser)
                 .with(AuthInfoVo::setAccessToken, accessToken)
                 .build();
     }

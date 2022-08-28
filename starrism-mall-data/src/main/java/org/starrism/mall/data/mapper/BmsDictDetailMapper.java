@@ -1,9 +1,8 @@
-package org.starrism.mall.admin.core.mapper;
+package org.starrism.mall.data.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.starrism.mall.admin.core.domain.entity.BmsDictDetail;
-import org.starrism.mall.data.mapper.CoreMapper;
+import org.starrism.mall.data.domain.entity.BmsDictDetail;
 
 import java.util.List;
 
@@ -40,7 +39,7 @@ public interface BmsDictDetailMapper extends CoreMapper<BmsDictDetail> {
      *
      * @param categoryId 类别id
      * @param dictCode   字典码
-     * @return org.starrism.mall.admin.core.domain.entity.BmsDictDetail
+     * @return org.starrism.mall.data.domain.entity.BmsDictDetail
      * @author hedwing
      * @since 2022/8/14
      */

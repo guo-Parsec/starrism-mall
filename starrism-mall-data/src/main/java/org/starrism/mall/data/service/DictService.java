@@ -1,4 +1,4 @@
-package org.starrism.mall.data.component;
+package org.starrism.mall.data.service;
 
 import org.starrism.mall.data.domain.vo.DictVo;
 
@@ -10,7 +10,7 @@ import java.util.List;
  * @author hedwing
  * @since 2022/8/13
  **/
-public interface DictComponent {
+public interface DictService {
     /**
      * 根据分类码查询字典
      *

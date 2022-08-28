@@ -9,10 +9,8 @@ import org.starrism.mall.admin.core.domain.converter.BmsUserConverters;
 import org.starrism.mall.admin.core.domain.entity.BmsUser;
 import org.starrism.mall.admin.core.mapper.BmsUserMapper;
 import org.starrism.mall.admin.core.service.BmsUserService;
-import org.starrism.mall.common.domain.Builder;
-import org.starrism.mall.common.domain.vo.AuthUser;
-import org.starrism.mall.common.domain.vo.BmsUserVo;
 import org.starrism.mall.data.domain.entity.BaseEntity;
+import org.starrism.mall.data.domain.vo.CoreUser;
 
 import javax.annotation.Resource;
 
@@ -40,12 +38,12 @@ public class BmsUserServiceImpl implements BmsUserService {
      * <p>根据用户名查询用户信息</p>
      *
      * @param username 用户名
-     * @return org.starrism.mall.common.domain.vo.AuthUser
+     * @return org.starrism.mall.data.domain.vo.CoreUser
      * @author hedwing
      * @since 2022/8/27
      */
     @Override
-    public AuthUser findUserByUsername(String username) {
+    public CoreUser findUserByUsername(String username) {
         LambdaQueryWrapper<BmsUser> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(BmsUser::getUsername, username);
         BmsUser bmsUser = bmsUserMapper.selectOne(wrapper);
@@ -53,10 +51,6 @@ public class BmsUserServiceImpl implements BmsUserService {
             log.info("cannot find bmsUser of username={}", username);
             return null;
         }
-        BmsUserVo bmsUserVo = bmsUserConverters.userEntityToUserVo(bmsUser);
-        return Builder.of(AuthUser::new)
-                .with(AuthUser::setUserInfo, bmsUserVo)
-                .with(AuthUser::setPassword, bmsUser.getPassword())
-                .build();
+        return bmsUserConverters.toCoreUser(bmsUser);
     }
 }

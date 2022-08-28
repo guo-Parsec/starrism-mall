@@ -1,7 +1,7 @@
-package org.starrism.mall.admin.core.domain.converter;
+package org.starrism.mall.data.domain.converter;
 
 import org.springframework.stereotype.Component;
-import org.starrism.mall.admin.core.domain.entity.BmsDictDetail;
+import org.starrism.mall.data.domain.entity.BmsDictDetail;
 import org.starrism.mall.common.domain.Builder;
 import org.starrism.mall.common.support.Convertible;
 import org.starrism.mall.data.domain.vo.DictVo;

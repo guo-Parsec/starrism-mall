@@ -25,7 +25,7 @@ public class GatewaySwaggerResourceProvider implements SwaggerResourcesProvider 
     /**
      * swagger默认的url后缀
      */
-    private static final String API_URI = "v2/api-docs";
+    private static final String API_URI = "/v3/api-docs";
     /**
      * 网关配置项，对应配置文件中配置的spring.cloud.gateway所有子项
      */
@@ -58,7 +58,7 @@ public class GatewaySwaggerResourceProvider implements SwaggerResourcesProvider 
         SwaggerResource swaggerResource = new SwaggerResource();
         swaggerResource.setName(name);
         swaggerResource.setLocation(location);
-        swaggerResource.setSwaggerVersion("2.0");
+        swaggerResource.setSwaggerVersion("3.0");
         return swaggerResource;
     }
 }

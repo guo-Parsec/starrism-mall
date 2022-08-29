@@ -1,8 +1,9 @@
-package org.starrism.mall.common.domain.vo;
+package org.starrism.mall.admin.api.domain.vo;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.starrism.mall.common.domain.Domainizable;
+import org.starrism.mall.data.service.client.DictClient;
 
 /**
  * <p></p>
@@ -30,4 +31,7 @@ public class BmsUserVo implements Domainizable {
 
     private String sexName;
 
+    public String getSexName() {
+        return DictClient.convert("SEX", this.sex);
+    }
 }

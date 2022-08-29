@@ -21,6 +21,12 @@ import org.starrism.mall.common.rest.CommonResult;
 public class GlobalExceptionConfig {
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionConfig.class);
 
+    /**
+     * 参数校验失败异常
+     *
+     * @param exception 异常信息
+     * @return 统一处理
+     */
     @ExceptionHandler({MethodArgumentNotValidException.class})
     public CommonResult<Void> validException(MethodArgumentNotValidException exception) {
         ObjectError objectError = exception.getBindingResult().getAllErrors().get(0);
@@ -28,12 +34,24 @@ public class GlobalExceptionConfig {
         return CommonResult.validateFailed(objectError.getDefaultMessage());
     }
 
+    /**
+     * Starrism异常
+     *
+     * @param exception 异常信息
+     * @return 统一处理
+     */
     @ExceptionHandler({StarrismException.class})
     public CommonResult<Void> starrismExceptionHandler(StarrismException exception) {
         log.error("The application run starrismException", exception);
         return CommonResult.failed(exception.getBaseRestEnum());
     }
 
+    /**
+     * 异常
+     *
+     * @param exception 异常信息
+     * @return 统一处理
+     */
     @ExceptionHandler({Exception.class})
     public CommonResult<Void> defaultExceptionHandler(Exception exception) {
         log.error("The application run exception", exception);

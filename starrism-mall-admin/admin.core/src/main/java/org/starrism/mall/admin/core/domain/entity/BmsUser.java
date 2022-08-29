@@ -21,17 +21,17 @@ import java.util.Objects;
 public class BmsUser extends BaseDataEntity {
     private static final long serialVersionUID = 3001411682177194704L;
 
-    public String username;
+    private String username;
 
-    public String password;
+    private String password;
 
-    public String nickname;
+    private String nickname;
 
-    public String email;
+    private String email;
 
-    public String phoneNumber;
+    private String phoneNumber;
 
-    public String avatarUrl;
+    private String avatarUrl;
 
     private Integer sex;
 

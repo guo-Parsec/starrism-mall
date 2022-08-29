@@ -7,6 +7,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.starrism.mall.common.enums.BaseRestEnum;
 import org.starrism.mall.common.exceptions.StarrismException;
 import org.starrism.mall.common.rest.CommonResult;
 
@@ -43,6 +44,10 @@ public class GlobalExceptionConfig {
     @ExceptionHandler({StarrismException.class})
     public CommonResult<Void> starrismExceptionHandler(StarrismException exception) {
         log.error("The application run starrismException", exception);
+        BaseRestEnum baseRestEnum = exception.getBaseRestEnum();
+        if (baseRestEnum == null) {
+            return CommonResult.failed(exception.getMessage(), exception.getCode());
+        }
         return CommonResult.failed(exception.getBaseRestEnum());
     }
 

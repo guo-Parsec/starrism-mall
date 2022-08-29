@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.starrism.mall.common.enums.BaseRestEnum;
+import org.starrism.mall.common.exceptions.StarrismException;
 
 /**
  * <p>结果返回集</p>
@@ -110,6 +111,16 @@ public class CommonResult<T> {
     }
 
     /**
+     * 失败返回结果
+     *
+     * @param code 错误码
+     * @param message      错误信息
+     */
+    public static <T> CommonResult<T> failed(String message, Long code) {
+        return new CommonResult<T>(code, message, null);
+    }
+
+    /**
      * 参数验证失败返回结果
      */
     public static <T> CommonResult<T> validateFailed() {
@@ -155,7 +166,7 @@ public class CommonResult<T> {
         long resultCode = commonResult.getCode();
         if (!ResultCode.SUCCESS.getCode().equals(resultCode)) {
             log.error("请求信息码为{}，可能为请求失败", resultCode);
-            throw new RuntimeException("The request info code is not success, possibly a request error");
+            throw new StarrismException(commonResult.getMessage(), resultCode);
         }
         return commonResult.getData();
     }

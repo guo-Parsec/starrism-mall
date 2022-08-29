@@ -16,4 +16,5 @@ public abstract class BaseVo extends BaseEntity implements Domainizable {
     public BaseVo clone() throws CloneNotSupportedException {
         return (BaseVo) super.clone();
     }
+
 }

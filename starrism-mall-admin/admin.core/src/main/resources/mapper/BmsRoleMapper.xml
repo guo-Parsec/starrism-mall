@@ -42,6 +42,6 @@
         from bms_role role
                  left join bms_user_role bur on role.id = bur.role_id
         where bur.user_id = #{userId,jdbcType=BIGINT}
-        and role.enable_status = ${@BasePool@ENABLE}
+        and role.enable_status = ${@org.starrism.mall.data.pool.BasePool@ENABLE}
     </select>
 </mapper>

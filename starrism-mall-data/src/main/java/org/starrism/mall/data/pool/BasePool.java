@@ -13,4 +13,6 @@ public interface BasePool {
     Integer ENABLE = 0;
 
     Integer DISABLE = 1;
+
+    String DEFAULT_DELIMITER = ",";
 }

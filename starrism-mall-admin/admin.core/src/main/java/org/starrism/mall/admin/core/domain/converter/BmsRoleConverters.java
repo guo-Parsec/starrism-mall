@@ -8,7 +8,7 @@ import org.starrism.mall.common.domain.Builder;
 import org.starrism.mall.common.support.Convertible;
 
 /**
- * <p></p>
+ * <p>角色数据转换</p>
  *
  * @author hedwing
  * @since 2022/8/14

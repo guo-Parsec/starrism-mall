@@ -45,7 +45,7 @@
         select <include refid="BaseColumnList"/>
         from bms_user
         where username = #{username,jdbcType=VARCHAR}
-        and enable_status = ${@BasePool@ENABLE}
+        and enable_status = ${@org.starrism.mall.data.pool.BasePool@ENABLE}
         limit 1
     </select>
 
@@ -59,5 +59,12 @@
                 #{sex,jdbcType=INTEGER},
                 #{avatarUrl,jdbcType=VARCHAR}, #{enableStatus,jdbcType=SMALLINT}, #{addTime,jdbcType=TIMESTAMP},
                 #{addName,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}, #{modifyName,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="grantRoleToUser">
+        insert into bms_user_role (user_id, role_id) values
+        <foreach collection="roleIds" open="(" close=")" separator="," item="roleId">
+            #{userId,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}
+        </foreach>
     </insert>
 </mapper>

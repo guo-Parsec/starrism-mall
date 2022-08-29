@@ -6,7 +6,9 @@ import cn.dev33.satoken.stp.StpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.starrism.mall.admin.api.domain.dto.UserDto;
 import org.starrism.mall.admin.api.domain.dto.UserLoginDto;
+import org.starrism.mall.admin.api.domain.dto.MemberRegisterDto;
 import org.starrism.mall.admin.api.feign.BmsUserClient;
 import org.starrism.mall.auth.core.domain.vo.AuthInfoVo;
 import org.starrism.mall.auth.core.exception.AuthException;
@@ -75,5 +77,30 @@ public class AuthServiceImpl implements AuthService {
                 .with(AuthInfoVo::setCoreUser, coreUser)
                 .with(AuthInfoVo::setAccessToken, accessToken)
                 .build();
+    }
+
+    /**
+     * <p>前端用户注册接口</p>
+     *
+     * @param dto 注册参数
+     * @return boolean
+     * @author hedwing
+     * @since 2022/8/29
+     */
+    @Override
+    public boolean memberRegister(MemberRegisterDto dto) {
+        MemberRegisterDto clone = dto.clone();
+        String securityPwd = SaSecureUtil.md5BySalt(dto.getPassword(), dto.getUsername());
+        clone.setPassword(securityPwd);
+        UserDto userDto = Builder.of(UserDto::new)
+                .with(UserDto::setPassword, dto.getPassword())
+                .with(UserDto::setUsername, dto.getUsername())
+                .with(UserDto::setEmail, dto.getEmail())
+                .with(UserDto::setSecurityPwd, securityPwd)
+                // todo 字典值
+                .with(UserDto::setSex, 0)
+                .build();
+        CommonResult<Boolean> commonResult = bmsUserClient.saveUser(userDto);
+        return CommonResult.getSuccessData(commonResult);
     }
 }

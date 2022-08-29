@@ -1,6 +1,7 @@
 package org.starrism.mall.admin.core.domain.converter;
 
 import org.springframework.stereotype.Component;
+import org.starrism.mall.admin.api.domain.dto.UserDto;
 import org.starrism.mall.admin.core.domain.entity.BmsUser;
 import org.starrism.mall.common.domain.BaseConverters;
 import org.starrism.mall.common.domain.Builder;
@@ -9,7 +10,7 @@ import org.starrism.mall.common.support.Convertible;
 import org.starrism.mall.data.domain.vo.CoreUser;
 
 /**
- * <p></p>
+ * <p>用户数据转换</p>
  *
  * @author hedwing
  * @since 2022/8/14
@@ -50,11 +51,27 @@ public class BmsUserConverters implements BaseConverters {
                 .build();
     }
 
+    Convertible<UserDto, BmsUser> dtoToBmsUserConverters(UserDto userDto) {
+        return (source) -> Builder.of(BmsUser::new)
+                .with(BmsUser::setUsername, userDto.getUsername())
+                .with(BmsUser::setPassword, userDto.getPassword())
+                .with(BmsUser::setSex, userDto.getSex())
+                .with(BmsUser::setNickname, userDto.getNickname())
+                .with(BmsUser::setEmail, userDto.getEmail())
+                .with(BmsUser::setPhoneNumber, userDto.getPhoneNumber())
+                .with(BmsUser::setAvatarUrl, userDto.getAvatarUrl())
+                .build();
+    }
+
     public BmsUserVo userEntityToUserVo(BmsUser bmsUser) {
         return userEntityToUserVoConverters(bmsUser).convert(bmsUser);
     }
 
     public CoreUser toCoreUser(BmsUser bmsUser) {
         return toCoreUserConverters(bmsUser).convert(bmsUser);
+    }
+
+    public BmsUser dtoToBmsUser(UserDto userDto) {
+        return dtoToBmsUserConverters(userDto).convert(userDto);
     }
 }

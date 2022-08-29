@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.starrism.mall.admin.api.domain.dto.MemberRegisterDto;
 import org.starrism.mall.admin.api.domain.dto.UserLoginDto;
 import org.starrism.mall.auth.core.domain.vo.AuthInfoVo;
 import org.starrism.mall.auth.core.service.AuthService;
@@ -33,5 +34,11 @@ public class AuthController {
     @PostMapping(value = "/login")
     public CommonResult<AuthInfoVo> login(@Validated @RequestBody UserLoginDto dto) {
         return CommonResult.success(authService.login(dto));
+    }
+
+    @ApiOperation(value = "用户注册", notes = "用户参数")
+    @PostMapping(value = "/member/register")
+    public CommonResult<Boolean> memberRegister(@Validated @RequestBody MemberRegisterDto dto) {
+        return CommonResult.success(authService.memberRegister(dto));
     }
 }

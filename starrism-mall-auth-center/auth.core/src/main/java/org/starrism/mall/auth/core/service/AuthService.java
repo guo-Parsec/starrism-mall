@@ -1,6 +1,7 @@
 package org.starrism.mall.auth.core.service;
 
 import org.starrism.mall.admin.api.domain.dto.UserLoginDto;
+import org.starrism.mall.admin.api.domain.dto.MemberRegisterDto;
 import org.starrism.mall.auth.core.domain.vo.AuthInfoVo;
 
 /**
@@ -19,4 +20,14 @@ public interface AuthService {
      * @since 2022/8/27
      */
     AuthInfoVo login(UserLoginDto userLoginDto);
+
+    /**
+     * <p>前端用户注册接口</p>
+     *
+     * @param dto 注册参数
+     * @return boolean
+     * @author hedwing
+     * @since 2022/8/29
+     */
+    boolean memberRegister(MemberRegisterDto dto);
 }

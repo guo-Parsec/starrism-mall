@@ -14,7 +14,7 @@ import java.util.Set;
  * @author hedwing
  * @since 2022/8/29
  **/
-@FeignClient(name = AppPool.APPLICATION_ADMIN_NAME)
+@FeignClient(name = AppPool.APPLICATION_ADMIN_NAME, contextId = "bmsRoleClient")
 public interface BmsRoleClient {
     String URL_PREFIX = "/v1/bms/role";
 

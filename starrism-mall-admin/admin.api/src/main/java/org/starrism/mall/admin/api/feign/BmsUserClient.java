@@ -8,7 +8,7 @@ import org.starrism.mall.common.rest.CommonResult;
 import org.starrism.mall.data.domain.vo.CoreUser;
 
 /**
- * <p></p>
+ * <p>用户对外服务接口</p>
  *
  * @author hedwing
  * @since 2022/8/27

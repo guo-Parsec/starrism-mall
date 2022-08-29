@@ -1,6 +1,7 @@
 package org.starrism.mall.admin.core.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.google.common.collect.Sets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,11 +9,14 @@ import org.springframework.stereotype.Service;
 import org.starrism.mall.admin.core.domain.converter.BmsUserConverters;
 import org.starrism.mall.admin.core.domain.entity.BmsUser;
 import org.starrism.mall.admin.core.mapper.BmsUserMapper;
+import org.starrism.mall.admin.core.service.BmsRoleService;
 import org.starrism.mall.admin.core.service.BmsUserService;
 import org.starrism.mall.data.domain.entity.BaseEntity;
 import org.starrism.mall.data.domain.vo.CoreUser;
 
 import javax.annotation.Resource;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * <p>系统用户业务实现类</p>
@@ -25,9 +29,14 @@ public class BmsUserServiceImpl implements BmsUserService {
     private static final Logger log = LoggerFactory.getLogger(BmsUserServiceImpl.class);
 
     @Resource
-    BmsUserMapper bmsUserMapper;
+    private BmsUserMapper bmsUserMapper;
+    private BmsRoleService bmsRoleService;
+    private BmsUserConverters bmsUserConverters;
 
-    BmsUserConverters bmsUserConverters;
+    @Autowired
+    public BmsUserServiceImpl(BmsRoleService bmsRoleService) {
+        this.bmsRoleService = bmsRoleService;
+    }
 
     @Autowired
     public void setBmsUserConverters(BmsUserConverters bmsUserConverters) {
@@ -51,6 +60,9 @@ public class BmsUserServiceImpl implements BmsUserService {
             log.info("cannot find bmsUser of username={}", username);
             return null;
         }
-        return bmsUserConverters.toCoreUser(bmsUser);
+        CoreUser coreUser = bmsUserConverters.toCoreUser(bmsUser);
+        Set<String> roles = bmsRoleService.findRoleCodeListByUsername(username);
+        coreUser.setRoles(Optional.ofNullable(roles).orElse(Sets.newHashSet()));
+        return coreUser;
     }
 }

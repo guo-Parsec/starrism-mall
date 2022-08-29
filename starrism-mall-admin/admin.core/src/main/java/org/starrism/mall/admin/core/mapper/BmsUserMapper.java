@@ -1,6 +1,7 @@
 package org.starrism.mall.admin.core.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.starrism.mall.admin.core.domain.entity.BmsUser;
 import org.starrism.mall.data.mapper.CoreMapper;
 
@@ -21,6 +22,13 @@ public interface BmsUserMapper extends CoreMapper<BmsUser> {
      * @since 2022/8/13
      */
     BmsUser findById(Long id);
+
+    /**
+     * 根据用户名查询用户
+     * @param username 用户名
+     * @return 用户
+     */
+    BmsUser findByUsername(@Param("username") String username);
 
     /**
      * <p>新增用户</p>

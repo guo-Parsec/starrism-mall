@@ -41,6 +41,14 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
 
+    <select id="findByUsername" parameterType="string" resultMap="BaseResultMap">
+        select <include refid="BaseColumnList"/>
+        from bms_user
+        where username = #{username,jdbcType=VARCHAR}
+        and enable_status = ${@BasePool@ENABLE}
+        limit 1
+    </select>
+
     <insert id="addUser" parameterType="org.starrism.mall.admin.core.domain.entity.BmsUser">
         insert into bms_user (id, username, `password`,
                               nickname, email, phone_number, sex,

@@ -5,18 +5,18 @@
 <mapper namespace="org.starrism.mall.admin.core.mapper.BmsRoleMapper">
 
     <resultMap id="BaseResultMap" type="org.starrism.mall.admin.core.domain.entity.BmsRole">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="roleCode" column="role_code" jdbcType="VARCHAR"/>
-            <result property="roleName" column="role_name" jdbcType="VARCHAR"/>
-            <result property="parentId" column="parent_id" jdbcType="BIGINT"/>
-            <result property="hierarchicalPath" column="hierarchical_path" jdbcType="VARCHAR"/>
-            <result property="description" column="description" jdbcType="VARCHAR"/>
-            <result property="sort" column="sort" jdbcType="INTEGER"/>
-            <result property="enableStatus" column="enable_status" jdbcType="SMALLINT"/>
-            <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
-            <result property="addName" column="add_name" jdbcType="VARCHAR"/>
-            <result property="modifyTime" column="modify_time" jdbcType="TIMESTAMP"/>
-            <result property="modifyName" column="modify_name" jdbcType="VARCHAR"/>
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="roleCode" column="role_code" jdbcType="VARCHAR"/>
+        <result property="roleName" column="role_name" jdbcType="VARCHAR"/>
+        <result property="parentId" column="parent_id" jdbcType="BIGINT"/>
+        <result property="hierarchicalPath" column="hierarchical_path" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="sort" column="sort" jdbcType="INTEGER"/>
+        <result property="enableStatus" column="enable_status" jdbcType="SMALLINT"/>
+        <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
+        <result property="addName" column="add_name" jdbcType="VARCHAR"/>
+        <result property="modifyTime" column="modify_time" jdbcType="TIMESTAMP"/>
+        <result property="modifyName" column="modify_name" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -25,4 +25,23 @@
         sort,enable_status,add_time,
         add_name,modify_time,modify_name
     </sql>
+
+    <select id="findByUser" parameterType="long" resultMap="BaseResultMap">
+        select role.id,
+               role.role_code,
+               role.role_name,
+               role.parent_id,
+               role.hierarchical_path,
+               role.description,
+               role.sort,
+               role.enable_status,
+               role.add_time,
+               role.add_name,
+               role.modify_time,
+               role.modify_name
+        from bms_role role
+                 left join bms_user_role bur on role.id = bur.role_id
+        where bur.user_id = #{userId,jdbcType=BIGINT}
+        and role.enable_status = ${@BasePool@ENABLE}
+    </select>
 </mapper>

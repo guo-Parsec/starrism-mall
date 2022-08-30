@@ -1,8 +1,9 @@
-package org.starrism.mall.admin.core.domain.converter;
+package org.starrism.mall.base.domain.converter;
+
 
 import org.springframework.stereotype.Component;
-import org.starrism.mall.admin.api.domain.vo.BmsParamVo;
-import org.starrism.mall.admin.core.domain.entity.BmsParam;
+import org.starrism.mall.base.domain.entity.BmsParam;
+import org.starrism.mall.base.domain.vo.BmsParamVo;
 import org.starrism.mall.common.domain.BaseConverters;
 import org.starrism.mall.common.domain.Builder;
 import org.starrism.mall.common.support.Convertible;

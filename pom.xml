@@ -13,6 +13,7 @@
         <module>starrism-mall-admin</module>
         <module>starrism-mall-gateway</module>
         <module>starrism-mall-auth-center</module>
+        <module>starrism-mall-base</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -171,6 +172,12 @@
                 <artifactId>auth.api</artifactId>
                 <version>${starrism.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.starrism</groupId>
+                <artifactId>starrism-mall-base</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <!-- swagger3.0 -->
             <dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger2</artifactId>

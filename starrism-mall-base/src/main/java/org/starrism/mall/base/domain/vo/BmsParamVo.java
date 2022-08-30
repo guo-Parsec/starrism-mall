@@ -1,4 +1,4 @@
-package org.starrism.mall.admin.api.domain.vo;
+package org.starrism.mall.base.domain.vo;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;

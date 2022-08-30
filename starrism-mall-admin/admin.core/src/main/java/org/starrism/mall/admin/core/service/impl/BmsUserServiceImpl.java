@@ -10,15 +10,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.starrism.mall.admin.api.domain.dto.UserDto;
 import org.starrism.mall.admin.core.domain.converter.BmsUserConverters;
-import org.starrism.mall.admin.core.domain.entity.BmsParam;
 import org.starrism.mall.admin.core.domain.entity.BmsRole;
 import org.starrism.mall.admin.core.domain.entity.BmsUser;
-import org.starrism.mall.admin.core.mapper.BmsParamMapper;
 import org.starrism.mall.admin.core.mapper.BmsRoleMapper;
 import org.starrism.mall.admin.core.mapper.BmsUserMapper;
 import org.starrism.mall.admin.core.rest.AdminResultCode;
 import org.starrism.mall.admin.core.service.BmsRoleService;
 import org.starrism.mall.admin.core.service.BmsUserService;
+import org.starrism.mall.base.access.BmsParamAccess;
+import org.starrism.mall.base.domain.vo.BmsParamVo;
+import org.starrism.mall.common.domain.Builder;
 import org.starrism.mall.common.exceptions.StarrismException;
 import org.starrism.mall.common.pools.ParamPool;
 import org.starrism.mall.common.util.CollectionUtil;
@@ -47,10 +48,10 @@ public class BmsUserServiceImpl implements BmsUserService {
     @Resource
     private BmsUserMapper bmsUserMapper;
     @Resource
-    private BmsParamMapper bmsParamMapper;
+    private BmsParamAccess bmsParamAccess;
     @Resource
     private BmsRoleMapper bmsRoleMapper;
-    private BmsRoleService bmsRoleService;
+    private final BmsRoleService bmsRoleService;
     private BmsUserConverters bmsUserConverters;
 
     @Autowired
@@ -116,6 +117,7 @@ public class BmsUserServiceImpl implements BmsUserService {
      */
     @Transactional(rollbackFor = Exception.class)
     public boolean addUser(UserDto userDto) {
+        UserDto clone = userDto.clone();
         String username = userDto.getUsername();
         BmsUser existUser = bmsUserMapper.findByUsername(username);
         if (BaseDataEntity.isNotEmpty(existUser)) {
@@ -124,24 +126,51 @@ public class BmsUserServiceImpl implements BmsUserService {
         }
         Set<String> roles = userDto.getRoleSet();
         if (CollectionUtil.isEmpty(roles)) {
-            BmsParam defaultRoleParam = bmsParamMapper.findByParamCode(ParamPool.DEFAULT_ROLE_KEY);
+            BmsParamVo defaultRoleParam = bmsParamAccess.findByParamCode(ParamPool.DEFAULT_ROLE_KEY);
             if (defaultRoleParam == null || StrUtil.isBlank(defaultRoleParam.getParamValue())) {
                 log.error("默认角色参数不存在");
                 return false;
             }
             roles = Sets.newHashSet(defaultRoleParam.getParamValue().split(BasePool.DEFAULT_DELIMITER));
         }
-        if (StrUtil.isBlank(userDto.getSecurityPwd())) {
-            userDto.setPassword(SaSecureUtil.md5BySalt(userDto.getPassword(), userDto.getUsername()));
-        } else {
-            userDto.setPassword(userDto.getSecurityPwd());
+        clone.setPassword(SaSecureUtil.md5BySalt(userDto.getPassword(), username));
+        BmsUser user = bmsUserConverters.dtoToBmsUser(clone);
+        if (!setUserSex(user)) {
+            return false;
         }
-        BmsUser user = bmsUserConverters.dtoToBmsUser(userDto);
         user.setAddName(user.getUsername());
         user.setModifyName(user.getUsername());
         user.setEnableStatus(BasePool.ENABLE);
         bmsUserMapper.addUser(user);
         return grantRoleToUser(user.getId(), roles);
+    }
+
+    /**
+     * <p>设置用户性别</p>
+     *
+     * @param bmsUser 用户信息
+     * @return boolean
+     * @author hedwing
+     * @since 2022/8/30
+     */
+    private boolean setUserSex(BmsUser bmsUser) {
+        if (bmsUser.getSex() == null) {
+            try {
+                BmsParamVo defaultSexParam = bmsParamAccess.findByParamCode(ParamPool.DEFAULT_SEX_KEY);
+                if (defaultSexParam == null || StrUtil.isBlank(defaultSexParam.getParamValue())) {
+                    log.warn("默认性别参数不存在, 统一赋值为0");
+                    defaultSexParam = Builder.of(BmsParamVo::new)
+                            .with(BmsParamVo::setParamValue, "0")
+                            .build();
+                }
+                bmsUser.setSex(Integer.valueOf(defaultSexParam.getParamValue()));
+                return true;
+            } catch (NumberFormatException e) {
+                log.error("设置默认性别码失败，原因为 -> ", e);
+                return false;
+            }
+        }
+        return true;
     }
 
     private boolean editUser(UserDto userDto) {

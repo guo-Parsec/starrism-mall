@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
+import org.starrism.mall.common.exceptions.StarrismException;
+import org.starrism.mall.common.rest.ResultCode;
 import org.starrism.mall.data.domain.vo.BaseVo;
 
 import javax.validation.constraints.Email;
@@ -53,9 +55,6 @@ public class UserDto extends BaseVo {
     @ApiModelProperty(value = "角色码")
     private Set<String> roleSet;
 
-    @ApiModelProperty(value = "加密密码")
-    private String securityPwd;
-
     @Override
     public String toString() {
         return "UserDto{" +
@@ -69,5 +68,14 @@ public class UserDto extends BaseVo {
                 ", sex=" + sex +
                 ", roleSet=" + roleSet +
                 "} " + super.toString();
+    }
+
+    @Override
+    public UserDto clone() {
+        try {
+            return (UserDto) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new StarrismException(ResultCode.FAILED);
+        }
     }
 }

@@ -11,4 +11,9 @@ public interface ParamPool {
      * 默认角色参数key
      */
     String DEFAULT_ROLE_KEY = "DEFAULT_ROLE";
+
+    /**
+     * 默认性别参数key
+     */
+    String DEFAULT_SEX_KEY = "DEFAULT_SEX";
 }

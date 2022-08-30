@@ -29,6 +29,10 @@
     <dependencies>
         <dependency>
             <groupId>org.starrism</groupId>
+            <artifactId>starrism-mall-base</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.starrism</groupId>
             <artifactId>starrism-mall-data</artifactId>
             <exclusions>
                 <exclusion>

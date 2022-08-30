@@ -1,4 +1,4 @@
-package org.starrism.mall.admin.core.domain.entity;
+package org.starrism.mall.base.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;

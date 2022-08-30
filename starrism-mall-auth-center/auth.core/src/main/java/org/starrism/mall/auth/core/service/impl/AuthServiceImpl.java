@@ -89,16 +89,10 @@ public class AuthServiceImpl implements AuthService {
      */
     @Override
     public boolean memberRegister(MemberRegisterDto dto) {
-        MemberRegisterDto clone = dto.clone();
-        String securityPwd = SaSecureUtil.md5BySalt(dto.getPassword(), dto.getUsername());
-        clone.setPassword(securityPwd);
         UserDto userDto = Builder.of(UserDto::new)
                 .with(UserDto::setPassword, dto.getPassword())
                 .with(UserDto::setUsername, dto.getUsername())
                 .with(UserDto::setEmail, dto.getEmail())
-                .with(UserDto::setSecurityPwd, securityPwd)
-                // todo 字典值
-                .with(UserDto::setSex, 0)
                 .build();
         CommonResult<Boolean> commonResult = bmsUserClient.saveUser(userDto);
         return CommonResult.getSuccessData(commonResult);

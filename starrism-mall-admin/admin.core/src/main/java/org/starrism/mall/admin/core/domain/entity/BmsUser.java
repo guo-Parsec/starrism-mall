@@ -1,5 +1,6 @@
 package org.starrism.mall.admin.core.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,18 +22,40 @@ import java.util.Objects;
 public class BmsUser extends BaseDataEntity {
     private static final long serialVersionUID = 3001411682177194704L;
 
+    /**
+     * 用户名
+     */
     private String username;
 
+    /**
+     * 密码
+     */
+    @TableField(value = "`password`")
     private String password;
 
+    /**
+     * 昵称
+     */
     private String nickname;
 
+    /**
+     * 邮箱地址
+     */
     private String email;
 
+    /**
+     * 手机号吗
+     */
     private String phoneNumber;
 
+    /**
+     * 头像地址
+     */
     private String avatarUrl;
 
+    /**
+     * 性别
+     */
     private Integer sex;
 
     public BmsUser() {

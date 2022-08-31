@@ -5,14 +5,30 @@
 <mapper namespace="org.starrism.mall.base.repository.BmsResourceCategoryRepository">
 
     <resultMap id="BaseResultMap" type="org.starrism.mall.base.domain.entity.BmsResourceCategory">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="categoryName" column="category_name" jdbcType="VARCHAR"/>
-            <result property="sort" column="sort" jdbcType="VARCHAR"/>
-            <result property="description" column="description" jdbcType="VARCHAR"/>
-            <result property="enableStatus" column="enable_status" jdbcType="SMALLINT"/>
-            <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
-            <result property="addName" column="add_name" jdbcType="VARCHAR"/>
-            <result property="modifyTime" column="modify_time" jdbcType="TIMESTAMP"/>
-            <result property="modifyName" column="modify_name" jdbcType="VARCHAR"/>
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="categoryCode" column="category_code" jdbcType="VARCHAR"/>
+        <result property="sort" column="sort" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="enableStatus" column="enable_status" jdbcType="SMALLINT"/>
+        <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
+        <result property="addName" column="add_name" jdbcType="VARCHAR"/>
+        <result property="modifyTime" column="modify_time" jdbcType="TIMESTAMP"/>
+        <result property="modifyName" column="modify_name" jdbcType="VARCHAR"/>
     </resultMap>
+
+    <select id="findByCategoryCode" parameterType="string" resultMap="BaseResultMap">
+        select id,
+               category_code,
+               `sort`,
+               `description`,
+               enable_status,
+               add_time,
+               add_name,
+               modify_time,
+               modify_name
+        from bms_resource_category
+        where enable_status = ${@org.starrism.mall.data.pool.BasePool@ENABLE}
+        and category_code = #{categoryCode,jdbcType=VARCHAR} limit 1
+    </select>
+
 </mapper>

@@ -1,5 +1,6 @@
 package org.starrism.mall.base.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,7 +27,7 @@ public class BmsResource extends BaseDataEntity {
     /**
      * 资源名称
      */
-    private String resourceName;
+    private String resourceCode;
 
     /**
      * 资源路径
@@ -36,5 +37,6 @@ public class BmsResource extends BaseDataEntity {
     /**
      * 资源描述
      */
+    @TableField(value = "`description`")
     private String description;
 }

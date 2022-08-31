@@ -1,5 +1,6 @@
 package org.starrism.mall.admin.core.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,11 +33,13 @@ public class BmsRole extends AbstractDataEntityTree<BmsRole> {
     /**
      * 角色描述
      */
+    @TableField(value = "`description`")
     private String description;
 
     /**
      * 排序
      */
+    @TableField(value = "`sort`")
     private Integer sort;
 
     /**

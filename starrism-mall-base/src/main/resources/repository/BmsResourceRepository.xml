@@ -5,16 +5,47 @@
 <mapper namespace="org.starrism.mall.base.repository.BmsResourceRepository">
 
     <resultMap id="BaseResultMap" type="org.starrism.mall.base.domain.entity.BmsResource">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="resourceCategoryId" column="resource_category_id" jdbcType="BIGINT"/>
-            <result property="resourceName" column="resource_name" jdbcType="VARCHAR"/>
-            <result property="resourceUrl" column="resource_url" jdbcType="VARCHAR"/>
-            <result property="description" column="description" jdbcType="VARCHAR"/>
-            <result property="enableStatus" column="enable_status" jdbcType="SMALLINT"/>
-            <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
-            <result property="addName" column="add_name" jdbcType="VARCHAR"/>
-            <result property="modifyTime" column="modify_time" jdbcType="TIMESTAMP"/>
-            <result property="modifyName" column="modify_name" jdbcType="VARCHAR"/>
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="resourceCategoryId" column="resource_category_id" jdbcType="BIGINT"/>
+        <result property="resourceCode" column="resource_code" jdbcType="VARCHAR"/>
+        <result property="resourceUrl" column="resource_url" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="enableStatus" column="enable_status" jdbcType="SMALLINT"/>
+        <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
+        <result property="addName" column="add_name" jdbcType="VARCHAR"/>
+        <result property="modifyTime" column="modify_time" jdbcType="TIMESTAMP"/>
+        <result property="modifyName" column="modify_name" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <select id="findByCategoryCode" parameterType="string" resultMap="BaseResultMap">
+        select br.id,
+               br.resource_category_id,
+               br.resource_code,
+               br.resource_url,
+               br.`description`,
+               br.enable_status,
+               br.add_time,
+               br.add_name,
+               br.modify_time,
+               br.modify_name
+        from bms_resource br
+        where br.enable_status = ${@org.starrism.mall.data.pool.BasePool@ENABLE}
+          and exists(select 1
+                     from bms_resource_category brc
+                     where brc.enable_status = ${@org.starrism.mall.data.pool.BasePool@ENABLE}
+                       and brc.category_code = #{categoryCode,jdbcType=VARCHAR}
+                       and brc.id = br.resource_category_id
+            )
+    </select>
+
+    <select id="findResourceCodeByRole" parameterType="java.util.Set" resultType="string">
+        select br.resource_code as resourceCode
+        from bms_resource br
+                 left join bms_role_resource brr on br.id = brr.resource_id
+        where br.enable_status = ${@org.starrism.mall.data.pool.BasePool@ENABLE}
+        and brr.role_id in
+        <foreach collection="roleIdSet" open="(" close=")" separator="," item="roleId">
+            #{roleId,jdbcType=BIGINT}
+        </foreach>
+    </select>
 </mapper>

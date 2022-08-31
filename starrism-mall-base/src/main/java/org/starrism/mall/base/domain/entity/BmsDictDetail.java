@@ -47,6 +47,7 @@ public class BmsDictDetail extends BaseDataEntity {
     /**
      * 排序
      */
+    @TableField(value = "`sort`")
     private Integer sort;
 
     @TableField(exist = false)

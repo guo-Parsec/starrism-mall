@@ -1,7 +1,5 @@
 package org.starrism.mall.base.access.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
@@ -10,6 +8,8 @@ import org.starrism.mall.base.domain.converter.BmsParamConverters;
 import org.starrism.mall.base.domain.entity.BmsParam;
 import org.starrism.mall.base.domain.vo.BmsParamVo;
 import org.starrism.mall.base.repository.BmsParamRepository;
+import org.starrism.mall.common.log.StarrismLogger;
+import org.starrism.mall.common.log.StarrismLoggerFactory;
 
 import javax.annotation.Resource;
 
@@ -21,7 +21,7 @@ import javax.annotation.Resource;
  **/
 @Component("bmsParamAccess")
 public class BmsParamAccessImpl implements BmsParamAccess {
-    private static final Logger log = LoggerFactory.getLogger(BmsParamAccessImpl.class);
+    private static final StarrismLogger LOGGER = StarrismLoggerFactory.getLogger(BmsParamAccessImpl.class);
 
     @Resource
     private BmsParamRepository bmsParamRepository;
@@ -44,14 +44,10 @@ public class BmsParamAccessImpl implements BmsParamAccess {
     @Override
     @Cacheable(key = "#paramCode", cacheNames = "param:paramCode")
     public BmsParamVo findByParamCode(String paramCode) {
-        if (log.isDebugEnabled()) {
-            log.debug("查询paramCode为{}的参数", paramCode);
-        }
+        LOGGER.debug("查询paramCode为{}的参数", paramCode);
         BmsParam param = bmsParamRepository.findByParamCode(paramCode);
         if (param == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("查询paramCode为{}的参数为空", paramCode);
-            }
+            LOGGER.debug("查询paramCode为{}的参数为空", paramCode);
             return null;
         }
         return bmsParamConverters.toParamVo(param);

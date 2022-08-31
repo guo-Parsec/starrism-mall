@@ -3,8 +3,6 @@ package org.starrism.mall.admin.core.service.impl;
 import cn.dev33.satoken.secure.SaSecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.google.common.collect.Sets;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +20,8 @@ import org.starrism.mall.base.domain.vo.BmsParamVo;
 import org.starrism.mall.base.domain.vo.CoreUser;
 import org.starrism.mall.common.domain.Builder;
 import org.starrism.mall.common.exceptions.StarrismException;
+import org.starrism.mall.common.log.StarrismLogger;
+import org.starrism.mall.common.log.StarrismLoggerFactory;
 import org.starrism.mall.common.pools.ParamPool;
 import org.starrism.mall.common.util.CollectionUtil;
 import org.starrism.mall.common.util.StrUtil;
@@ -43,7 +43,7 @@ import java.util.stream.Collectors;
  **/
 @Service("bmsUserService")
 public class BmsUserServiceImpl implements BmsUserService {
-    private static final Logger log = LoggerFactory.getLogger(BmsUserServiceImpl.class);
+    private static final StarrismLogger LOGGER = StarrismLoggerFactory.getLogger(BmsUserServiceImpl.class);
 
     @Resource
     private BmsUserMapper bmsUserMapper;
@@ -78,7 +78,7 @@ public class BmsUserServiceImpl implements BmsUserService {
         wrapper.eq(BmsUser::getUsername, username);
         BmsUser bmsUser = bmsUserMapper.selectOne(wrapper);
         if (BaseEntity.isEmpty(bmsUser)) {
-            log.info("cannot find bmsUser of username={}", username);
+            LOGGER.info("cannot find bmsUser of username={}", username);
             return null;
         }
         CoreUser coreUser = bmsUserConverters.toCoreUser(bmsUser);
@@ -96,14 +96,10 @@ public class BmsUserServiceImpl implements BmsUserService {
     @Override
     public boolean saveUser(UserDto userDto) {
         if (BaseEntity.isEmpty(userDto)) {
-            if (log.isDebugEnabled()) {
-                log.debug("save user[{}] to add", userDto);
-            }
+            LOGGER.debug("通过新增保存用户信息[userDto={}]", userDto);
             return addUser(userDto);
         }
-        if (log.isDebugEnabled()) {
-            log.debug("save user[{}] to edit", userDto);
-        }
+        LOGGER.debug("通过更新保存用户信息[userDto={}]", userDto);
         return editUser(userDto);
     }
 
@@ -121,14 +117,14 @@ public class BmsUserServiceImpl implements BmsUserService {
         String username = userDto.getUsername();
         BmsUser existUser = bmsUserMapper.findByUsername(username);
         if (BaseDataEntity.isNotEmpty(existUser)) {
-            log.error("用户名{}已存在", username);
+            LOGGER.error("用户名{}已存在", username);
             throw new StarrismException(AdminResultCode.USER_EXIST);
         }
         Set<String> roles = userDto.getRoleSet();
         if (CollectionUtil.isEmpty(roles)) {
             BmsParamVo defaultRoleParam = bmsParamAccess.findByParamCode(ParamPool.DEFAULT_ROLE_KEY);
             if (defaultRoleParam == null || StrUtil.isBlank(defaultRoleParam.getParamValue())) {
-                log.error("默认角色参数不存在");
+                LOGGER.error("默认角色参数不存在");
                 return false;
             }
             roles = Sets.newHashSet(defaultRoleParam.getParamValue().split(BasePool.DEFAULT_DELIMITER));
@@ -158,7 +154,7 @@ public class BmsUserServiceImpl implements BmsUserService {
             try {
                 BmsParamVo defaultSexParam = bmsParamAccess.findByParamCode(ParamPool.DEFAULT_SEX_KEY);
                 if (defaultSexParam == null || StrUtil.isBlank(defaultSexParam.getParamValue())) {
-                    log.warn("默认性别参数不存在, 统一赋值为0");
+                    LOGGER.warn("默认性别参数不存在, 统一赋值为0");
                     defaultSexParam = Builder.of(BmsParamVo::new)
                             .with(BmsParamVo::setParamValue, "0")
                             .build();
@@ -166,7 +162,7 @@ public class BmsUserServiceImpl implements BmsUserService {
                 bmsUser.setSex(Integer.valueOf(defaultSexParam.getParamValue()));
                 return true;
             } catch (NumberFormatException e) {
-                log.error("设置默认性别码失败，原因为 -> ", e);
+                LOGGER.error("设置默认性别码失败，原因为 -> ", e);
                 return false;
             }
         }
@@ -184,7 +180,7 @@ public class BmsUserServiceImpl implements BmsUserService {
                 .map(BmsRole::getId)
                 .collect(Collectors.toList());
         if (CollectionUtil.isEmpty(roleIds)) {
-            log.error("赋予用户[userId={}]的角色列表{}不存在", userId, roleCodeSet);
+            LOGGER.error("赋予用户[userId={}]的角色列表{}不存在", userId, roleCodeSet);
             return false;
         }
         bmsUserMapper.grantRoleToUser(userId, roleIds);

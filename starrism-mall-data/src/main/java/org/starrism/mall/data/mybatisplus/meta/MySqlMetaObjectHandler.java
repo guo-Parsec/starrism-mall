@@ -2,9 +2,9 @@ package org.starrism.mall.data.mybatisplus.meta;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.starrism.mall.common.log.StarrismLogger;
+import org.starrism.mall.common.log.StarrismLoggerFactory;
 
 import java.time.LocalDateTime;
 
@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
  **/
 @Component
 public class MySqlMetaObjectHandler implements MetaObjectHandler {
-    private static final Logger log = LoggerFactory.getLogger(MySqlMetaObjectHandler.class);
+    private static final StarrismLogger LOGGER = StarrismLoggerFactory.getLogger(MySqlMetaObjectHandler.class);
 
     /**
      * 插入元对象字段填充（用于插入时对公共字段的填充）
@@ -25,9 +25,7 @@ public class MySqlMetaObjectHandler implements MetaObjectHandler {
      */
     @Override
     public void insertFill(MetaObject metaObject) {
-        if (log.isDebugEnabled()) {
-            log.debug("start insert fill...");
-        }
+        LOGGER.debug("开始填充插入字段...");
         this.strictInsertFill(metaObject, "addTime", LocalDateTime.class, LocalDateTime.now());
         this.strictInsertFill(metaObject, "modifyTime", LocalDateTime.class, LocalDateTime.now());
     }
@@ -39,9 +37,7 @@ public class MySqlMetaObjectHandler implements MetaObjectHandler {
      */
     @Override
     public void updateFill(MetaObject metaObject) {
-        if (log.isDebugEnabled()) {
-            log.debug("start update fill...");
-        }
+        LOGGER.debug("开始填充更新字段...");
         this.strictUpdateFill(metaObject, "modifyTime", LocalDateTime.class, LocalDateTime.now());
     }
 }

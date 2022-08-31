@@ -1,10 +1,10 @@
 package org.starrism.mall.admin.core.service.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.starrism.mall.admin.core.mapper.BmsParamMapper;
 import org.starrism.mall.admin.core.service.BmsParamService;
+import org.starrism.mall.common.log.StarrismLogger;
+import org.starrism.mall.common.log.StarrismLoggerFactory;
 
 import javax.annotation.Resource;
 
@@ -16,7 +16,7 @@ import javax.annotation.Resource;
  **/
 @Service("bmsParamService")
 public class BmsParamServiceImpl implements BmsParamService {
-    private static final Logger log = LoggerFactory.getLogger(BmsParamServiceImpl.class);
+    private static final StarrismLogger LOGGER = StarrismLoggerFactory.getLogger(BmsParamServiceImpl.class);
 
     @Resource
     private BmsParamMapper bmsParamMapper;

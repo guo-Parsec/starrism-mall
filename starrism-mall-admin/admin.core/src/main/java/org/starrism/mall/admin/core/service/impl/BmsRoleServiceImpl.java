@@ -1,8 +1,6 @@
 package org.starrism.mall.admin.core.service.impl;
 
 import com.google.common.collect.Lists;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.starrism.mall.admin.api.domain.vo.BmsRoleVo;
@@ -12,6 +10,8 @@ import org.starrism.mall.admin.core.domain.entity.BmsUser;
 import org.starrism.mall.admin.core.mapper.BmsRoleMapper;
 import org.starrism.mall.admin.core.mapper.BmsUserMapper;
 import org.starrism.mall.admin.core.service.BmsRoleService;
+import org.starrism.mall.common.log.StarrismLogger;
+import org.starrism.mall.common.log.StarrismLoggerFactory;
 import org.starrism.mall.common.util.CollectionUtil;
 import org.starrism.mall.data.domain.entity.BaseDataEntity;
 
@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
  **/
 @Service("bmsRoleService")
 public class BmsRoleServiceImpl implements BmsRoleService {
-    private static final Logger log = LoggerFactory.getLogger(BmsRoleServiceImpl.class);
+    private static final StarrismLogger LOGGER = StarrismLoggerFactory.getLogger(BmsRoleServiceImpl.class);
     @Resource
     private BmsRoleMapper bmsRoleMapper;
     @Resource
@@ -52,9 +52,7 @@ public class BmsRoleServiceImpl implements BmsRoleService {
     public List<BmsRoleVo> findRolesByUsername(String username) {
         BmsUser user = bmsUserMapper.findByUsername(username);
         if (BaseDataEntity.isEmpty(user)) {
-            if (log.isDebugEnabled()) {
-                log.debug("用户[username={}]的角色为空", username);
-            }
+            LOGGER.debug("用户[username={}]的角色为空", username);
             return Lists.newArrayList();
         }
         return findRolesByUserId(user.getId());
@@ -72,9 +70,7 @@ public class BmsRoleServiceImpl implements BmsRoleService {
     public List<BmsRoleVo> findRolesByUserId(Long userId) {
         List<BmsRole> roles = bmsRoleMapper.findByUser(userId);
         if (CollectionUtil.isEmpty(roles)) {
-            if (log.isDebugEnabled()) {
-                log.debug("用户[userId={}]的角色为空", userId);
-            }
+            LOGGER.debug("用户[userId={}]的角色为空", userId);
             return Lists.newArrayList();
         }
         return roles.stream().map(role -> bmsRoleConverters.toRoleVo(role)).collect(Collectors.toList());

@@ -3,8 +3,8 @@ package org.starrism.mall.common.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.starrism.mall.common.log.StarrismLogger;
+import org.starrism.mall.common.log.StarrismLoggerFactory;
 import org.starrism.mall.common.pools.AuthPool;
 import org.starrism.mall.common.support.CommonConverts;
 
@@ -17,7 +17,7 @@ import java.util.Map;
  * @since 2022/8/25
  **/
 public class TokenUtil {
-    private static final Logger log = LoggerFactory.getLogger(TokenUtil.class);
+    private static final StarrismLogger LOGGER = StarrismLoggerFactory.getLogger(TokenUtil.class);
 
     public static String secret = AuthPool.SECRET;
 

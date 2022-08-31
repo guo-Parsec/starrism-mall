@@ -2,10 +2,10 @@ package org.starrism.mall.common.rest;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.starrism.mall.common.enums.BaseRestEnum;
 import org.starrism.mall.common.exceptions.StarrismException;
+import org.starrism.mall.common.log.StarrismLogger;
+import org.starrism.mall.common.log.StarrismLoggerFactory;
 
 /**
  * <p>结果返回集</p>
@@ -16,7 +16,7 @@ import org.starrism.mall.common.exceptions.StarrismException;
 @Setter
 @Getter
 public class CommonResult<T> {
-    private static final Logger log = LoggerFactory.getLogger(CommonResult.class);
+    private static final StarrismLogger LOGGER = StarrismLoggerFactory.getLogger(CommonResult.class);
     private long code;
 
     private String message;
@@ -160,12 +160,12 @@ public class CommonResult<T> {
      */
     public static <T> T getSuccessData(CommonResult<T> commonResult) {
         if (commonResult == null) {
-            log.error("请求结果集为空，可能为请求错误");
+            LOGGER.error("请求结果集为空，可能为请求错误");
             throw new RuntimeException("The request result set is empty, possibly a request error");
         }
         long resultCode = commonResult.getCode();
         if (!ResultCode.SUCCESS.getCode().equals(resultCode)) {
-            log.error("请求信息码为{}，可能为请求失败", resultCode);
+            LOGGER.error("请求信息码为{}，可能为请求失败", resultCode);
             throw new StarrismException(commonResult.getMessage(), resultCode);
         }
         return commonResult.getData();

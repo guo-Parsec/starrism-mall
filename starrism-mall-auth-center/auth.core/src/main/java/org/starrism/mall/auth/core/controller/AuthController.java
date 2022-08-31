@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.starrism.mall.admin.api.domain.dto.MemberRegisterDto;
 import org.starrism.mall.admin.api.domain.dto.UserLoginDto;
@@ -40,5 +41,11 @@ public class AuthController {
     @PostMapping(value = "/member/register")
     public CommonResult<Boolean> memberRegister(@Validated @RequestBody MemberRegisterDto dto) {
         return CommonResult.success(authService.memberRegister(dto));
+    }
+
+    @ApiOperation(value = "用户登出", notes = "用户登出")
+    @PostMapping(value = "/logout")
+    public CommonResult<Boolean> logout(@RequestParam("userId")String userId) {
+        return CommonResult.success(authService.logout(userId));
     }
 }

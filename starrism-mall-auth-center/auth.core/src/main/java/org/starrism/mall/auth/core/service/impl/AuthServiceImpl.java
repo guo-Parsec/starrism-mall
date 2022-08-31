@@ -3,8 +3,6 @@ package org.starrism.mall.auth.core.service.impl;
 import cn.dev33.satoken.secure.SaSecureUtil;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.starrism.mall.admin.api.domain.dto.MemberRegisterDto;
 import org.starrism.mall.admin.api.domain.dto.UserDto;
@@ -17,6 +15,8 @@ import org.starrism.mall.auth.core.service.AuthService;
 import org.starrism.mall.base.domain.vo.CoreUser;
 import org.starrism.mall.common.domain.Builder;
 import org.starrism.mall.common.domain.vo.AccessTokenVo;
+import org.starrism.mall.common.log.StarrismLogger;
+import org.starrism.mall.common.log.StarrismLoggerFactory;
 import org.starrism.mall.common.pools.AuthPool;
 import org.starrism.mall.common.rest.CommonResult;
 import org.starrism.mall.common.util.StrUtil;
@@ -31,7 +31,7 @@ import javax.annotation.Resource;
  **/
 @Service("authService")
 public class AuthServiceImpl implements AuthService {
-    private static final Logger log = LoggerFactory.getLogger(AuthServiceImpl.class);
+    private static final StarrismLogger LOGGER = StarrismLoggerFactory.getLogger(AuthServiceImpl.class);
     @Resource
     BmsUserClient bmsUserClient;
 
@@ -47,20 +47,20 @@ public class AuthServiceImpl implements AuthService {
     public AuthInfoVo login(UserLoginDto userLoginDto) {
         SaTokenInfo saTokenInfo = null;
         if (userLoginDto == null || StrUtil.isBlank(userLoginDto.getUsername())) {
-            log.error("username cannot be empty");
+            LOGGER.error("username cannot be empty");
             throw new AuthException(AuthResultCode.USERNAME_OR_PASSWORD_ERROR);
         }
         String username = userLoginDto.getUsername();
         CommonResult<CoreUser> clientApi = bmsUserClient.findUserByUsername(username);
         CoreUser coreUser = CommonResult.getSuccessData(clientApi);
         if (coreUser == null) {
-            log.error("cannot find user of username={}", username);
+            LOGGER.error("cannot find user of username={}", username);
             throw new AuthException(AuthResultCode.USERNAME_OR_PASSWORD_ERROR);
         }
         String password = coreUser.getPassword();
         String salePwd = SaSecureUtil.md5BySalt(userLoginDto.getPassword(), username);
         if (!password.equals(salePwd)) {
-            log.error("Password for user {} does not match", username);
+            LOGGER.error("Password for user {} does not match", username);
             throw new AuthException(AuthResultCode.USERNAME_OR_PASSWORD_ERROR);
         }
         // 密码校验成功后登录，一行代码实现登录
@@ -98,5 +98,20 @@ public class AuthServiceImpl implements AuthService {
                 .build();
         CommonResult<Boolean> commonResult = bmsUserClient.saveUser(userDto);
         return CommonResult.getSuccessData(commonResult);
+    }
+
+    /**
+     * <p>登出</p>
+     *
+     * @return boolean
+     * @author hedwing
+     * @since 2022/8/31
+     */
+    @Override
+    public boolean logout(String userId) {
+        LOGGER.debug("用户[userId={}]正在退出系统", userId);
+        StpUtil.logout(userId);
+        LOGGER.debug("用户[userId={}]退出系统成功", userId);
+        return true;
     }
 }

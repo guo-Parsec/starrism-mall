@@ -8,7 +8,7 @@ import org.starrism.mall.base.domain.vo.BmsParamVo;
  * @author hedwing
  * @since 2022/8/29
  **/
-public interface BmsParamAccess {
+public interface ParamAccess {
     /**
      * <p>根据参数码获取参数</p>
      *

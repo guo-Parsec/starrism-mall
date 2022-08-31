@@ -15,7 +15,7 @@ import org.starrism.mall.admin.core.mapper.BmsUserMapper;
 import org.starrism.mall.admin.core.rest.AdminResultCode;
 import org.starrism.mall.admin.core.service.BmsRoleService;
 import org.starrism.mall.admin.core.service.BmsUserService;
-import org.starrism.mall.base.access.BmsParamAccess;
+import org.starrism.mall.base.access.ParamAccess;
 import org.starrism.mall.base.domain.vo.BmsParamVo;
 import org.starrism.mall.base.domain.vo.CoreUser;
 import org.starrism.mall.common.domain.Builder;
@@ -48,9 +48,10 @@ public class BmsUserServiceImpl implements BmsUserService {
     @Resource
     private BmsUserMapper bmsUserMapper;
     @Resource
-    private BmsParamAccess bmsParamAccess;
+    private ParamAccess paramAccess;
     @Resource
     private BmsRoleMapper bmsRoleMapper;
+
     private final BmsRoleService bmsRoleService;
 
     @Autowired
@@ -77,6 +78,7 @@ public class BmsUserServiceImpl implements BmsUserService {
         }
         CoreUser coreUser = BmsUserConverters.toCoreUser(bmsUser);
         Set<String> roles = bmsRoleService.findRoleCodeListByUsername(username);
+
         coreUser.setRoles(Optional.ofNullable(roles).orElse(Sets.newHashSet()));
         return coreUser;
     }
@@ -116,7 +118,7 @@ public class BmsUserServiceImpl implements BmsUserService {
         }
         Set<String> roles = userDto.getRoleSet();
         if (CollectionUtil.isEmpty(roles)) {
-            BmsParamVo defaultRoleParam = bmsParamAccess.findByParamCode(ParamPool.DEFAULT_ROLE_KEY);
+            BmsParamVo defaultRoleParam = paramAccess.findByParamCode(ParamPool.DEFAULT_ROLE_KEY);
             if (defaultRoleParam == null || StrUtil.isBlank(defaultRoleParam.getParamValue())) {
                 LOGGER.error("默认角色参数不存在");
                 return false;
@@ -146,7 +148,7 @@ public class BmsUserServiceImpl implements BmsUserService {
     private boolean setUserSex(BmsUser bmsUser) {
         if (bmsUser.getSex() == null) {
             try {
-                BmsParamVo defaultSexParam = bmsParamAccess.findByParamCode(ParamPool.DEFAULT_SEX_KEY);
+                BmsParamVo defaultSexParam = paramAccess.findByParamCode(ParamPool.DEFAULT_SEX_KEY);
                 if (defaultSexParam == null || StrUtil.isBlank(defaultSexParam.getParamValue())) {
                     LOGGER.warn("默认性别参数不存在, 统一赋值为0");
                     defaultSexParam = Builder.of(BmsParamVo::new)

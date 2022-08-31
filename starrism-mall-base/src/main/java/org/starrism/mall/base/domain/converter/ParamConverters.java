@@ -13,7 +13,7 @@ import org.starrism.mall.common.support.Convertible;
  * @author hedwing
  * @since 2022/8/14
  **/
-public class BmsParamConverters implements BaseConverters {
+public class ParamConverters implements BaseConverters {
 
     /**
      * <p>BmsParam 转 BmsParamVo 转换器</p>

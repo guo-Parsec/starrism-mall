@@ -2,8 +2,8 @@ package org.starrism.mall.base.access.impl;
 
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
-import org.starrism.mall.base.access.BmsParamAccess;
-import org.starrism.mall.base.domain.converter.BmsParamConverters;
+import org.starrism.mall.base.access.ParamAccess;
+import org.starrism.mall.base.domain.converter.ParamConverters;
 import org.starrism.mall.base.domain.entity.BmsParam;
 import org.starrism.mall.base.domain.vo.BmsParamVo;
 import org.starrism.mall.base.repository.BmsParamRepository;
@@ -18,9 +18,9 @@ import javax.annotation.Resource;
  * @author hedwing
  * @since 2022/8/29
  **/
-@Component("bmsParamAccess")
-public class BmsParamAccessImpl implements BmsParamAccess {
-    private static final StarrismLogger LOGGER = StarrismLoggerFactory.getLogger(BmsParamAccessImpl.class);
+@Component("paramAccess")
+public class ParamAccessImpl implements ParamAccess {
+    private static final StarrismLogger LOGGER = StarrismLoggerFactory.getLogger(ParamAccessImpl.class);
 
     @Resource
     private BmsParamRepository bmsParamRepository;
@@ -42,6 +42,6 @@ public class BmsParamAccessImpl implements BmsParamAccess {
             LOGGER.debug("查询paramCode为{}的参数为空", paramCode);
             return null;
         }
-        return BmsParamConverters.toParamVo(param);
+        return ParamConverters.toParamVo(param);
     }
 }

@@ -162,16 +162,19 @@
                 <version>${sa-token.version}</version>
             </dependency>
             <!-- 本应用公共模块 -->
+            <!-- admin-api -->
             <dependency>
                 <groupId>org.starrism</groupId>
                 <artifactId>admin.api</artifactId>
                 <version>${starrism.version}</version>
             </dependency>
+            <!-- auth-api -->
             <dependency>
                 <groupId>org.starrism</groupId>
                 <artifactId>auth.api</artifactId>
                 <version>${starrism.version}</version>
             </dependency>
+            <!-- starrism-mall-base -->
             <dependency>
                 <groupId>org.starrism</groupId>
                 <artifactId>starrism-mall-base</artifactId>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.starrism.mall.base.repository.BmsResourceRepository">
+
+    <resultMap id="BaseResultMap" type="org.starrism.mall.base.domain.entity.BmsResource">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="resourceCategoryId" column="resource_category_id" jdbcType="BIGINT"/>
+            <result property="resourceName" column="resource_name" jdbcType="VARCHAR"/>
+            <result property="resourceUrl" column="resource_url" jdbcType="VARCHAR"/>
+            <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="enableStatus" column="enable_status" jdbcType="SMALLINT"/>
+            <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
+            <result property="addName" column="add_name" jdbcType="VARCHAR"/>
+            <result property="modifyTime" column="modify_time" jdbcType="TIMESTAMP"/>
+            <result property="modifyName" column="modify_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+</mapper>

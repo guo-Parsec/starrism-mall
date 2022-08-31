@@ -1,10 +1,10 @@
-package org.starrism.mall.data.domain.converter;
+package org.starrism.mall.base.domain.converter;
 
 import org.springframework.stereotype.Component;
-import org.starrism.mall.data.domain.entity.BmsDictDetail;
 import org.starrism.mall.common.domain.Builder;
 import org.starrism.mall.common.support.Convertible;
-import org.starrism.mall.data.domain.vo.DictVo;
+import org.starrism.mall.base.domain.entity.BmsDictDetail;
+import org.starrism.mall.base.domain.vo.DictVo;
 
 /**
  * <p>字典转换</p>

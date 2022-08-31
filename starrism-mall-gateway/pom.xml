@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>org.starrism</groupId>
-            <artifactId>starrism-mall-data</artifactId>
+            <artifactId>starrism-mall-base</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>

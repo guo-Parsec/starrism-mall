@@ -17,35 +17,41 @@
         <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
         <result column="modify_name" jdbcType="VARCHAR" property="modifyName"/>
     </resultMap>
-
-    <sql id="BaseColumnList">
-        id,
-        username,
-        `password`,
-        nickname,
-        email,
-        phone_number,
-        sex,
-        avatar_url,
-        enable_status,
-        add_time,
-        add_name,
-        modify_time,
-        modify_name
-    </sql>
-
     <select id="findById" parameterType="long" resultMap="BaseResultMap">
-        select
-        <include refid="BaseColumnList"/>
+        select id,
+               username,
+               `password`,
+               nickname,
+               email,
+               phone_number,
+               sex,
+               avatar_url,
+               enable_status,
+               add_time,
+               add_name,
+               modify_time,
+               modify_name
         from bms_user
         where id = #{id,jdbcType=BIGINT}
     </select>
 
     <select id="findByUsername" parameterType="string" resultMap="BaseResultMap">
-        select <include refid="BaseColumnList"/>
+        select id,
+               username,
+               `password`,
+               nickname,
+               email,
+               phone_number,
+               sex,
+               avatar_url,
+               enable_status,
+               add_time,
+               add_name,
+               modify_time,
+               modify_name
         from bms_user
         where username = #{username,jdbcType=VARCHAR}
-        and enable_status = ${@org.starrism.mall.data.pool.BasePool@ENABLE}
+          and enable_status = ${@org.starrism.mall.data.pool.BasePool@ENABLE}
         limit 1
     </select>
 

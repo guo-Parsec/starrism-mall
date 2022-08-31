@@ -15,6 +15,10 @@
     <dependencies>
         <dependency>
             <groupId>org.starrism</groupId>
+            <artifactId>starrism-mall-base</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.starrism</groupId>
             <artifactId>admin.api</artifactId>
         </dependency>
     </dependencies>

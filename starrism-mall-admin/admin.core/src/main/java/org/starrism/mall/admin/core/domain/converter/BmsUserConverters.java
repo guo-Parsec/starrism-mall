@@ -2,12 +2,12 @@ package org.starrism.mall.admin.core.domain.converter;
 
 import org.springframework.stereotype.Component;
 import org.starrism.mall.admin.api.domain.dto.UserDto;
+import org.starrism.mall.admin.api.domain.vo.BmsUserVo;
 import org.starrism.mall.admin.core.domain.entity.BmsUser;
+import org.starrism.mall.base.domain.vo.CoreUser;
 import org.starrism.mall.common.domain.BaseConverters;
 import org.starrism.mall.common.domain.Builder;
-import org.starrism.mall.admin.api.domain.vo.BmsUserVo;
 import org.starrism.mall.common.support.Convertible;
-import org.starrism.mall.data.domain.vo.CoreUser;
 
 /**
  * <p>用户数据转换</p>

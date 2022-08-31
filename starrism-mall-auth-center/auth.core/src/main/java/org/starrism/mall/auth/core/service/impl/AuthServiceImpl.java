@@ -6,20 +6,20 @@ import cn.dev33.satoken.stp.StpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.starrism.mall.admin.api.domain.dto.MemberRegisterDto;
 import org.starrism.mall.admin.api.domain.dto.UserDto;
 import org.starrism.mall.admin.api.domain.dto.UserLoginDto;
-import org.starrism.mall.admin.api.domain.dto.MemberRegisterDto;
 import org.starrism.mall.admin.api.feign.BmsUserClient;
 import org.starrism.mall.auth.core.domain.vo.AuthInfoVo;
 import org.starrism.mall.auth.core.exception.AuthException;
 import org.starrism.mall.auth.core.rest.AuthResultCode;
 import org.starrism.mall.auth.core.service.AuthService;
+import org.starrism.mall.base.domain.vo.CoreUser;
 import org.starrism.mall.common.domain.Builder;
 import org.starrism.mall.common.domain.vo.AccessTokenVo;
 import org.starrism.mall.common.pools.AuthPool;
 import org.starrism.mall.common.rest.CommonResult;
 import org.starrism.mall.common.util.StrUtil;
-import org.starrism.mall.data.domain.vo.CoreUser;
 
 import javax.annotation.Resource;
 
@@ -66,6 +66,8 @@ public class AuthServiceImpl implements AuthService {
         // 密码校验成功后登录，一行代码实现登录
         StpUtil.login(coreUser.getId());
         // 将用户信息存储到Session中
+        // 密码校验完成后清空密码
+        coreUser.setPassword(null);
         StpUtil.getSession().set(AuthPool.USER_SESSION, coreUser);
         // 获取当前登录用户Token信息
         saTokenInfo = StpUtil.getTokenInfo();

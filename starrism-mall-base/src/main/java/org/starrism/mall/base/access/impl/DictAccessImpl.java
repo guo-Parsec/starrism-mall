@@ -1,32 +1,32 @@
-package org.starrism.mall.data.service.impl;
+package org.starrism.mall.base.access.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import org.starrism.mall.data.domain.converter.DictConverters;
-import org.starrism.mall.data.domain.entity.BmsDictCategory;
-import org.starrism.mall.data.domain.entity.BmsDictDetail;
-import org.starrism.mall.data.domain.vo.DictVo;
-import org.starrism.mall.data.mapper.BmsDictCategoryMapper;
-import org.starrism.mall.data.mapper.BmsDictDetailMapper;
-import org.starrism.mall.data.service.DictService;
+import org.starrism.mall.base.access.DictAccess;
+import org.starrism.mall.base.domain.converter.DictConverters;
+import org.starrism.mall.base.domain.entity.BmsDictCategory;
+import org.starrism.mall.base.domain.entity.BmsDictDetail;
+import org.starrism.mall.base.domain.vo.DictVo;
+import org.starrism.mall.base.repository.BmsDictCategoryRepository;
+import org.starrism.mall.base.repository.BmsDictDetailRepository;
 
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * <p></p>
+ * <p>数据字典参数业务类</p>
  *
  * @author hedwing
  * @since 2022/8/28
  **/
-@Service("dictService")
-public class DictServiceImpl implements DictService {
+@Service("dictAccess")
+public class DictAccessImpl implements DictAccess {
     @Resource
-    private BmsDictCategoryMapper dictCategoryMapper;
+    private BmsDictCategoryRepository dictCategoryRepository;
     @Resource
-    private BmsDictDetailMapper dictDetailMapper;
+    private BmsDictDetailRepository dictDetailRepository;
     DictConverters dictConverters;
     @Autowired
     public void setDictConverters(DictConverters dictConverters) {
@@ -42,11 +42,11 @@ public class DictServiceImpl implements DictService {
     @Override
     @Cacheable(key = "#categoryCode", cacheNames = "dict:categoryCode")
     public List<DictVo> findDictByCategoryCode(String categoryCode) {
-        BmsDictCategory category = dictCategoryMapper.findByCode(categoryCode);
+        BmsDictCategory category = dictCategoryRepository.findByCode(categoryCode);
         if (category == null) {
             return null;
         }
-        List<BmsDictDetail> details = dictDetailMapper.findByCategory(category.getId());
+        List<BmsDictDetail> details = dictDetailRepository.findByCategory(category.getId());
         return details.stream().map(detail -> dictConverters.dictDetailToVo(detail)).collect(Collectors.toList());
     }
 
@@ -62,10 +62,10 @@ public class DictServiceImpl implements DictService {
     @Override
     @Cacheable(key = "#categoryCode+'-'+#dictCode", cacheNames = "dict:categoryCode")
     public DictVo findDictByCodes(String categoryCode, String dictCode) {
-        BmsDictCategory category = dictCategoryMapper.findByCode(categoryCode);
+        BmsDictCategory category = dictCategoryRepository.findByCode(categoryCode);
         if (category == null) {
             return null;
         }
-        return dictConverters.dictDetailToVo(dictDetailMapper.findByCodes(category.getId(), dictCode));
+        return dictConverters.dictDetailToVo(dictDetailRepository.findByCodes(category.getId(), dictCode));
     }
 }

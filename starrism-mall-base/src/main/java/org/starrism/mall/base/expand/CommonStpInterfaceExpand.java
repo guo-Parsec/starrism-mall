@@ -1,12 +1,12 @@
-package org.starrism.mall.data.component;
+package org.starrism.mall.base.expand;
 
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.starrism.mall.base.domain.vo.CoreUser;
 import org.starrism.mall.common.pools.AuthPool;
-import org.starrism.mall.data.domain.vo.CoreUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +19,8 @@ import java.util.Set;
  * @since 2022/8/27
  **/
 @Component
-public class CommonStpInterfaceImpl implements StpInterface {
-    private final Logger logger = LoggerFactory.getLogger(CommonStpInterfaceImpl.class);
+public class CommonStpInterfaceExpand implements StpInterface {
+    private final Logger logger = LoggerFactory.getLogger(CommonStpInterfaceExpand.class);
 
 
     /**

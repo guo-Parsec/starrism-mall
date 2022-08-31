@@ -19,6 +19,7 @@ import org.starrism.mall.admin.core.service.BmsRoleService;
 import org.starrism.mall.admin.core.service.BmsUserService;
 import org.starrism.mall.base.access.BmsParamAccess;
 import org.starrism.mall.base.domain.vo.BmsParamVo;
+import org.starrism.mall.base.domain.vo.CoreUser;
 import org.starrism.mall.common.domain.Builder;
 import org.starrism.mall.common.exceptions.StarrismException;
 import org.starrism.mall.common.pools.ParamPool;
@@ -26,7 +27,6 @@ import org.starrism.mall.common.util.CollectionUtil;
 import org.starrism.mall.common.util.StrUtil;
 import org.starrism.mall.data.domain.entity.BaseDataEntity;
 import org.starrism.mall.data.domain.entity.BaseEntity;
-import org.starrism.mall.data.domain.vo.CoreUser;
 import org.starrism.mall.data.pool.BasePool;
 
 import javax.annotation.Resource;

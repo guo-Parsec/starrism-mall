@@ -2,8 +2,8 @@ package org.starrism.mall.gateway.support;
 
 import cn.dev33.satoken.stp.StpUtil;
 import com.google.common.collect.Lists;
+import org.starrism.mall.base.domain.vo.CoreUser;
 import org.starrism.mall.common.pools.AuthPool;
-import org.starrism.mall.data.domain.vo.CoreUser;
 import org.starrism.mall.gateway.exceptions.NotClientException;
 
 import java.util.List;

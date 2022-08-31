@@ -1,7 +1,7 @@
 package org.starrism.mall.admin.core.service;
 
 import org.starrism.mall.admin.api.domain.dto.UserDto;
-import org.starrism.mall.data.domain.vo.CoreUser;
+import org.starrism.mall.base.domain.vo.CoreUser;
 
 /**
  * <p>系统用户业务接口</p>

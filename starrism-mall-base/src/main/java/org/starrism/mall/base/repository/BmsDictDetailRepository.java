@@ -1,19 +1,22 @@
-package org.starrism.mall.data.mapper;
+package org.starrism.mall.base.repository;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.starrism.mall.data.domain.entity.BmsDictDetail;
+import org.springframework.stereotype.Repository;
+import org.starrism.mall.base.domain.entity.BmsDictDetail;
+import org.starrism.mall.data.mapper.CoreMapper;
 
 import java.util.List;
 
 /**
- * <p></p>
+ * <p>数据字典详情访问层</p>
  *
  * @author hedwing
  * @since 2022/8/13
  **/
 @Mapper
-public interface BmsDictDetailMapper extends CoreMapper<BmsDictDetail> {
+@Repository(value = "bmsDictDetailRepository")
+public interface BmsDictDetailRepository extends CoreMapper<BmsDictDetail> {
     /**
      * <p>根据主键查询字典</p>
      *

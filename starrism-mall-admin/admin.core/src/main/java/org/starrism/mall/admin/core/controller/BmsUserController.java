@@ -7,8 +7,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.starrism.mall.admin.api.domain.dto.UserDto;
 import org.starrism.mall.admin.core.service.BmsUserService;
+import org.starrism.mall.base.domain.vo.CoreUser;
 import org.starrism.mall.common.rest.CommonResult;
-import org.starrism.mall.data.domain.vo.CoreUser;
 
 /**
  * <p></p>

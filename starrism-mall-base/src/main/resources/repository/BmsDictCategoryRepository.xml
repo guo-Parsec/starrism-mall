@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.starrism.mall.base.repository.BmsDictCategoryRepository">
+    <resultMap id="DictCategoryMap" type="org.starrism.mall.base.domain.entity.BmsDictCategory">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="dict_category_code" jdbcType="VARCHAR" property="dictCategoryCode"/>
+        <result column="dict_category_name" jdbcType="VARCHAR" property="dictCategoryName"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+        <result column="enable_status" jdbcType="SMALLINT" property="enableStatus"/>
+        <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
+        <result column="add_name" jdbcType="VARCHAR" property="addName"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="modify_name" jdbcType="VARCHAR" property="modifyName"/>
+    </resultMap>
+    <select id="findByCode" resultMap="DictCategoryMap">
+        select bdc.id,
+        bdc.dict_category_code,
+        bdc.dict_category_name,
+        bdc.sort,
+        bdc.enable_status,
+        bdc.add_time,
+        bdc.add_name,
+        bdc.modify_time,
+        bdc.modify_name
+        from bms_dict_category bdc
+        where bdc.dict_category_code = #{dictCategoryCode,jdbcType=VARCHAR}
+        and bdc.enable_status = ${@org.starrism.mall.data.pool.BasePool@ENABLE}
+    </select>
+</mapper>

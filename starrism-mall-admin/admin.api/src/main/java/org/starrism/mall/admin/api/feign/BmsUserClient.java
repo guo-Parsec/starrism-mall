@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.starrism.mall.admin.api.domain.dto.UserDto;
+import org.starrism.mall.base.domain.vo.CoreUser;
 import org.starrism.mall.common.pools.AppPool;
 import org.starrism.mall.common.rest.CommonResult;
-import org.starrism.mall.data.domain.vo.CoreUser;
 
 /**
  * <p>用户对外服务接口</p>

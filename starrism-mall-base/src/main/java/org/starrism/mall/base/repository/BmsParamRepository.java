@@ -1,5 +1,6 @@
 package org.starrism.mall.base.repository;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import org.starrism.mall.base.domain.entity.BmsParam;
@@ -10,6 +11,7 @@ import org.starrism.mall.data.mapper.CoreMapper;
  *
  * @author hedwing
  */
+@Mapper
 @Repository(value = "bmsParamRepository")
 public interface BmsParamRepository extends CoreMapper<BmsParam> {
     /**

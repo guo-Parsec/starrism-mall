@@ -1,16 +1,16 @@
-package org.starrism.mall.data.service;
+package org.starrism.mall.base.access;
 
-import org.starrism.mall.data.domain.vo.DictVo;
+import org.starrism.mall.base.domain.vo.DictVo;
 
 import java.util.List;
 
 /**
- * <p></p>
+ * <p>字典参数接口</p>
  *
  * @author hedwing
  * @since 2022/8/13
  **/
-public interface DictService {
+public interface DictAccess {
     /**
      * 根据分类码查询字典
      *

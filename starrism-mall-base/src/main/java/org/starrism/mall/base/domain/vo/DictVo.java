@@ -1,7 +1,8 @@
-package org.starrism.mall.data.domain.vo;
+package org.starrism.mall.base.domain.vo;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.starrism.mall.data.domain.vo.BaseVo;
 
 /**
  * <p></p>

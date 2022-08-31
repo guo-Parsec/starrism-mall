@@ -42,7 +42,7 @@
                modify_time,
                modify_name
         FROM bms_menu
-        WHERE enable_status = 0
+        WHERE enable_status = ${@org.starrism.mall.data.pool.BasePool@ENABLE}
         ORDER BY sort;
     </select>
 </mapper>

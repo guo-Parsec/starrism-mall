@@ -16,8 +16,11 @@ import org.starrism.mall.data.mybatisplus.inject.MySqlInjector;
  * @since 2022/8/13
  **/
 @Configuration
-@MapperScan({"com.baomidou.mybatisplus.samples.quickstart.mapper",
-        "org.starrism.mall.**.mapper"})
+@MapperScan({
+        "com.baomidou.mybatisplus.samples.quickstart.mapper",
+        "org.starrism.mall.**.mapper",
+        "org.starrism.mall.**.repository"
+})
 public class MyBatisPlusConfig {
 
     @Bean

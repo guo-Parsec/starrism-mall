@@ -1,11 +1,9 @@
-package org.starrism.mall.data.domain.vo;
+package org.starrism.mall.base.domain.vo;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.starrism.mall.base.context.DictContext;
 import org.starrism.mall.common.domain.Domainizable;
-import org.starrism.mall.common.support.CommonConverts;
-import org.starrism.mall.common.util.StrUtil;
-import org.starrism.mall.data.service.client.DictClient;
 
 import java.util.Set;
 
@@ -43,7 +41,7 @@ public class CoreUser implements Domainizable {
     private String sexName;
 
     public String getSexName() {
-        return DictClient.convert("SEX", CommonConverts.toStr().convert(this.sex, StrUtil.EMPTY));
+        return DictContext.convert("SEX", this.sex);
     }
 
     @Override

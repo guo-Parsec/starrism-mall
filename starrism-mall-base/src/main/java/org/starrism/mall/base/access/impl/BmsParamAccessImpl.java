@@ -1,6 +1,5 @@
 package org.starrism.mall.base.access.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.starrism.mall.base.access.BmsParamAccess;
@@ -26,13 +25,6 @@ public class BmsParamAccessImpl implements BmsParamAccess {
     @Resource
     private BmsParamRepository bmsParamRepository;
 
-    private BmsParamConverters bmsParamConverters;
-
-    @Autowired
-    public void setBmsParamConverters(BmsParamConverters bmsParamConverters) {
-        this.bmsParamConverters = bmsParamConverters;
-    }
-
     /**
      * <p>根据参数码获取参数</p>
      *
@@ -50,6 +42,6 @@ public class BmsParamAccessImpl implements BmsParamAccess {
             LOGGER.debug("查询paramCode为{}的参数为空", paramCode);
             return null;
         }
-        return bmsParamConverters.toParamVo(param);
+        return BmsParamConverters.toParamVo(param);
     }
 }

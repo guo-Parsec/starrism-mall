@@ -1,6 +1,5 @@
 package org.starrism.mall.admin.core.domain.converter;
 
-import org.springframework.stereotype.Component;
 import org.starrism.mall.admin.api.domain.vo.BmsRoleVo;
 import org.starrism.mall.admin.core.domain.entity.BmsRole;
 import org.starrism.mall.common.domain.BaseConverters;
@@ -13,7 +12,6 @@ import org.starrism.mall.common.support.Convertible;
  * @author hedwing
  * @since 2022/8/14
  **/
-@Component
 public class BmsRoleConverters implements BaseConverters {
 
     /**
@@ -23,7 +21,7 @@ public class BmsRoleConverters implements BaseConverters {
      * @author hedwing
      * @since 2022/8/14
      */
-    Convertible<BmsRole, BmsRoleVo> toRoleVoConverters(BmsRole bmsRole) {
+    static Convertible<BmsRole, BmsRoleVo> toRoleVoConverters(BmsRole bmsRole) {
         return (source) -> Builder.of(BmsRoleVo::new)
                 .with(BmsRoleVo::setId, bmsRole.getId())
                 .with(BmsRoleVo::setParentId, String.valueOf(bmsRole.getParentId()))
@@ -35,7 +33,15 @@ public class BmsRoleConverters implements BaseConverters {
                 .build();
     }
 
-    public BmsRoleVo toRoleVo(BmsRole bmsRole) {
+    /**
+     * <p>BmsRole 转 BmsRoleVo</p>
+     *
+     * @param bmsRole bmsRole
+     * @return org.starrism.mall.admin.api.domain.vo.BmsRoleVo
+     * @author hedwing
+     * @since 2022/8/31
+     */
+    public static BmsRoleVo toRoleVo(BmsRole bmsRole) {
         return toRoleVoConverters(bmsRole).convert(bmsRole);
     }
 

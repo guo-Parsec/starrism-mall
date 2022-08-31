@@ -1,7 +1,6 @@
 package org.starrism.mall.admin.core.service.impl;
 
 import com.google.common.collect.Lists;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.starrism.mall.admin.api.domain.vo.BmsRoleVo;
 import org.starrism.mall.admin.core.domain.converter.BmsRoleConverters;
@@ -33,12 +32,6 @@ public class BmsRoleServiceImpl implements BmsRoleService {
     private BmsRoleMapper bmsRoleMapper;
     @Resource
     private BmsUserMapper bmsUserMapper;
-    private BmsRoleConverters bmsRoleConverters;
-
-    @Autowired
-    public void setBmsRoleConverters(BmsRoleConverters bmsRoleConverters) {
-        this.bmsRoleConverters = bmsRoleConverters;
-    }
 
     /**
      * <p>根据用户名查询角色信息</p>
@@ -73,7 +66,7 @@ public class BmsRoleServiceImpl implements BmsRoleService {
             LOGGER.debug("用户[userId={}]的角色为空", userId);
             return Lists.newArrayList();
         }
-        return roles.stream().map(role -> bmsRoleConverters.toRoleVo(role)).collect(Collectors.toList());
+        return roles.stream().map(BmsRoleConverters::toRoleVo).collect(Collectors.toList());
     }
 
     /**

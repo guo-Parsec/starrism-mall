@@ -1,7 +1,6 @@
 package org.starrism.mall.base.domain.converter;
 
 
-import org.springframework.stereotype.Component;
 import org.starrism.mall.base.domain.entity.BmsParam;
 import org.starrism.mall.base.domain.vo.BmsParamVo;
 import org.starrism.mall.common.domain.BaseConverters;
@@ -14,7 +13,6 @@ import org.starrism.mall.common.support.Convertible;
  * @author hedwing
  * @since 2022/8/14
  **/
-@Component
 public class BmsParamConverters implements BaseConverters {
 
     /**
@@ -24,7 +22,7 @@ public class BmsParamConverters implements BaseConverters {
      * @author hedwing
      * @since 2022/8/14
      */
-    Convertible<BmsParam, BmsParamVo> toParamVoConverters(BmsParam bmsParam) {
+    static Convertible<BmsParam, BmsParamVo> toParamVoConverters(BmsParam bmsParam) {
         return (source) -> Builder.of(BmsParamVo::new)
                 .with(BmsParamVo::setId, bmsParam.getId())
                 .with(BmsParamVo::setParamCode, bmsParam.getParamCode())
@@ -33,7 +31,15 @@ public class BmsParamConverters implements BaseConverters {
                 .build();
     }
 
-    public BmsParamVo toParamVo(BmsParam bmsParam) {
+    /**
+     * <p>BmsParam 转 BmsParamVo</p>
+     *
+     * @param bmsParam bmsParam
+     * @return org.starrism.mall.base.domain.vo.BmsParamVo
+     * @author hedwing
+     * @since 2022/8/31
+     */
+    public static BmsParamVo toParamVo(BmsParam bmsParam) {
         return toParamVoConverters(bmsParam).convert(bmsParam);
     }
 

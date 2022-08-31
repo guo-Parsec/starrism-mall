@@ -1,6 +1,5 @@
 package org.starrism.mall.base.access.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.starrism.mall.base.access.DictAccess;
@@ -27,11 +26,6 @@ public class DictAccessImpl implements DictAccess {
     private BmsDictCategoryRepository dictCategoryRepository;
     @Resource
     private BmsDictDetailRepository dictDetailRepository;
-    DictConverters dictConverters;
-    @Autowired
-    public void setDictConverters(DictConverters dictConverters) {
-        this.dictConverters = dictConverters;
-    }
 
     /**
      * 根据分类码查询字典
@@ -47,7 +41,7 @@ public class DictAccessImpl implements DictAccess {
             return null;
         }
         List<BmsDictDetail> details = dictDetailRepository.findByCategory(category.getId());
-        return details.stream().map(detail -> dictConverters.dictDetailToVo(detail)).collect(Collectors.toList());
+        return details.stream().map(DictConverters::dictDetailToVo).collect(Collectors.toList());
     }
 
     /**
@@ -66,6 +60,6 @@ public class DictAccessImpl implements DictAccess {
         if (category == null) {
             return null;
         }
-        return dictConverters.dictDetailToVo(dictDetailRepository.findByCodes(category.getId(), dictCode));
+        return DictConverters.dictDetailToVo(dictDetailRepository.findByCodes(category.getId(), dictCode));
     }
 }

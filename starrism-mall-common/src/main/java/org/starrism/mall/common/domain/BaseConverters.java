@@ -1,7 +1,7 @@
 package org.starrism.mall.common.domain;
 
 /**
- * <p></p>
+ * <p>基础转换器</p>
  *
  * @author hedwing
  * @since 2022/8/14

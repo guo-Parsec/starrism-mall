@@ -26,7 +26,7 @@ public class BmsUserConverters implements BaseConverters {
      * @author hedwing
      * @since 2022/8/14
      */
-    Convertible<BmsUser, BmsUserVo> userEntityToUserVoConverters(BmsUser bmsUser) {
+    static Convertible<BmsUser, BmsUserVo> userEntityToUserVoConverters(BmsUser bmsUser) {
         return (source) -> Builder.of(BmsUserVo::new)
                 .with(BmsUserVo::setId, bmsUser.getId())
                 .with(BmsUserVo::setUsername, bmsUser.getUsername())
@@ -38,7 +38,15 @@ public class BmsUserConverters implements BaseConverters {
                 .build();
     }
 
-    Convertible<BmsUser, CoreUser> toCoreUserConverters(BmsUser bmsUser) {
+    /**
+     * <p>BmsUser 转 CoreUser 转换器</p>
+     *
+     * @param bmsUser 用户实体
+     * @return org.starrism.mall.common.support.Convertible<org.starrism.mall.admin.core.domain.entity.BmsUser, org.starrism.mall.base.domain.vo.CoreUser>
+     * @author hedwing
+     * @since 2022/8/31
+     */
+    static Convertible<BmsUser, CoreUser> toCoreUserConverters(BmsUser bmsUser) {
         return (source) -> Builder.of(CoreUser::new)
                 .with(CoreUser::setId, bmsUser.getId())
                 .with(CoreUser::setUsername, bmsUser.getUsername())
@@ -51,7 +59,15 @@ public class BmsUserConverters implements BaseConverters {
                 .build();
     }
 
-    Convertible<UserDto, BmsUser> dtoToBmsUserConverters(UserDto userDto) {
+    /**
+     * <p>UserDto 转 BmsUser 转换器</p>
+     *
+     * @param userDto 用户传参
+     * @return org.starrism.mall.common.support.Convertible<org.starrism.mall.admin.api.domain.dto.UserDto, org.starrism.mall.admin.core.domain.entity.BmsUser>
+     * @author hedwing
+     * @since 2022/8/31
+     */
+    static Convertible<UserDto, BmsUser> dtoToBmsUserConverters(UserDto userDto) {
         return (source) -> Builder.of(BmsUser::new)
                 .with(BmsUser::setUsername, userDto.getUsername())
                 .with(BmsUser::setPassword, userDto.getPassword())
@@ -63,15 +79,39 @@ public class BmsUserConverters implements BaseConverters {
                 .build();
     }
 
-    public BmsUserVo userEntityToUserVo(BmsUser bmsUser) {
+    /**
+     * <p>BmsUser 转换为 BmsUserVo</p>
+     *
+     * @param bmsUser bmsUser
+     * @return org.starrism.mall.admin.api.domain.vo.BmsUserVo
+     * @author hedwing
+     * @since 2022/8/31
+     */
+    public static BmsUserVo userEntityToUserVo(BmsUser bmsUser) {
         return userEntityToUserVoConverters(bmsUser).convert(bmsUser);
     }
 
-    public CoreUser toCoreUser(BmsUser bmsUser) {
+    /**
+     * <p>BmsUser 转换为 CoreUser</p>
+     *
+     * @param bmsUser bmsUser
+     * @return org.starrism.mall.base.domain.vo.CoreUser
+     * @author hedwing
+     * @since 2022/8/31
+     */
+    public static CoreUser toCoreUser(BmsUser bmsUser) {
         return toCoreUserConverters(bmsUser).convert(bmsUser);
     }
 
-    public BmsUser dtoToBmsUser(UserDto userDto) {
+    /**
+     * <p>UserDto 转换为 BmsUser</p>
+     *
+     * @param userDto 用户参数
+     * @return org.starrism.mall.admin.core.domain.entity.BmsUser
+     * @author hedwing
+     * @since 2022/8/31
+     */
+    public static BmsUser dtoToBmsUser(UserDto userDto) {
         return dtoToBmsUserConverters(userDto).convert(userDto);
     }
 }

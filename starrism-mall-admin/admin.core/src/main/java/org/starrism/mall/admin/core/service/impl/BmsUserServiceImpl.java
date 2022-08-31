@@ -52,16 +52,10 @@ public class BmsUserServiceImpl implements BmsUserService {
     @Resource
     private BmsRoleMapper bmsRoleMapper;
     private final BmsRoleService bmsRoleService;
-    private BmsUserConverters bmsUserConverters;
 
     @Autowired
     public BmsUserServiceImpl(BmsRoleService bmsRoleService) {
         this.bmsRoleService = bmsRoleService;
-    }
-
-    @Autowired
-    public void setBmsUserConverters(BmsUserConverters bmsUserConverters) {
-        this.bmsUserConverters = bmsUserConverters;
     }
 
     /**
@@ -81,7 +75,7 @@ public class BmsUserServiceImpl implements BmsUserService {
             LOGGER.info("cannot find bmsUser of username={}", username);
             return null;
         }
-        CoreUser coreUser = bmsUserConverters.toCoreUser(bmsUser);
+        CoreUser coreUser = BmsUserConverters.toCoreUser(bmsUser);
         Set<String> roles = bmsRoleService.findRoleCodeListByUsername(username);
         coreUser.setRoles(Optional.ofNullable(roles).orElse(Sets.newHashSet()));
         return coreUser;
@@ -130,7 +124,7 @@ public class BmsUserServiceImpl implements BmsUserService {
             roles = Sets.newHashSet(defaultRoleParam.getParamValue().split(BasePool.DEFAULT_DELIMITER));
         }
         clone.setPassword(SaSecureUtil.md5BySalt(userDto.getPassword(), username));
-        BmsUser user = bmsUserConverters.dtoToBmsUser(clone);
+        BmsUser user = BmsUserConverters.dtoToBmsUser(clone);
         if (!setUserSex(user)) {
             return false;
         }
@@ -169,10 +163,27 @@ public class BmsUserServiceImpl implements BmsUserService {
         return true;
     }
 
+    /**
+     * <p>更新用户信息</p>
+     *
+     * @param userDto 用户参数
+     * @return boolean
+     * @author hedwing
+     * @since 2022/8/31
+     */
     private boolean editUser(UserDto userDto) {
         return true;
     }
 
+    /**
+     * <p>为用户赋予角色</p>
+     *
+     * @param userId      用户id
+     * @param roleCodeSet 角色code列表
+     * @return boolean
+     * @author hedwing
+     * @since 2022/8/31
+     */
     public boolean grantRoleToUser(Long userId, Set<String> roleCodeSet) {
         LambdaQueryWrapper<BmsRole> wrapper = new LambdaQueryWrapper<>();
         wrapper.in(BmsRole::getRoleCode, roleCodeSet);

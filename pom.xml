@@ -45,6 +45,7 @@
         <fastJson.version>2.0.7</fastJson.version>
         <sa-token.version>1.30.0</sa-token.version>
         <springfox.version>3.0.0</springfox.version>
+        <seata.version>1.5.2</seata.version>
     </properties>
 
     <dependencyManagement>
@@ -190,6 +191,11 @@
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-boot-starter</artifactId>
                 <version>${springfox.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.seata</groupId>
+                <artifactId>seata-spring-boot-starter</artifactId>
+                <version>${seata.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

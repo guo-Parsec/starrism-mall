@@ -3,6 +3,7 @@ package org.starrism.mall.auth.core.service.impl;
 import cn.dev33.satoken.secure.SaSecureUtil;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.stereotype.Service;
 import org.starrism.mall.admin.api.domain.dto.MemberRegisterDto;
 import org.starrism.mall.admin.api.domain.dto.UserDto;
@@ -90,6 +91,7 @@ public class AuthServiceImpl implements AuthService {
      * @since 2022/8/29
      */
     @Override
+    @GlobalTransactional(rollbackFor = Exception.class)
     public boolean memberRegister(MemberRegisterDto dto) {
         UserDto userDto = Builder.of(UserDto::new)
                 .with(UserDto::setPassword, dto.getPassword())

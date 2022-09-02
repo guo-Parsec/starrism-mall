@@ -11,18 +11,18 @@ import lombok.Setter;
  **/
 @Setter
 @Getter
-public class BasePageParam extends BaseParam {
+public class BasePageDto extends BaseDto {
     private static final long serialVersionUID = 83042109450770030L;
 
     /**
      * 当前页
      */
-    private Integer currPage;
+    protected Integer currPage;
 
     /**
      * 页大小
      */
-    private Integer pageSize;
+    protected Integer pageSize;
 
 
 

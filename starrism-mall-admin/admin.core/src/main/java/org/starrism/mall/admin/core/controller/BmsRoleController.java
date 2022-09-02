@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.starrism.mall.admin.core.service.BmsRoleService;
+import org.starrism.mall.common.pools.UrlPool;
 import org.starrism.mall.common.rest.CommonResult;
 
 import java.util.Set;
@@ -20,7 +21,7 @@ import java.util.Set;
  **/
 @Api(value = "角色管理Web", tags = "角色管理接口")
 @RestController
-@RequestMapping(value = "/v1/bms/role")
+@RequestMapping(value = UrlPool.BMS_ROLE_PREFIX)
 public class BmsRoleController {
     private BmsRoleService bmsRoleService;
 

@@ -35,6 +35,7 @@ public class BmsUserConverters implements BaseConverters {
                 .with(BmsUserVo::setPhoneNumber, bmsUser.getPhoneNumber())
                 .with(BmsUserVo::setAvatarUrl, bmsUser.getAvatarUrl())
                 .with(BmsUserVo::setSex, bmsUser.getSex())
+                .with(BmsUserVo::setEnableStatus, bmsUser.getEnableStatus())
                 .build();
     }
 

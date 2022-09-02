@@ -23,7 +23,7 @@ public interface BmsUserMapper extends CoreMapper<BmsUser> {
      * @author hedwing
      * @since 2022/8/13
      */
-    BmsUser findById(Long id);
+    BmsUser findById(@Param("id") Long id);
 
     /**
      * 根据用户名查询用户
@@ -41,6 +41,34 @@ public interface BmsUserMapper extends CoreMapper<BmsUser> {
      * @since 2022/8/13
      */
     void addUser(BmsUser bmsUser);
+
+    /**
+     * <p>更新用户信息</p>
+     *
+     * @param bmsUser 用户
+     * @author hedwing
+     * @since 2022/9/2
+     */
+    void modifyUser(BmsUser bmsUser);
+
+    /**
+     * <p>更改用户状态</p>
+     *
+     * @param id           用户id
+     * @param enableStatus 用户状态
+     * @author hedwing
+     * @since 2022/9/2
+     */
+    void changeUserStatus(@Param("id") Long id, @Param("enableStatus") Integer enableStatus);
+
+    /**
+     * <p>物理删除用户</p>
+     *
+     * @param id 用户id
+     * @author hedwing
+     * @since 2022/9/2
+     */
+    void physicalRemoveUser(@Param("id") Long id);
 
     /**
      * <p>为用户赋予角色</p>

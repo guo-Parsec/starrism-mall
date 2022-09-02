@@ -22,7 +22,7 @@
                param_value,
                param_name
         from bms_param
-        where enable_status = ${@org.starrism.mall.data.pool.BasePool@ENABLE}
+        where enable_status = '${@org.starrism.mall.data.pool.BasePool@ENABLE}'
             and param_code = #{paramCode,jdbcType=VARCHAR}
         limit 1
     </select>

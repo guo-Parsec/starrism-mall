@@ -42,7 +42,7 @@
         from bms_role role
                  left join bms_user_role bur on role.id = bur.role_id
         where bur.user_id = #{userId,jdbcType=BIGINT}
-          and role.enable_status = ${@org.starrism.mall.data.pool.BasePool@ENABLE}
+          and role.enable_status = '${@org.starrism.mall.data.pool.BasePool@ENABLE}'
     </select>
 
     <select id="findById" parameterType="long" resultMap="BaseResultMap">
@@ -60,7 +60,7 @@
                role.modify_name
         from bms_role role
         where role.id = #{id,jdbcType=BIGINT}
-          and role.enable_status = ${@org.starrism.mall.data.pool.BasePool@ENABLE}
+          and role.enable_status = '${@org.starrism.mall.data.pool.BasePool@ENABLE}'
         limit 1
     </select>
 
@@ -82,7 +82,7 @@
         <foreach collection="roleCodes" open="(" close=")" separator="," item="roleCode">
             #{roleCode,jdbcType=VARCHAR}
         </foreach>
-          and role.enable_status = ${@org.starrism.mall.data.pool.BasePool@ENABLE}
+          and role.enable_status = '${@org.starrism.mall.data.pool.BasePool@ENABLE}'
         limit 1
     </select>
 </mapper>

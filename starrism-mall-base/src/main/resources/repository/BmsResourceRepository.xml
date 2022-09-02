@@ -29,10 +29,10 @@
                br.modify_time,
                br.modify_name
         from bms_resource br
-        where br.enable_status = ${@org.starrism.mall.data.pool.BasePool@ENABLE}
+        where br.enable_status = '${@org.starrism.mall.data.pool.BasePool@ENABLE}'
           and exists(select 1
                      from bms_resource_category brc
-                     where brc.enable_status = ${@org.starrism.mall.data.pool.BasePool@ENABLE}
+                     where brc.enable_status = '${@org.starrism.mall.data.pool.BasePool@ENABLE}'
                        and brc.category_code = #{categoryCode,jdbcType=VARCHAR}
                        and brc.id = br.resource_category_id
             )
@@ -42,7 +42,7 @@
         select br.resource_code as resourceCode
         from bms_resource br
                  left join bms_role_resource brr on br.id = brr.resource_id
-        where br.enable_status = ${@org.starrism.mall.data.pool.BasePool@ENABLE}
+        where br.enable_status = '${@org.starrism.mall.data.pool.BasePool@ENABLE}'
         and brr.role_id in
         <foreach collection="roleIdSet" open="(" close=")" separator="," item="roleId">
             #{roleId,jdbcType=BIGINT}

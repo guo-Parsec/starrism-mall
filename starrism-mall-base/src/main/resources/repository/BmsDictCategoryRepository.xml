@@ -25,6 +25,6 @@
         bdc.modify_name
         from bms_dict_category bdc
         where bdc.dict_category_code = #{dictCategoryCode,jdbcType=VARCHAR}
-        and bdc.enable_status = ${@org.starrism.mall.data.pool.BasePool@ENABLE}
+        and bdc.enable_status = '${@org.starrism.mall.data.pool.BasePool@ENABLE}'
     </select>
 </mapper>

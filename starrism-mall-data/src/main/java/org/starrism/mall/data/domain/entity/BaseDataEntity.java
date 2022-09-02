@@ -2,7 +2,6 @@ package org.starrism.mall.data.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -45,9 +44,8 @@ public abstract class BaseDataEntity extends BaseEntity {
     protected String modifyName;
 
     /**
-     * 启用状态(数据字典 0-启用 1-禁用)
+     * 启用状态(数据字典 0-启用 1-禁用 2-删除)
      */
-    @TableLogic(value = "0", delval = "1")
     protected Integer enableStatus;
 
     public BaseDataEntity() {

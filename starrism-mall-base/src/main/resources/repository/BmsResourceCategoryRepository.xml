@@ -27,7 +27,7 @@
                modify_time,
                modify_name
         from bms_resource_category
-        where enable_status = ${@org.starrism.mall.data.pool.BasePool@ENABLE}
+        where enable_status = '${@org.starrism.mall.data.pool.BasePool@ENABLE}'
         and category_code = #{categoryCode,jdbcType=VARCHAR} limit 1
     </select>
 

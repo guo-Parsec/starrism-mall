@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.starrism.mall.base.context.DictContext;
 import org.starrism.mall.common.domain.Domainizable;
+import org.starrism.mall.common.pools.DictPool;
 
 import java.util.Set;
 
@@ -41,7 +42,7 @@ public class CoreUser implements Domainizable {
     private String sexName;
 
     public String getSexName() {
-        return DictContext.convert("SEX", this.sex);
+        return DictContext.convert(DictPool.DICT_CATEGORY_SEX, this.sex);
     }
 
     @Override

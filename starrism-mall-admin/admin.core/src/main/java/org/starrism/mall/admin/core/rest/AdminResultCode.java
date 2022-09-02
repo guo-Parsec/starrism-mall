@@ -13,7 +13,12 @@ public enum AdminResultCode implements BaseRestEnum {
     /**
      * 用户已存在
      */
-    USER_EXIST(100501L, "用户已存在");
+    USER_EXIST(100501L, "用户已存在"),
+    /**
+     * 用户不存在
+     */
+    USER_NOT_EXIST(100502L, "用户不存在")
+    ;
 
     AdminResultCode(Long code, String message) {
         this.code = code;

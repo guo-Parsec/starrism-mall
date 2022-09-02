@@ -7,6 +7,7 @@ import org.starrism.mall.base.domain.converter.DictConverters;
 import org.starrism.mall.base.domain.entity.BmsDictCategory;
 import org.starrism.mall.base.domain.entity.BmsDictDetail;
 import org.starrism.mall.base.domain.vo.DictVo;
+import org.starrism.mall.base.pool.BeanPool;
 import org.starrism.mall.base.repository.BmsDictCategoryRepository;
 import org.starrism.mall.base.repository.BmsDictDetailRepository;
 
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
  * @author hedwing
  * @since 2022/8/28
  **/
-@Service("dictAccess")
+@Service(BeanPool.DICT_ACCESS_BEAN_NAME)
 public class DictAccessImpl implements DictAccess {
     @Resource
     private BmsDictCategoryRepository dictCategoryRepository;

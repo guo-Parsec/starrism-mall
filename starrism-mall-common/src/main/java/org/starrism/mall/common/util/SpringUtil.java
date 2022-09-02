@@ -3,8 +3,6 @@ package org.starrism.mall.common.util;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
-import org.starrism.mall.common.log.StarrismLogger;
-import org.starrism.mall.common.log.StarrismLoggerFactory;
 
 import javax.annotation.Nullable;
 
@@ -16,8 +14,6 @@ import javax.annotation.Nullable;
  **/
 @Component
 public class SpringUtil implements ApplicationContextAware {
-    private static final StarrismLogger LOGGER = StarrismLoggerFactory.getLogger(SpringUtil.class);
-
     private static ApplicationContext applicationContext;
 
     @Override

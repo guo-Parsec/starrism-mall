@@ -49,7 +49,7 @@
                modify_name
         from bms_dict_detail
         where dict_category_id = #{categoryId,jdbcType=BIGINT}
-          and enable_status = ${@org.starrism.mall.data.pool.BasePool@ENABLE}
+          and enable_status = '${@org.starrism.mall.data.pool.BasePool@ENABLE}'
         order by sort;
     </select>
 
@@ -69,7 +69,7 @@
         from bms_dict_detail
         where dict_category_id = #{categoryId,jdbcType=BIGINT}
           and dict_code = #{dictCode,jdbcType=VARCHAR}
-          and enable_status = ${@org.starrism.mall.data.pool.BasePool@ENABLE}
+          and enable_status = '${@org.starrism.mall.data.pool.BasePool@ENABLE}'
         order by sort;
     </select>
 </mapper>

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.starrism.mall.admin.api.domain.dto.UserDto;
 import org.starrism.mall.admin.core.service.BmsUserService;
 import org.starrism.mall.base.domain.vo.CoreUser;
+import org.starrism.mall.common.pools.UrlPool;
 import org.starrism.mall.common.rest.CommonResult;
 
 /**
@@ -19,9 +20,10 @@ import org.starrism.mall.common.rest.CommonResult;
 @Api(value = "用户管理Web", tags = "用户管理接口")
 @RestController
 @Validated
-@RequestMapping(value = "/v1/bms/user")
+@RequestMapping(value = UrlPool.BMS_USER_PREFIX)
 public class BmsUserController {
     BmsUserService bmsUserService;
+
     @Autowired
     public void setBmsUserService(BmsUserService bmsUserService) {
         this.bmsUserService = bmsUserService;

@@ -4,6 +4,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.starrism.mall.common.pools.AppPool;
+import org.starrism.mall.common.pools.UrlPool;
 import org.starrism.mall.common.rest.CommonResult;
 
 import java.util.Set;
@@ -16,8 +17,6 @@ import java.util.Set;
  **/
 @FeignClient(name = AppPool.APPLICATION_ADMIN_NAME, contextId = "bmsRoleClient")
 public interface BmsRoleClient {
-    String URL_PREFIX = "/v1/bms/role";
-
     /**
      * <p>根据用户名查询角色</p>
      *
@@ -26,7 +25,7 @@ public interface BmsRoleClient {
      * @author hedwing
      * @since 2022/8/29
      */
-    @GetMapping(value = URL_PREFIX + "/find/role-code/by/username")
+    @GetMapping(value = UrlPool.BMS_ROLE_PREFIX + "/find/role-code/by/username")
     public CommonResult<Set<String>> findRoleCodesByUsername(@RequestParam("username") String username);
 
     /**
@@ -37,6 +36,6 @@ public interface BmsRoleClient {
      * @author hedwing
      * @since 2022/8/29
      */
-    @GetMapping(value = URL_PREFIX + "/find/role-code/by/userId")
+    @GetMapping(value = UrlPool.BMS_ROLE_PREFIX + "/find/role-code/by/userId")
     public CommonResult<Set<String>> findRoleCodesByUserId(@RequestParam("userId") Long userId);
 }

@@ -48,7 +48,7 @@ public class GlobalExceptionConfig {
         if (baseRestEnum == null) {
             return CommonResult.failed(exception.getMessage(), exception.getCode());
         }
-        return CommonResult.failed(exception.getBaseRestEnum());
+        return CommonResult.failed(exception.getBaseRestEnum(), exception.getMessage());
     }
 
     /**

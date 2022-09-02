@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.starrism.mall.admin.core.domain.entity.BmsMenu;
 import org.starrism.mall.admin.core.service.BmsMenuService;
+import org.starrism.mall.common.pools.UrlPool;
 import org.starrism.mall.common.rest.CommonResult;
 
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
  * @since 2022/8/21
  **/
 @RestController
-@RequestMapping(value = "/v1/bms/menu")
+@RequestMapping(value = UrlPool.BMS_MENU_PREFIX)
 public class BmsMenuController {
     private final BmsMenuService bmsMenuService;
 

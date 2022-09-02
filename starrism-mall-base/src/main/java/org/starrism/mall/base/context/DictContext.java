@@ -3,6 +3,7 @@ package org.starrism.mall.base.context;
 import org.springframework.context.ApplicationContext;
 import org.starrism.mall.base.access.DictAccess;
 import org.starrism.mall.base.domain.vo.DictVo;
+import org.starrism.mall.base.pool.BeanPool;
 import org.starrism.mall.common.log.StarrismLogger;
 import org.starrism.mall.common.log.StarrismLoggerFactory;
 import org.starrism.mall.common.support.CommonConverts;
@@ -46,7 +47,7 @@ public class DictContext {
             return null;
         }
         ApplicationContext context = SpringUtil.getApplicationContext();
-        DictAccess dictAccess = context.getBean("dictAccess", DictAccess.class);
+        DictAccess dictAccess = context.getBean(BeanPool.DICT_ACCESS_BEAN_NAME, DictAccess.class);
         DictVo dictVo = dictAccess.findDictByCodes(categoryCode, dictCode);
         if (dictVo == null) {
             return null;

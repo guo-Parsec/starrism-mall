@@ -1,12 +1,14 @@
 package org.starrism.mall.admin.core.service.impl;
 
 import cn.dev33.satoken.secure.SaSecureUtil;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.starrism.mall.admin.api.domain.dto.UserDto;
+import org.starrism.mall.admin.api.domain.dto.UserPageDto;
+import org.starrism.mall.admin.api.domain.vo.BmsUserVo;
 import org.starrism.mall.admin.core.domain.converter.BmsUserConverters;
 import org.starrism.mall.admin.core.domain.entity.BmsRole;
 import org.starrism.mall.admin.core.domain.entity.BmsUser;
@@ -24,6 +26,7 @@ import org.starrism.mall.common.exceptions.StarrismException;
 import org.starrism.mall.common.log.StarrismLogger;
 import org.starrism.mall.common.log.StarrismLoggerFactory;
 import org.starrism.mall.common.pools.ParamPool;
+import org.starrism.mall.common.rest.ResultCode;
 import org.starrism.mall.common.util.CollectionUtil;
 import org.starrism.mall.common.util.StrUtil;
 import org.starrism.mall.data.domain.entity.BaseDataEntity;
@@ -68,6 +71,20 @@ public class BmsUserServiceImpl implements BmsUserService {
 
 
     /**
+     * <p>分页查询用户数据</p>
+     *
+     * @param userPageDto 用户dto
+     * @return com.baomidou.mybatisplus.extension.plugins.pagination.Page<org.starrism.mall.admin.api.domain.vo.BmsUserVo>
+     * @author hedwing
+     * @since 2022/9/2
+     */
+    @Override
+    public Page<BmsUserVo> page(UserPageDto userPageDto) {
+       // todo
+        return null;
+    }
+
+    /**
      * <p>根据用户名查询用户信息</p>
      *
      * @param username 用户名
@@ -77,9 +94,7 @@ public class BmsUserServiceImpl implements BmsUserService {
      */
     @Override
     public CoreUser findUserByUsername(String username) {
-        LambdaQueryWrapper<BmsUser> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(BmsUser::getUsername, username);
-        BmsUser bmsUser = bmsUserMapper.selectOne(wrapper);
+        BmsUser bmsUser = bmsUserMapper.findByUsername(username);
         if (BaseEntity.isEmpty(bmsUser)) {
             LOGGER.info("cannot find bmsUser of username={}", username);
             return null;
@@ -120,6 +135,74 @@ public class BmsUserServiceImpl implements BmsUserService {
     @Override
     public boolean grantRoleToUser(Long userId, Set<String> roleCodeSet) {
         return grantRoleToUser(userId, roleCodeSet, Boolean.FALSE);
+    }
+
+    private void userExistCheck(Long userId) {
+        BmsUser existUser = bmsUserMapper.findById(userId);
+        if (BaseDataEntity.isEmpty(existUser)) {
+            LOGGER.error("删除的用户[userId={}]不存在", userId);
+            throw new StarrismException(AdminResultCode.USER_NOT_EXIST);
+        }
+    }
+
+    /**
+     * <p>禁用用户</p>
+     *
+     * @param userId 用户id
+     * @return boolean
+     * @author hedwing
+     * @since 2022/9/2
+     */
+    @Override
+    public boolean disabledUser(Long userId) {
+        userExistCheck(userId);
+        bmsUserMapper.changeUserStatus(userId, BasePool.DISABLE);
+        return true;
+    }
+
+    /**
+     * <p>启用用户</p>
+     *
+     * @param userId 用户id
+     * @return boolean
+     * @author hedwing
+     * @since 2022/9/2
+     */
+    @Override
+    public boolean enableUser(Long userId) {
+        userExistCheck(userId);
+        bmsUserMapper.changeUserStatus(userId, BasePool.ENABLE);
+        return true;
+    }
+
+    /**
+     * <p>逻辑删除用户</p>
+     *
+     * @param userId 用户id
+     * @return boolean
+     * @author hedwing
+     * @since 2022/9/2
+     */
+    @Override
+    public boolean logicRemoveUser(Long userId) {
+        userExistCheck(userId);
+        bmsUserMapper.changeUserStatus(userId, BasePool.DELETE);
+        return true;
+    }
+
+    /**
+     * <p>物理删除用户</p>
+     *
+     * @param userId 用户id
+     * @return boolean
+     * @author hedwing
+     * @since 2022/9/2
+     */
+    @Override
+    public boolean physicalRemoveUser(Long userId) {
+        userExistCheck(userId);
+        bmsUserMapper.physicalRemoveUser(userId);
+        return true;
     }
 
     /**
@@ -197,6 +280,15 @@ public class BmsUserServiceImpl implements BmsUserService {
      * @since 2022/8/31
      */
     private boolean editUser(UserDto userDto) {
+        UserDto clone = userDto.clone();
+        Long id = clone.getId();
+        if (id == null || id.equals(0L)) {
+            LOGGER.error("更新用户时id不能为空");
+            throw new StarrismException("更新用户时id不能为空", ResultCode.VALIDATE_FAILED);
+        }
+        userExistCheck(id);
+        BmsUser user = BmsUserConverters.dtoToBmsUser(clone);
+        bmsUserMapper.modifyUser(user);
         return true;
     }
 
@@ -212,8 +304,6 @@ public class BmsUserServiceImpl implements BmsUserService {
      */
     @Transactional(rollbackFor = Exception.class)
     public boolean grantRoleToUser(Long userId, Set<String> roleCodeSet, boolean isNewUser) {
-        LambdaQueryWrapper<BmsRole> wrapper = new LambdaQueryWrapper<>();
-        wrapper.in(BmsRole::getRoleCode, roleCodeSet);
         List<Long> roleIds = bmsRoleMapper.findByRoleCode(roleCodeSet)
                 .stream()
                 .map(BmsRole::getId)
@@ -224,6 +314,7 @@ public class BmsUserServiceImpl implements BmsUserService {
         }
         // 如果不是新用户则需要删除原始角色信息才能赋值
         if (!isNewUser) {
+            userExistCheck(userId);
             bmsUserMapper.removeRoleForUser(userId);
         }
         bmsUserMapper.grantRoleToUser(userId, roleIds);

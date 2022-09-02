@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.starrism.mall.admin.api.domain.dto.UserDto;
 import org.starrism.mall.base.domain.vo.CoreUser;
 import org.starrism.mall.common.pools.AppPool;
+import org.starrism.mall.common.pools.UrlPool;
 import org.starrism.mall.common.rest.CommonResult;
 
 /**
@@ -19,7 +20,6 @@ import org.starrism.mall.common.rest.CommonResult;
  **/
 @FeignClient(name = AppPool.APPLICATION_ADMIN_NAME, contextId = "bmsUserClient")
 public interface BmsUserClient {
-    String URL_PREFIX = "/v1/bms/user";
 
     /**
      * 根据用户名获取用户信息
@@ -28,7 +28,7 @@ public interface BmsUserClient {
      * @return org.lime.hedwing.base.rest.RestApi<org.lime.hedwing.api.system.pojo.vo.UserVo>
      * @author guochengqiang
      */
-    @GetMapping(URL_PREFIX + "/find/{username}")
+    @GetMapping(UrlPool.BMS_USER_PREFIX + "/find/{username}")
     CommonResult<CoreUser> findUserByUsername(@PathVariable String username);
 
     /**
@@ -39,7 +39,7 @@ public interface BmsUserClient {
      * @author hedwing
      * @since 2022/8/29
      */
-    @PostMapping(value = URL_PREFIX + "/save")
+    @PostMapping(value = UrlPool.BMS_USER_PREFIX + "/save")
     CommonResult<Boolean> saveUser(@RequestBody @Validated UserDto userDto);
 
 }

@@ -3,6 +3,8 @@ package org.starrism.mall.admin.core.service;
 import org.starrism.mall.admin.api.domain.dto.UserDto;
 import org.starrism.mall.base.domain.vo.CoreUser;
 
+import java.util.Set;
+
 /**
  * <p>系统用户业务接口</p>
  *
@@ -27,4 +29,15 @@ public interface BmsUserService {
      * @return 是否保存成功
      */
     boolean saveUser(UserDto userDto);
+
+    /**
+     * <p>为用户赋予角色</p>
+     *
+     * @param userId      用户id
+     * @param roleCodeSet 角色code列表
+     * @return boolean
+     * @author hedwing
+     * @since 2022/8/31
+     */
+    boolean grantRoleToUser(Long userId, Set<String> roleCodeSet);
 }

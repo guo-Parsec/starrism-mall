@@ -51,4 +51,22 @@ public interface BmsRoleService {
      * @since 2022/8/29
      */
     Set<String> findRoleCodeListByUserId(Long userId);
+
+    /**
+     * <p>根据roleCodes查询roleId列表</p>
+     * @param roleCodes roleCodes
+     * @return java.util.Set<java.lang.Long>
+     * @author hedwing
+     * @since 2022/9/2
+     */
+    Set<Long> findRoleIdByRoleCodes(Set<String> roleCodes);
+
+    /**
+     * <p>根据roleCodes查询role列表</p>
+     * @param roleCodes roleCodes
+     * @return java.util.Set<java.lang.Long>
+     * @author hedwing
+     * @since 2022/9/2
+     */
+    List<BmsRoleVo> findRoleByRoleCodes(Set<String> roleCodes);
 }

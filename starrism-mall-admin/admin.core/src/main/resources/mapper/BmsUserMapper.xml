@@ -73,4 +73,8 @@
             #{userId,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}
         </foreach>
     </insert>
+
+    <delete id="removeRoleForUser" parameterType="long">
+        delete from bms_user_role where user_id = #{userId,jdbcType=BIGINT}
+    </delete>
 </mapper>

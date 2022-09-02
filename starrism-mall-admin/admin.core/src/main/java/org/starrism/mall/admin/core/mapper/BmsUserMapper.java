@@ -51,4 +51,13 @@ public interface BmsUserMapper extends CoreMapper<BmsUser> {
      * @since 2022/8/29
      */
     void grantRoleToUser(@Param("userId") Long userId, @Param("roleIds") List<Long> roleIds);
+
+    /**
+     * <p>删除用户拥有角色</p>
+     *
+     * @param userId 用户id
+     * @author hedwing
+     * @since 2022/9/2
+     */
+    void removeRoleForUser(@Param("userId") Long userId);
 }

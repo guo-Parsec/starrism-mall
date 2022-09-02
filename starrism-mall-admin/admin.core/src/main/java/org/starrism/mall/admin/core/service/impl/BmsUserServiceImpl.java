@@ -13,6 +13,7 @@ import org.starrism.mall.admin.core.domain.entity.BmsUser;
 import org.starrism.mall.admin.core.mapper.BmsRoleMapper;
 import org.starrism.mall.admin.core.mapper.BmsUserMapper;
 import org.starrism.mall.admin.core.rest.AdminResultCode;
+import org.starrism.mall.admin.core.service.BmsResourceService;
 import org.starrism.mall.admin.core.service.BmsRoleService;
 import org.starrism.mall.admin.core.service.BmsUserService;
 import org.starrism.mall.base.access.ParamAccess;
@@ -52,12 +53,19 @@ public class BmsUserServiceImpl implements BmsUserService {
     @Resource
     private BmsRoleMapper bmsRoleMapper;
 
+    private BmsResourceService resourceService;
+
     private final BmsRoleService bmsRoleService;
 
-    @Autowired
     public BmsUserServiceImpl(BmsRoleService bmsRoleService) {
         this.bmsRoleService = bmsRoleService;
     }
+
+    @Autowired
+    public void setResourceService(BmsResourceService resourceService) {
+        this.resourceService = resourceService;
+    }
+
 
     /**
      * <p>根据用户名查询用户信息</p>
@@ -78,8 +86,9 @@ public class BmsUserServiceImpl implements BmsUserService {
         }
         CoreUser coreUser = BmsUserConverters.toCoreUser(bmsUser);
         Set<String> roles = bmsRoleService.findRoleCodeListByUsername(username);
-
+        Set<String> permissions = resourceService.findResourcesForRoleCodes(roles);
         coreUser.setRoles(Optional.ofNullable(roles).orElse(Sets.newHashSet()));
+        coreUser.setPermissions(permissions);
         return coreUser;
     }
 
@@ -97,6 +106,20 @@ public class BmsUserServiceImpl implements BmsUserService {
         }
         LOGGER.debug("通过更新保存用户信息[userDto={}]", userDto);
         return editUser(userDto);
+    }
+
+    /**
+     * <p>为用户赋予角色</p>
+     *
+     * @param userId      用户id
+     * @param roleCodeSet 角色code列表
+     * @return boolean
+     * @author hedwing
+     * @since 2022/8/31
+     */
+    @Override
+    public boolean grantRoleToUser(Long userId, Set<String> roleCodeSet) {
+        return grantRoleToUser(userId, roleCodeSet, Boolean.FALSE);
     }
 
     /**
@@ -134,7 +157,7 @@ public class BmsUserServiceImpl implements BmsUserService {
         user.setModifyName(user.getUsername());
         user.setEnableStatus(BasePool.ENABLE);
         bmsUserMapper.addUser(user);
-        return grantRoleToUser(user.getId(), roles);
+        return grantRoleToUser(user.getId(), roles, Boolean.TRUE);
     }
 
     /**
@@ -182,19 +205,26 @@ public class BmsUserServiceImpl implements BmsUserService {
      *
      * @param userId      用户id
      * @param roleCodeSet 角色code列表
+     * @param isNewUser   是否为新用户 如果是新用户则不需要删除原始角色信息
      * @return boolean
      * @author hedwing
      * @since 2022/8/31
      */
-    public boolean grantRoleToUser(Long userId, Set<String> roleCodeSet) {
+    @Transactional(rollbackFor = Exception.class)
+    public boolean grantRoleToUser(Long userId, Set<String> roleCodeSet, boolean isNewUser) {
         LambdaQueryWrapper<BmsRole> wrapper = new LambdaQueryWrapper<>();
         wrapper.in(BmsRole::getRoleCode, roleCodeSet);
-        List<Long> roleIds = bmsRoleMapper.selectList(wrapper).stream()
+        List<Long> roleIds = bmsRoleMapper.findByRoleCode(roleCodeSet)
+                .stream()
                 .map(BmsRole::getId)
                 .collect(Collectors.toList());
         if (CollectionUtil.isEmpty(roleIds)) {
             LOGGER.error("赋予用户[userId={}]的角色列表{}不存在", userId, roleCodeSet);
             return false;
+        }
+        // 如果不是新用户则需要删除原始角色信息才能赋值
+        if (!isNewUser) {
+            bmsUserMapper.removeRoleForUser(userId);
         }
         bmsUserMapper.grantRoleToUser(userId, roleIds);
         return true;

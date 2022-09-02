@@ -1,6 +1,7 @@
 package org.starrism.mall.admin.core.service.impl;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import org.springframework.stereotype.Service;
 import org.starrism.mall.admin.api.domain.vo.BmsRoleVo;
 import org.starrism.mall.admin.core.domain.converter.BmsRoleConverters;
@@ -95,5 +96,49 @@ public class BmsRoleServiceImpl implements BmsRoleService {
     public Set<String> findRoleCodeListByUserId(Long userId) {
         List<BmsRoleVo> roles = findRolesByUserId(userId);
         return roles.stream().map(BmsRoleVo::getRoleCode).collect(Collectors.toSet());
+    }
+
+    /**
+     * <p>根据roleCodes查询roleId列表</p>
+     *
+     * @param roleCodes roleCodes
+     * @return java.util.Set<java.lang.Long>
+     * @author hedwing
+     * @since 2022/9/2
+     */
+    @Override
+    public Set<Long> findRoleIdByRoleCodes(Set<String> roleCodes) {
+        if (CollectionUtil.isEmpty(roleCodes)) {
+            LOGGER.error("根据roleCodes查询role列表时roleCodes不能为空");
+            return Sets.newHashSet();
+        }
+        List<BmsRole> roles = bmsRoleMapper.findByRoleCode(roleCodes);
+        if (CollectionUtil.isEmpty(roles)) {
+            LOGGER.warn("根据roleCodes{}查询role列表为空", roleCodes);
+            return Sets.newHashSet();
+        }
+        return roles.stream().map(BmsRole::getId).collect(Collectors.toSet());
+    }
+
+    /**
+     * <p>根据roleCodes查询role列表</p>
+     *
+     * @param roleCodes roleCodes
+     * @return java.util.Set<java.lang.Long>
+     * @author hedwing
+     * @since 2022/9/2
+     */
+    @Override
+    public List<BmsRoleVo> findRoleByRoleCodes(Set<String> roleCodes) {
+        if (CollectionUtil.isEmpty(roleCodes)) {
+            LOGGER.error("根据roleCodes查询role列表时roleCodes不能为空");
+            return Lists.newArrayList();
+        }
+        List<BmsRole> role = bmsRoleMapper.findByRoleCode(roleCodes);
+        if (CollectionUtil.isEmpty(role)) {
+            LOGGER.warn("根据roleCodes{}查询role列表为空", roleCodes);
+            return Lists.newArrayList();
+        }
+        return role.stream().map(BmsRoleConverters::toRoleVo).collect(Collectors.toList());
     }
 }

@@ -9,8 +9,10 @@ import org.starrism.mall.admin.api.domain.dto.UserDto;
 import org.starrism.mall.admin.api.domain.dto.UserLoginDto;
 import org.starrism.mall.admin.api.feign.BmsUserClient;
 import org.starrism.mall.auth.core.domain.vo.AuthInfoVo;
+import org.starrism.mall.auth.core.exception.AuthException;
 import org.starrism.mall.auth.core.factory.LoginStrategyFactory;
 import org.starrism.mall.auth.core.pool.UserLoginPool;
+import org.starrism.mall.auth.core.rest.AuthResultCode;
 import org.starrism.mall.auth.core.service.AuthService;
 import org.starrism.mall.auth.core.strategy.LoginStrategy;
 import org.starrism.mall.base.access.ParamAccess;
@@ -63,6 +65,8 @@ public class AuthServiceImpl implements AuthService {
         String salePwd = SaSecureUtil.md5BySalt(userLoginDto.getPassword(), coreUser.getUsername());
         if (!coreUser.getPassword().equals(salePwd)) {
             loginStrategy.passwordMatchErrorProcessor(coreUser);
+            LOGGER.error("Password for user {} does not match", coreUser.getUsername());
+            throw new AuthException(AuthResultCode.USERNAME_OR_PASSWORD_ERROR);
         }
         return loginStrategy.loginSuccessProcessor(coreUser);
     }

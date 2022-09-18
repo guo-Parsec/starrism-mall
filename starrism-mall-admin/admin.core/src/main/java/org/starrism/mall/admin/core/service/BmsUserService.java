@@ -17,6 +17,7 @@ import java.util.Set;
 public interface BmsUserService {
     /**
      * <p>分页查询用户数据</p>
+     *
      * @param userPageDto 用户dto
      * @return com.baomidou.mybatisplus.extension.plugins.pagination.Page<org.starrism.mall.admin.api.domain.vo.BmsUserVo>
      * @author hedwing
@@ -92,4 +93,13 @@ public interface BmsUserService {
      * @since 2022/9/2
      */
     boolean physicalRemoveUser(Long userId);
+
+    /**
+     * <p>锁定用户</p>
+     *
+     * @param userId userId
+     * @author hedwing
+     * @since 2022/9/18
+     */
+    void lockUser(Long userId);
 }

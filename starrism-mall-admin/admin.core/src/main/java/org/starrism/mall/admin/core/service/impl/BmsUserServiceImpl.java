@@ -140,7 +140,7 @@ public class BmsUserServiceImpl implements BmsUserService {
     private void userExistCheck(Long userId) {
         BmsUser existUser = bmsUserMapper.findById(userId);
         if (BaseDataEntity.isEmpty(existUser)) {
-            LOGGER.error("删除的用户[userId={}]不存在", userId);
+            LOGGER.error("用户[userId={}]不存在", userId);
             throw new StarrismException(AdminResultCode.USER_NOT_EXIST);
         }
     }
@@ -203,6 +203,23 @@ public class BmsUserServiceImpl implements BmsUserService {
         userExistCheck(userId);
         bmsUserMapper.physicalRemoveUser(userId);
         return true;
+    }
+
+    /**
+     * <p>锁定用户</p>
+     *
+     * @param userId userId
+     * @author hedwing
+     * @since 2022/9/18
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void lockUser(Long userId) {
+        userExistCheck(userId);
+        BmsUser user = bmsUserMapper.findById(userId);
+        user.setEnableStatus(BasePool.LOCK_USER);
+        bmsUserMapper.modifyUser(user);
+        //
     }
 
     /**

@@ -11,10 +11,32 @@ import java.time.temporal.ChronoUnit;
  * @since 2022/9/17
  **/
 public class DateTimeUtil {
-    public static final String DEFAULT_DATETIME_PATTERN = "YYYY-MM-DD HH:mm:ss";
+    public static final String DEFAULT_DATETIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
+    /**
+     * <p>获取指定格式化规则</p>
+     *
+     * @param pattern 格式化规则
+     * @return java.time.format.DateTimeFormatter
+     * @author hedwing
+     * @since 2022/9/18
+     */
+    public static DateTimeFormatter getDateTimeFormatter(String pattern) {
+        if (StrUtil.isBlank(pattern)) {
+            return DateTimeFormatter.ofPattern(DEFAULT_DATETIME_PATTERN);
+        }
+        return DateTimeFormatter.ofPattern(pattern);
+    }
+
+    /**
+     * <p>获取默认格式化规则</p>
+     *
+     * @return java.time.format.DateTimeFormatter
+     * @author hedwing
+     * @since 2022/9/18
+     */
     public static DateTimeFormatter getDefaultDateTimeFormatter() {
-        return DateTimeFormatter.ofPattern(DEFAULT_DATETIME_PATTERN);
+        return getDateTimeFormatter(DEFAULT_DATETIME_PATTERN);
     }
 
     /**
@@ -25,7 +47,7 @@ public class DateTimeUtil {
      * @since 2022/9/17
      */
     public static String now() {
-        return getDefaultDateTimeFormatter().format(LocalDateTime.now());
+        return format(LocalDateTime.now());
     }
 
     /**
@@ -38,6 +60,31 @@ public class DateTimeUtil {
      */
     public static LocalDateTime parse(String time) {
         return LocalDateTime.parse(time, getDefaultDateTimeFormatter());
+    }
+
+    /**
+     * <p>根据默认规则格式化日期</p>
+     *
+     * @param localDateTime localDateTime
+     * @return java.lang.String
+     * @author hedwing
+     * @since 2022/9/18
+     */
+    public static String format(LocalDateTime localDateTime) {
+        return getDefaultDateTimeFormatter().format(localDateTime);
+    }
+
+    /**
+     * <p>根据指定规则格式化日期</p>
+     *
+     * @param localDateTime localDateTime
+     * @param pattern       pattern
+     * @return java.lang.String
+     * @author hedwing
+     * @since 2022/9/18
+     */
+    public static String format(LocalDateTime localDateTime, String pattern) {
+        return getDateTimeFormatter(pattern).format(localDateTime);
     }
 
     /**

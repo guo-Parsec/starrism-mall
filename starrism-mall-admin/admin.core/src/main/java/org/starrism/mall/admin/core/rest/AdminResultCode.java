@@ -17,7 +17,12 @@ public enum AdminResultCode implements BaseRestEnum {
     /**
      * 用户不存在
      */
-    USER_NOT_EXIST(100502L, "用户不存在")
+    USER_NOT_EXIST(100502L, "用户不存在"),
+
+    /**
+     * 锁定用户失败
+     */
+    LOCK_USER_ERROR(100503L, "锁定用户失败")
     ;
 
     AdminResultCode(Long code, String message) {

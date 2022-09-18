@@ -21,4 +21,9 @@ public interface UserLoginPool {
      * 默认登录策略器名称
      */
     String DEFAULT_LOGIN_STRATEGY_NAME = "defaultLoginStrategy";
+
+    /**
+     * 用户登录密码尝试错误锁定原因
+     */
+    String USER_LOGIN_PWD_WRONG_LOCK_REASON = "登录时用户名密码错误在{time}小时内超过{count}次被系统自动锁定";
 }

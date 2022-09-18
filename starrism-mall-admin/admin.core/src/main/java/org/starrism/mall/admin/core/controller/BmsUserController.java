@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.starrism.mall.admin.api.domain.dto.UserDto;
+import org.starrism.mall.admin.core.service.BmsLockAccountService;
 import org.starrism.mall.admin.core.service.BmsUserService;
 import org.starrism.mall.base.domain.vo.CoreUser;
 import org.starrism.mall.common.pools.UrlPool;
 import org.starrism.mall.common.rest.CommonResult;
+
+import java.time.LocalDateTime;
 
 /**
  * <p></p>
@@ -22,11 +25,17 @@ import org.starrism.mall.common.rest.CommonResult;
 @Validated
 @RequestMapping(value = UrlPool.BMS_USER_PREFIX)
 public class BmsUserController {
-    BmsUserService bmsUserService;
+    final BmsUserService bmsUserService;
+
+    BmsLockAccountService bmsLockAccountService;
+
+    public BmsUserController(BmsUserService bmsUserService) {
+        this.bmsUserService = bmsUserService;
+    }
 
     @Autowired
-    public void setBmsUserService(BmsUserService bmsUserService) {
-        this.bmsUserService = bmsUserService;
+    public void setBmsLockAccountService(BmsLockAccountService bmsLockAccountService) {
+        this.bmsLockAccountService = bmsLockAccountService;
     }
 
     @ApiOperation(value = "根据用户名查询用户", notes = "用户名")
@@ -39,5 +48,15 @@ public class BmsUserController {
     @PostMapping(value = "/save")
     public CommonResult<Boolean> saveUser(@RequestBody @Validated UserDto userDto) {
         return CommonResult.success(bmsUserService.saveUser(userDto));
+    }
+
+    @ApiOperation(value = "锁定用户", notes = "用户")
+    @PostMapping(value = "/lock")
+    public CommonResult<Void> lockUser(@RequestParam(value = "username") String username,
+                                       @RequestParam(value = "scheduledUnlockTime") LocalDateTime scheduledUnlockTime,
+                                       @RequestParam(value = "lockTime") LocalDateTime lockTime,
+                                       @RequestParam(value = "lockReason") String lockReason) {
+        bmsLockAccountService.lockUser(username, scheduledUnlockTime, lockTime, lockReason);
+        return CommonResult.success();
     }
 }

@@ -62,7 +62,7 @@ public class ParamAccessImpl implements ParamAccess {
      * @since 2022/9/17
      */
     @Override
-    @Cacheable(key = "'g'-#groupCode +'-'+#paramCode", cacheNames = "param:paramCode")
+    @Cacheable(key = "'g-'+#groupCode +'-'+#paramCode", cacheNames = "param:paramCode")
     public List<BmsParamVo> findByGroupCode(String groupCode, String paramCode) {
         LOGGER.debug("根据组别和参数码(可选)获取参数信息:参数[groupCode]={},参数[paramCode]={}", groupCode, paramCode);
         if (StrUtil.isBlank(groupCode)) {

@@ -113,8 +113,8 @@ public class CommonResult<T> {
     /**
      * 失败返回结果
      *
-     * @param code 错误码
-     * @param message      错误信息
+     * @param code    错误码
+     * @param message 错误信息
      */
     public static <T> CommonResult<T> failed(String message, Long code) {
         return new CommonResult<T>(code, message, null);
@@ -159,6 +159,11 @@ public class CommonResult<T> {
      * @since 2022/8/27
      */
     public static <T> T getSuccessData(CommonResult<T> commonResult) {
+        isSuccess(commonResult);
+        return commonResult.getData();
+    }
+
+    public static <T> boolean isSuccess(CommonResult<T> commonResult) {
         if (commonResult == null) {
             LOGGER.error("请求结果集为空，可能为请求错误");
             throw new RuntimeException("The request result set is empty, possibly a request error");
@@ -168,6 +173,6 @@ public class CommonResult<T> {
             LOGGER.error("请求信息码为{}，可能为请求失败", resultCode);
             throw new StarrismException(commonResult.getMessage(), resultCode);
         }
-        return commonResult.getData();
+        return true;
     }
 }

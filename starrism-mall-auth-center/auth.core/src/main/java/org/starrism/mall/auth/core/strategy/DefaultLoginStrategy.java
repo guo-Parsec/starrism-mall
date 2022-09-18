@@ -29,6 +29,7 @@ import org.starrism.mall.common.util.StrUtil;
 import org.starrism.mall.common.util.TextFormat;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
@@ -96,13 +97,14 @@ public class DefaultLoginStrategy implements LoginStrategy {
             return;
         }
         String now = DateTimeUtil.now();
+        LocalDateTime nowDt = DateTimeUtil.parse(now);
         String redisPwdWrongCountKey = TextFormat.format(UserLoginPool.USER_LOGIN_PWD_WRONG_COUNT_REDIS_KEY, coreUser.getId());
         String redisPwdWrongTimeKey = TextFormat.format(UserLoginPool.USER_LOGIN_PWD_WRONG_TIME_REDIS_KEY, coreUser.getId());
         boolean hasWrongRecord = redisService.hasKey(redisPwdWrongCountKey) || redisService.hasKey(redisPwdWrongTimeKey);
         // 在指定小时数内输错密码指定次数后将会被锁定
         int lockLimitTime = CommonConverts.strToInt().convert(pwdLockUserParamMap.get(ParamPool.PWD_WRONG_LOCK_HOURS_KEY), ParamPool.DEFAULT_PWD_WRONG_LOCK_HOURS);
         Integer pwdWrongCount = CommonConverts.toInt().convert(redisService.get(redisPwdWrongCountKey), 0);
-        String pwdWrongTime = CommonConverts.toStr().convert(redisService.get(redisPwdWrongTimeKey));
+        String pwdWrongTime = CommonConverts.toStr().convert(redisService.get(redisPwdWrongTimeKey), DateTimeUtil.now());
         // 如果为第一次输错密码则记录错误时间和信息
         if (!hasWrongRecord) {
             redisService.setByHour(redisPwdWrongCountKey, 1, lockLimitTime);
@@ -111,14 +113,16 @@ public class DefaultLoginStrategy implements LoginStrategy {
         }
         // 如果已记录其密码错误信息则判断错误次数是否超过指定次数
         Integer maxTolerancePwdWrongCount = CommonConverts.strToInt().convert(pwdLockUserParamMap.get(ParamPool.MAX_TOLERANCE_PWD_WRONG_KEY), ParamPool.DEFAULT_MAX_TOLERANCE_PWD_WRONG_COUNT);
-
-        if (pwdWrongCount > maxTolerancePwdWrongCount && DateTimeUtil.between(now, pwdWrongTime, ChronoUnit.HOURS) <= lockLimitTime) {
-            // todo 锁定账户
+        Integer scheduledUnlockHours = CommonConverts.strToInt().convert(pwdLockUserParamMap.get(ParamPool.PWD_WRONG_UNLOCK_HOURS_KEY), ParamPool.DEFAULT_PWD_WRONG_UNLOCK_HOURS);
+        // 如果超过指定次数并且仍在输错密码错误期限内则锁定账户
+        if (pwdWrongCount >= maxTolerancePwdWrongCount && DateTimeUtil.between(now, pwdWrongTime, ChronoUnit.HOURS) <= lockLimitTime) {
+            String lockReason = TextFormat.format(UserLoginPool.USER_LOGIN_PWD_WRONG_LOCK_REASON, lockLimitTime, maxTolerancePwdWrongCount);
+            LocalDateTime scheduledUnlockTime = nowDt.plusHours(scheduledUnlockHours);
+            CommonResult<Void> result = bmsUserClient.lockUser(coreUser.getUsername(), scheduledUnlockTime, nowDt, lockReason);
+            CommonResult.isSuccess(result);
             return;
         }
         redisService.incr(redisPwdWrongCountKey, 1);
-        LOGGER.error("Password for user {} does not match", coreUser.getUsername());
-        throw new AuthException(AuthResultCode.USERNAME_OR_PASSWORD_ERROR);
     }
 
     /**

@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.starrism.mall.data.domain.entity.BaseDataEntity;
+import org.starrism.mall.data.domain.entity.BaseEntity;
 
 import java.time.LocalDateTime;
 
@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Getter
 @ToString
 @TableName("bms_lock_account")
-public class BmsLockAccount extends BaseDataEntity {
+public class BmsLockAccount extends BaseEntity {
     private static final long serialVersionUID = -4052803079871070955L;
 
     /**

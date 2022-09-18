@@ -19,8 +19,6 @@ public class StrUtil extends StringUtils {
      * @param strList 需要检查的字符串数组
      * @return boolean 是否匹配
      * @author guochengqiang
-     * @date 2022/5/23 15:02
-     * @modify
      */
     public static boolean matches(String str, List<String> strList) {
         if (isEmpty(str) || CollectionUtil.isEmpty(strList)) {

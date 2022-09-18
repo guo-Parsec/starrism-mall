@@ -18,6 +18,11 @@ public class BmsParam extends BaseDataEntity {
     private static final long serialVersionUID = -7109953093730050084L;
 
     /**
+     * 组别
+     */
+    private String groupCode;
+
+    /**
      * 参数标识
      */
     private String paramCode;

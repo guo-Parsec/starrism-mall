@@ -24,6 +24,34 @@ public class RedisServiceImpl implements RedisService {
         redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
     }
 
+    /**
+     * <p>保存属性 设置分钟数</p>
+     *
+     * @param key     key
+     * @param value   value
+     * @param minutes minutes
+     * @author hedwing
+     * @since 2022/9/17
+     */
+    @Override
+    public void setByMinute(String key, Object value, long minutes) {
+        redisTemplate.opsForValue().set(key, value, minutes, TimeUnit.MINUTES);
+    }
+
+    /**
+     * <p>保存属性 设置小时数</p>
+     *
+     * @param key   key
+     * @param value value
+     * @param hours hours
+     * @author hedwing
+     * @since 2022/9/17
+     */
+    @Override
+    public void setByHour(String key, Object value, long hours) {
+        redisTemplate.opsForValue().set(key, value, hours, TimeUnit.HOURS);
+    }
+
     @Override
     public void set(String key, Object value) {
         redisTemplate.opsForValue().set(key, value);

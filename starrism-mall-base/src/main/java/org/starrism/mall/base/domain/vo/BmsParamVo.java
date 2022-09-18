@@ -20,6 +20,12 @@ public class BmsParamVo implements Domainizable {
     private Long id;
 
     /**
+     * 组别
+     */
+    @ApiModelProperty(value = "组别")
+    private String groupCode;
+
+    /**
      * 参数标识
      */
     @ApiModelProperty(value = "参数标识")

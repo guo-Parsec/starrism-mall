@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.starrism.mall.admin.core.mapper.BmsLockAccountMapper">
+    <resultMap id="LockAccountMap" type="org.starrism.mall.admin.core.domain.entity.BmsLockAccount">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="lock_time" jdbcType="TIMESTAMP" property="lockTime"/>
+        <result column="lock_status" jdbcType="INTEGER" property="lockStatus"/>
+        <result column="scheduled_unlock_time" jdbcType="TIMESTAMP" property="scheduledUnlockTime"/>
+        <result column="act_unlock_time" jdbcType="TIMESTAMP" property="actUnlockTime"/>
+        <result column="lock_reason" jdbcType="VARCHAR" property="lockReason"/>
+        <result column="unlock_reason" jdbcType="VARCHAR" property="unlockReason"/>
+    </resultMap>
+
+    <select id="findByUserId" resultMap="LockAccountMap">
+        select id,
+               user_id,
+               lock_time,
+               lock_status,
+               scheduled_unlock_time,
+               act_unlock_time,
+               lock_reason,
+               unlock_reason
+        from bms_lock_account
+        where user_id = #{userId,jdbcType=BIGINT}
+          and lock_status = '${@org.starrism.mall.data.pool.BasePool@LOCK_ACCOUNT}'
+        order by lock_time DESC
+        limit 1
+    </select>
+
+    <insert id="addLockAccountRecord" parameterType="org.starrism.mall.admin.core.domain.entity.BmsLockAccount">
+        insert into bms_lock_account (id, user_id, lock_time,
+                                      lock_status, scheduled_unlock_time, act_unlock_time,
+                                      lock_reason, unlock_reason)
+        values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{lockTime,jdbcType=TIMESTAMP},
+                #{lockStatus,jdbcType=INTEGER}, #{scheduledUnlockTime,jdbcType=TIMESTAMP},
+                #{actUnlockTime,jdbcType=TIMESTAMP},
+                #{lockReason,jdbcType=VARCHAR}, #{unlockReason,jdbcType=VARCHAR})
+    </insert>
+</mapper>

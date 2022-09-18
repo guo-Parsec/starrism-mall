@@ -3,9 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.starrism.mall.base.repository.BmsParamRepository">
-
     <resultMap id="BaseResultMap" type="org.starrism.mall.base.domain.entity.BmsParam">
         <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="groupCode" column="group_code" jdbcType="VARCHAR"/>
         <result property="paramCode" column="param_code" jdbcType="VARCHAR"/>
         <result property="paramValue" column="param_value" jdbcType="VARCHAR"/>
         <result property="paramName" column="param_name" jdbcType="VARCHAR"/>
@@ -18,12 +18,37 @@
 
     <select id="findByParamCode" parameterType="string" resultMap="BaseResultMap">
         select id,
+               group_code,
                param_code,
                param_value,
-               param_name
+               param_name,
+               enable_status,
+               add_time,
+               add_name,
+               modify_time,
+               modify_name
         from bms_param
         where enable_status = '${@org.starrism.mall.data.pool.BasePool@ENABLE}'
-            and param_code = #{paramCode,jdbcType=VARCHAR}
+          and param_code = #{paramCode,jdbcType=VARCHAR}
         limit 1
+    </select>
+
+    <select id="findByGroupCode" resultMap="BaseResultMap">
+        select id,
+        group_code,
+        param_code,
+        param_value,
+        param_name,
+        enable_status,
+        add_time,
+        add_name,
+        modify_time,
+        modify_name
+        from bms_param
+        where enable_status = '${@org.starrism.mall.data.pool.BasePool@ENABLE}'
+        and group_code = #{groupCode,jdbcType=VARCHAR}
+        <if test="paramCode != null and paramCode != ''">
+            and param_code = #{paramCode,jdbcType=VARCHAR}
+        </if>
     </select>
 </mapper>

@@ -1,7 +1,6 @@
 package org.starrism.mall.auth.core.service.impl;
 
 import cn.dev33.satoken.secure.SaSecureUtil;
-import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.stereotype.Service;
@@ -10,19 +9,22 @@ import org.starrism.mall.admin.api.domain.dto.UserDto;
 import org.starrism.mall.admin.api.domain.dto.UserLoginDto;
 import org.starrism.mall.admin.api.feign.BmsUserClient;
 import org.starrism.mall.auth.core.domain.vo.AuthInfoVo;
-import org.starrism.mall.auth.core.exception.AuthException;
-import org.starrism.mall.auth.core.rest.AuthResultCode;
+import org.starrism.mall.auth.core.factory.LoginStrategyFactory;
+import org.starrism.mall.auth.core.pool.UserLoginPool;
 import org.starrism.mall.auth.core.service.AuthService;
+import org.starrism.mall.auth.core.strategy.LoginStrategy;
+import org.starrism.mall.base.access.ParamAccess;
+import org.starrism.mall.base.domain.vo.BmsParamVo;
 import org.starrism.mall.base.domain.vo.CoreUser;
 import org.starrism.mall.common.domain.Builder;
-import org.starrism.mall.common.domain.vo.AccessTokenVo;
 import org.starrism.mall.common.log.StarrismLogger;
 import org.starrism.mall.common.log.StarrismLoggerFactory;
-import org.starrism.mall.common.pools.AuthPool;
+import org.starrism.mall.common.pools.ParamPool;
 import org.starrism.mall.common.rest.CommonResult;
 import org.starrism.mall.common.util.StrUtil;
 
 import javax.annotation.Resource;
+import java.util.Optional;
 
 /**
  * <p>认证服务实现类</p>
@@ -34,7 +36,15 @@ import javax.annotation.Resource;
 public class AuthServiceImpl implements AuthService {
     private static final StarrismLogger LOGGER = StarrismLoggerFactory.getLogger(AuthServiceImpl.class);
     @Resource
-    BmsUserClient bmsUserClient;
+    private BmsUserClient bmsUserClient;
+    @Resource
+    private ParamAccess paramAccess;
+
+    private final LoginStrategyFactory loginStrategyFactory;
+
+    public AuthServiceImpl(LoginStrategyFactory loginStrategyFactory) {
+        this.loginStrategyFactory = loginStrategyFactory;
+    }
 
     /**
      * <p>用户登录接口</p>
@@ -46,40 +56,15 @@ public class AuthServiceImpl implements AuthService {
      */
     @Override
     public AuthInfoVo login(UserLoginDto userLoginDto) {
-        SaTokenInfo saTokenInfo = null;
-        if (userLoginDto == null || StrUtil.isBlank(userLoginDto.getUsername())) {
-            LOGGER.error("username cannot be empty");
-            throw new AuthException(AuthResultCode.USERNAME_OR_PASSWORD_ERROR);
+        // 获取登录策略器
+        LoginStrategy loginStrategy = loginStrategyFactory.getLoginStrategy(getLoginStrategyName());
+        // 执行登录人信息实体获取处理器
+        CoreUser coreUser = loginStrategy.loginPersonEntityAcquisitionProcessor(userLoginDto);
+        String salePwd = SaSecureUtil.md5BySalt(userLoginDto.getPassword(), coreUser.getUsername());
+        if (!coreUser.getPassword().equals(salePwd)) {
+            loginStrategy.passwordMatchErrorProcessor(coreUser);
         }
-        String username = userLoginDto.getUsername();
-        CommonResult<CoreUser> clientApi = bmsUserClient.findUserByUsername(username);
-        CoreUser coreUser = CommonResult.getSuccessData(clientApi);
-        if (coreUser == null) {
-            LOGGER.error("cannot find user of username={}", username);
-            throw new AuthException(AuthResultCode.USERNAME_OR_PASSWORD_ERROR);
-        }
-        String password = coreUser.getPassword();
-        String salePwd = SaSecureUtil.md5BySalt(userLoginDto.getPassword(), username);
-        if (!password.equals(salePwd)) {
-            LOGGER.error("Password for user {} does not match", username);
-            throw new AuthException(AuthResultCode.USERNAME_OR_PASSWORD_ERROR);
-        }
-        // 密码校验成功后登录，一行代码实现登录
-        StpUtil.login(coreUser.getId());
-        // 将用户信息存储到Session中
-        // 密码校验完成后清空密码
-        coreUser.setPassword(null);
-        StpUtil.getSession().set(AuthPool.USER_SESSION, coreUser);
-        // 获取当前登录用户Token信息
-        saTokenInfo = StpUtil.getTokenInfo();
-        AccessTokenVo accessToken = Builder.of(AccessTokenVo::new)
-                .with(AccessTokenVo::setAccessToken, saTokenInfo.getTokenValue())
-                .with(AccessTokenVo::setAccessTokenName, saTokenInfo.getTokenName())
-                .build();
-        return Builder.of(AuthInfoVo::new)
-                .with(AuthInfoVo::setCoreUser, coreUser)
-                .with(AuthInfoVo::setAccessToken, accessToken)
-                .build();
+        return loginStrategy.loginSuccessProcessor(coreUser);
     }
 
     /**
@@ -115,5 +100,22 @@ public class AuthServiceImpl implements AuthService {
         StpUtil.logout(userId);
         LOGGER.debug("用户[userId={}]退出系统成功", userId);
         return true;
+    }
+
+    /**
+     * <p>获取系统中设置的登录策略名</p>
+     *
+     * @return java.lang.String
+     * @author hedwing
+     * @since 2022/9/18
+     */
+    private String getLoginStrategyName() {
+        BmsParamVo param = paramAccess.findByParamCode(ParamPool.LOGIN_STRATEGY_KEY);
+        if (param == null || StrUtil.isBlank(param.getParamValue())) {
+            LOGGER.warn("系统中未指定登录策略器，将使用[{}]", UserLoginPool.DEFAULT_LOGIN_STRATEGY_NAME);
+        }
+        String strategyName = Optional.ofNullable(param).map(BmsParamVo::getParamValue).orElse(UserLoginPool.DEFAULT_LOGIN_STRATEGY_NAME);
+        LOGGER.debug("当前系统使用的登录策略器为{}", strategyName);
+        return strategyName;
     }
 }

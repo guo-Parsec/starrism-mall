@@ -12,172 +12,396 @@ import java.util.Set;
  **/
 public interface RedisService {
     /**
-     * 保存属性
+     * <p>保存属性</p>
+     *
+     * @param key   key
+     * @param value value
+     * @param time  time 按秒计算
+     * @author hedwing
+     * @since 2022/9/17
      */
     void set(String key, Object value, long time);
 
     /**
-     * 保存属性
+     * <p>保存属性 设置分钟数</p>
+     *
+     * @param key    key
+     * @param value  value
+     * @param minutes minutes
+     * @author hedwing
+     * @since 2022/9/17
+     */
+    void setByMinute(String key, Object value, long minutes);
+
+    /**
+     * <p>保存属性 设置小时数</p>
+     *
+     * @param key    key
+     * @param value  value
+     * @param hours hours
+     * @author hedwing
+     * @since 2022/9/17
+     */
+    void setByHour(String key, Object value, long hours);
+
+    /**
+     * <p>保存属性</p>
+     *
+     * @param key   key
+     * @param value value
+     * @author hedwing
+     * @since 2022/9/17
      */
     void set(String key, Object value);
 
     /**
      * 获取属性
+     *
+     * @param key key
+     * @return Object
+     * @author hedwing
+     * @since 2022/9/17
      */
     Object get(String key);
 
     /**
-     * 删除属性
+     * <p>删除属性</p>
+     *
+     * @param key key
+     * @return java.lang.Boolean
+     * @author hedwing
+     * @since 2022/9/17
      */
     Boolean del(String key);
 
     /**
-     * 批量删除属性
+     * <p>批量删除属性</p>
+     *
+     * @param keys keys
+     * @return java.lang.Long
+     * @author hedwing
+     * @since 2022/9/17
      */
     Long del(List<String> keys);
 
     /**
-     * 设置过期时间
+     * <p>设置过期时间</p>
+     *
+     * @param key  key
+     * @param time time
+     * @return java.lang.Boolean
+     * @author hedwing
+     * @since 2022/9/17
      */
     Boolean expire(String key, long time);
 
     /**
-     * 获取过期时间
+     * <p>获取过期时间</p>
+     *
+     * @param key key
+     * @return java.lang.Long
+     * @author hedwing
+     * @since 2022/9/17
      */
     Long getExpire(String key);
 
     /**
-     * 判断是否有该属性
+     * <p>判断是否有该属性</p>
+     *
+     * @param key key
+     * @return java.lang.Boolean
+     * @author hedwing
+     * @since 2022/9/17
      */
     Boolean hasKey(String key);
 
     /**
-     * 按delta递增
+     * <p>按delta递增</p>
+     *
+     * @param key   key
+     * @param delta delta
+     * @return java.lang.Long
+     * @author hedwing
+     * @since 2022/9/17
      */
     Long incr(String key, long delta);
 
     /**
-     * 按delta递减
+     * <p>按delta递减</p>
+     *
+     * @param key   key
+     * @param delta delta
+     * @return java.lang.Long
+     * @author hedwing
+     * @since 2022/9/17
      */
     Long decr(String key, long delta);
 
     /**
-     * 获取Hash结构中的属性
+     * <p>获取Hash结构中的属性</p>
+     *
+     * @param key     key
+     * @param hashKey hashKey
+     * @return java.lang.Object
+     * @author hedwing
+     * @since 2022/9/17
      */
     Object hGet(String key, String hashKey);
 
     /**
-     * 向Hash结构中放入一个属性
+     * <p>向Hash结构中放入一个属性</p>
+     *
+     * @param key     key
+     * @param hashKey hashKey
+     * @param value   value
+     * @param time    time
+     * @return java.lang.Boolean
+     * @author hedwing
+     * @since 2022/9/17
      */
     Boolean hSet(String key, String hashKey, Object value, long time);
 
     /**
-     * 向Hash结构中放入一个属性
+     * <p>向Hash结构中放入一个属性</p>
+     *
+     * @param key     key
+     * @param hashKey hashKey
+     * @param value   value
+     * @author hedwing
+     * @since 2022/9/17
      */
     void hSet(String key, String hashKey, Object value);
 
     /**
-     * 直接获取整个Hash结构
+     * <p>直接获取整个Hash结构</p>
+     *
+     * @param key key
+     * @return java.util.Map<java.lang.Object, java.lang.Object>
+     * @author hedwing
+     * @since 2022/9/17
      */
     Map<Object, Object> hGetAll(String key);
 
     /**
-     * 直接设置整个Hash结构
+     * <p>直接设置整个Hash结构</p>
+     *
+     * @param key  key
+     * @param map  map
+     * @param time time
+     * @return java.lang.Boolean
+     * @author hedwing
+     * @since 2022/9/17
      */
     Boolean hSetAll(String key, Map<String, Object> map, long time);
 
     /**
-     * 直接设置整个Hash结构
+     * <p>直接设置整个Hash结构</p>
+     *
+     * @param key key
+     * @param map map
+     * @author hedwing
+     * @since 2022/9/17
      */
     void hSetAll(String key, Map<String, ?> map);
 
     /**
-     * 删除Hash结构中的属性
+     * <p>删除Hash结构中的属性</p>
+     *
+     * @param key     key
+     * @param hashKey hashKey
+     * @author hedwing
+     * @since 2022/9/17
      */
     void hDel(String key, Object... hashKey);
 
     /**
-     * 判断Hash结构中是否有该属性
+     * <p>判断Hash结构中是否有该属性</p>
+     *
+     * @param key     key
+     * @param hashKey hashKey
+     * @return java.lang.Boolean
+     * @author hedwing
+     * @since 2022/9/17
      */
     Boolean hHasKey(String key, String hashKey);
 
     /**
-     * Hash结构中属性递增
+     * <p>Hash结构中属性递增</p>
+     *
+     * @param key     key
+     * @param hashKey hashKey
+     * @param delta   delta
+     * @return java.lang.Long
+     * @author hedwing
+     * @since 2022/9/17
      */
     Long hIncr(String key, String hashKey, Long delta);
 
     /**
-     * Hash结构中属性递减
+     * <p>Hash结构中属性递减</p>
+     *
+     * @param key     key
+     * @param hashKey hashKey
+     * @param delta   delta
+     * @return java.lang.Long
+     * @author hedwing
+     * @since 2022/9/17
      */
     Long hDecr(String key, String hashKey, Long delta);
 
     /**
-     * 获取Set结构
+     * <p>获取Set结构</p>
+     *
+     * @param key key
+     * @return java.util.Set<java.lang.Object>
+     * @author hedwing
+     * @since 2022/9/17
      */
     Set<Object> sMembers(String key);
 
     /**
-     * 向Set结构中添加属性
+     * <p>向Set结构中添加属性</p>
+     *
+     * @param key    key
+     * @param values values
+     * @return java.lang.Long
+     * @author hedwing
+     * @since 2022/9/17
      */
     Long sAdd(String key, Object... values);
 
     /**
-     * 向Set结构中添加属性
+     * <p>向Set结构中添加属性</p>
+     *
+     * @param key    key
+     * @param time   time
+     * @param values values
+     * @return java.lang.Long
+     * @author hedwing
+     * @since 2022/9/17
      */
     Long sAdd(String key, long time, Object... values);
 
     /**
-     * 是否为Set中的属性
+     * <p>是否为Set中的属性</p>
+     *
+     * @param key   key
+     * @param value value
+     * @return java.lang.Boolean
+     * @author hedwing
+     * @since 2022/9/17
      */
     Boolean sIsMember(String key, Object value);
 
     /**
-     * 获取Set结构的长度
+     * <p>获取Set结构的长度</p>
+     *
+     * @param key key
+     * @return java.lang.Long
+     * @author hedwing
+     * @since 2022/9/17
      */
     Long sSize(String key);
 
     /**
-     * 删除Set结构中的属性
+     * <p>删除Set结构中的属性</p>
+     *
+     * @param key    key
+     * @param values values
+     * @return java.lang.Long
+     * @author hedwing
+     * @since 2022/9/17
      */
     Long sRemove(String key, Object... values);
 
     /**
-     * 获取List结构中的属性
+     * <p>获取List结构中的属性</p>
+     *
+     * @param key   key
+     * @param start start
+     * @param end   end
+     * @return java.util.List<java.lang.Object>
+     * @author hedwing
+     * @since 2022/9/17
      */
     List<Object> lRange(String key, long start, long end);
 
     /**
-     * 获取List结构的长度
+     * <p>获取List结构的长度</p>
+     *
+     * @param key key
+     * @return java.lang.Long
+     * @author hedwing
+     * @since 2022/9/17
      */
     Long lSize(String key);
 
     /**
-     * 根据索引获取List中的属性
+     * <p>根据索引获取List中的属性</p>
+     *
+     * @param key   key
+     * @param index index
+     * @return java.lang.Object
+     * @author hedwing
+     * @since 2022/9/17
      */
     Object lIndex(String key, long index);
 
     /**
-     * 向List结构中添加属性
+     * <p>向List结构中添加属性</p>
+     *
+     * @param key   key
+     * @param value value
+     * @return java.lang.Long
+     * @author hedwing
+     * @since 2022/9/17
      */
     Long lPush(String key, Object value);
 
     /**
-     * 向List结构中添加属性
+     * <p>向List结构中添加属性</p>
+     *
+     * @param key   key
+     * @param value value
+     * @param time  time
+     * @return java.lang.Long
+     * @author hedwing
+     * @since 2022/9/17
      */
     Long lPush(String key, Object value, long time);
 
     /**
-     * 向List结构中批量添加属性
+     * <p>向List结构中批量添加属性</p>
+     *
+     * @param key    key
+     * @param values values
+     * @return java.lang.Long
+     * @author hedwing
+     * @since 2022/9/17
      */
     Long lPushAll(String key, Object... values);
 
     /**
-     * 向List结构中批量添加属性
+     * <p>向List结构中批量添加属性</p>
+     *
+     * @param key    key
+     * @param time   time
+     * @param values values
+     * @return java.lang.Long
+     * @author hedwing
+     * @since 2022/9/17
      */
     Long lPushAll(String key, Long time, Object... values);
 
     /**
-     * 从List结构中移除属性
+     * <p>从List结构中移除属性</p>
+     *
+     * @param key   key
+     * @param count count
+     * @param value value
+     * @return java.lang.Long
+     * @author hedwing
+     * @since 2022/9/17
      */
     Long lRemove(String key, long count, Object value);
 }

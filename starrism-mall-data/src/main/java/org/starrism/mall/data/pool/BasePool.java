@@ -26,9 +26,29 @@ public interface BasePool {
     Integer DELETE = 2;
 
     /**
-     * 删除状态
+     * 锁定状态
      */
-    Integer LOCK = 3;
+    Integer LOCK_USER = 3;
 
     String DEFAULT_DELIMITER = ",";
+
+    /**
+     * 锁定
+     */
+    Integer LOCK_ACCOUNT = 0;
+
+    /**
+     * 已解锁
+     */
+    Integer UNLOCK_ACCOUNT = 1;
+
+    /**
+     * 自动解锁
+     */
+    Integer AUTO_UNLOCK_ACCOUNT = 2;
+
+    /**
+     * 手动解锁
+     */
+    Integer MANUAL_UNLOCK_ACCOUNT = 3;
 }

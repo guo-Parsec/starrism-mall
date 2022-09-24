@@ -77,4 +77,13 @@ public interface ParamPool {
      */
     String LOGIN_STRATEGY_KEY = "LOGIN_STRATEGY";
 
+    /**
+     * 用户锁定提示信息参数key
+     */
+    String USER_LOCK_MESSAGE_KEY = "USER_LOCK_MESSAGE";
+
+    /**
+     * 用户锁定提示信息
+     */
+    String DEFAULT_USER_LOCK_MESSAGE = "用户[{username}]已被锁定，原因为:{lockReason},预计解锁时间为{scheduledUnlockTime}！";
 }

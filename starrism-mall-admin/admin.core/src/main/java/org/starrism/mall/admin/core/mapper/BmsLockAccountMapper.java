@@ -2,6 +2,7 @@ package org.starrism.mall.admin.core.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.starrism.mall.admin.api.domain.dto.UnLockAccountDto;
 import org.starrism.mall.admin.core.domain.entity.BmsLockAccount;
 import org.starrism.mall.data.mapper.CoreMapper;
 
@@ -31,5 +32,14 @@ public interface BmsLockAccountMapper extends CoreMapper<BmsLockAccount> {
      * @since 2022/9/18
      */
     void addLockAccountRecord(BmsLockAccount bmsLockAccount);
+
+    /**
+     * <p>解锁用户</p>
+     *
+     * @param dto dto
+     * @author hedwing
+     * @since 2022/9/24
+     */
+    void unlock(UnLockAccountDto dto);
 
 }

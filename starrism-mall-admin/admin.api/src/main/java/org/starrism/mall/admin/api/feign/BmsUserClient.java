@@ -3,7 +3,9 @@ package org.starrism.mall.admin.api.feign;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.starrism.mall.admin.api.domain.dto.UnLockAccountDto;
 import org.starrism.mall.admin.api.domain.dto.UserDto;
+import org.starrism.mall.admin.api.domain.vo.BmsLockAccountVo;
 import org.starrism.mall.base.domain.vo.CoreUser;
 import org.starrism.mall.common.pools.AppPool;
 import org.starrism.mall.common.pools.UrlPool;
@@ -57,5 +59,28 @@ public interface BmsUserClient {
                                 @RequestParam(value = "scheduledUnlockTime") LocalDateTime scheduledUnlockTime,
                                 @RequestParam(value = "lockTime") LocalDateTime lockTime,
                                 @RequestParam(value = "lockReason") String lockReason);
+
+
+    /**
+     * <p>通过用户id查询用户锁定信息</p>
+     *
+     * @param userId userId
+     * @return org.starrism.mall.common.rest.CommonResult<org.starrism.mall.admin.api.domain.vo.BmsLockAccountVo>
+     * @author hedwing
+     * @since 2022/9/24
+     */
+    @PostMapping(value = UrlPool.BMS_USER_PREFIX + "/find/lockInfo/by/userId")
+    CommonResult<BmsLockAccountVo> findLockUserInfoByUserId(@RequestParam(value = "userId") Long userId);
+
+    /**
+     * <p>解锁用户</p>
+     *
+     * @param unLockAccountDto unLockAccountDto
+     * @return org.starrism.mall.common.rest.CommonResult<java.lang.Void>
+     * @author hedwing
+     * @since 2022/9/24
+     */
+    @PostMapping(value = UrlPool.BMS_USER_PREFIX + "/unlock")
+    CommonResult<Void> unlockUser(@RequestBody @Validated UnLockAccountDto unLockAccountDto);
 
 }

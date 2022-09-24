@@ -51,7 +51,10 @@
                modify_name
         from bms_user
         where username = #{username,jdbcType=VARCHAR}
-          and enable_status = '${@org.starrism.mall.data.pool.BasePool@ENABLE}'
+          and enable_status in
+              ('${@org.starrism.mall.data.pool.BasePool@ENABLE}',
+               '${@org.starrism.mall.data.pool.BasePool@DISABLE}',
+               '${@org.starrism.mall.data.pool.BasePool@LOCK_USER}')
         limit 1
     </select>
 

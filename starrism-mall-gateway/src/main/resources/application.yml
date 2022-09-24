@@ -18,9 +18,10 @@ spring:
             - Path=/auth/**
   redis:
     database: 0
-    host: 1.15.57.220
+    host: 127.0.0.1
+    #    host: 1.15.57.220
     port: 6379
-    password: Redis.166Gcq2431
+    #    password: Redis.166Gcq2431
 # Sa-Token 配置
 sa-token:
   # token名称 (同时也是cookie名称)
@@ -42,3 +43,36 @@ sa-token:
 logging:
   level:
     org.starrism.mall: debug
+seata:
+  # 是否开启spring-boot自动装配
+  enabled: true
+  # Seata 应用编号，默认为 ${spring.application.name}
+  application-id: ${spring.application.name}
+  # Seata 事务组编号，用于 TC 集群名。该配置需要与服务端提到的group相对应，也需要与下面的相对应
+  tx-service-group: ${spring.application.name}-group
+  # 服务配置项
+  service:
+    # 虚拟组和分组的映射
+    vgroupMapping:
+      netty-seata-test-group: default   #该配置需要与服务端提到的group相对应
+      default:
+        # 仅注册中心为file时使用
+        grouplist: 127.0.0.1:15000
+  config:
+    type: nacos
+    nacos:
+      server-addr: ${spring.cloud.nacos.config.server-addr}
+      namespace: SEATA
+      group: SEATA_GROUP
+      username: nacos
+      password: nacos
+      data-id: seata-server.yml
+  registry:
+    type: nacos
+    nacos:
+      server-addr: ${spring.cloud.nacos.config.server-addr}
+      namespace: SEATA
+      group: SEATA_GROUP
+      username: nacos
+      password: nacos
+      cluster: default

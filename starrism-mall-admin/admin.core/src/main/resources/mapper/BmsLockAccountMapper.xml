@@ -38,4 +38,12 @@
                 #{actUnlockTime,jdbcType=TIMESTAMP},
                 #{lockReason,jdbcType=VARCHAR}, #{unlockReason,jdbcType=VARCHAR})
     </insert>
+
+    <update id="unlock" parameterType="org.starrism.mall.admin.api.domain.dto.UnLockAccountDto">
+        update bms_lock_account
+        set lock_status     = #{lockStatus,jdbcType=INTEGER},
+            act_unlock_time = #{actUnlockTime,jdbcType=TIMESTAMP},
+            unlock_reason   = #{unlockReason,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
 </mapper>

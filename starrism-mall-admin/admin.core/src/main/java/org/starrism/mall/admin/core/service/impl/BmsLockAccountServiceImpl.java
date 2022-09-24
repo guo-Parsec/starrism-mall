@@ -2,6 +2,9 @@ package org.starrism.mall.admin.core.service.impl;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.starrism.mall.admin.api.domain.dto.UnLockAccountDto;
+import org.starrism.mall.admin.api.domain.vo.BmsLockAccountVo;
+import org.starrism.mall.admin.core.domain.converter.BmsLockAccountConverters;
 import org.starrism.mall.admin.core.domain.entity.BmsLockAccount;
 import org.starrism.mall.admin.core.domain.entity.BmsUser;
 import org.starrism.mall.admin.core.mapper.BmsLockAccountMapper;
@@ -18,6 +21,7 @@ import org.starrism.mall.data.pool.BasePool;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 /**
  * <p>锁定用户实现类</p>
@@ -70,5 +74,33 @@ public class BmsLockAccountServiceImpl implements BmsLockAccountService {
                 .with(BmsLockAccount::setLockReason, lockReason)
                 .build();
         bmsLockAccountMapper.insert(lockAccount);
+    }
+
+    /**
+     * <p>通过用户id查询用户锁定信息</p>
+     *
+     * @param userId userId
+     * @return org.starrism.mall.admin.api.domain.vo.BmsLockAccountVo
+     * @author hedwing
+     * @since 2022/9/24
+     */
+    @Override
+    public BmsLockAccountVo findLockUserInfoByUserId(Long userId) {
+        BmsLockAccount lockInfo = Optional.ofNullable(bmsLockAccountMapper.findByUserId(userId)).orElseGet(BmsLockAccount::new);
+        return BmsLockAccountConverters.toLockAccountVo(lockInfo);
+    }
+
+    /**
+     * <p>解锁用户</p>
+     *
+     * @param dto dto
+     * @author hedwing
+     * @since 2022/9/24
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void unlockUser(UnLockAccountDto dto) {
+        bmsUserMapper.changeUserStatus(dto.getUserId(), BasePool.ENABLE);
+        bmsLockAccountMapper.unlock(dto);
     }
 }

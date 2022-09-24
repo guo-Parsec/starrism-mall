@@ -5,7 +5,9 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.starrism.mall.admin.api.domain.dto.UnLockAccountDto;
 import org.starrism.mall.admin.api.domain.dto.UserDto;
+import org.starrism.mall.admin.api.domain.vo.BmsLockAccountVo;
 import org.starrism.mall.admin.core.service.BmsLockAccountService;
 import org.starrism.mall.admin.core.service.BmsUserService;
 import org.starrism.mall.base.domain.vo.CoreUser;
@@ -57,6 +59,19 @@ public class BmsUserController {
                                        @RequestParam(value = "lockTime") LocalDateTime lockTime,
                                        @RequestParam(value = "lockReason") String lockReason) {
         bmsLockAccountService.lockUser(username, scheduledUnlockTime, lockTime, lockReason);
+        return CommonResult.success();
+    }
+
+    @ApiOperation(value = "通过用户id查询用户锁定信息", notes = "用户id")
+    @PostMapping(value = "/find/lockInfo/by/userId")
+    public CommonResult<BmsLockAccountVo> findLockUserInfoByUserId(@RequestParam(value = "userId") Long userId) {
+        return CommonResult.success(bmsLockAccountService.findLockUserInfoByUserId(userId));
+    }
+
+    @ApiOperation(value = "解锁用户", notes = "用户")
+    @PostMapping(value = "/unlock")
+    public CommonResult<Void> unlockUser(@RequestBody @Validated UnLockAccountDto unLockAccountDto) {
+        bmsLockAccountService.unlockUser(unLockAccountDto);
         return CommonResult.success();
     }
 }

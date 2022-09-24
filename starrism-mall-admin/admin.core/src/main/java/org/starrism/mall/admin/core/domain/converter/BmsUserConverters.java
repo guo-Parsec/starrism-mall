@@ -57,6 +57,7 @@ public class BmsUserConverters implements BaseConverters {
                 .with(CoreUser::setAvatarUrl, bmsUser.getAvatarUrl())
                 .with(CoreUser::setPassword, bmsUser.getPassword())
                 .with(CoreUser::setSex, bmsUser.getSex())
+                .with(CoreUser::setEnableStatus, bmsUser.getEnableStatus())
                 .build();
     }
 

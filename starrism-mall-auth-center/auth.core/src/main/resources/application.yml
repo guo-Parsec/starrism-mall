@@ -5,9 +5,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://1.15.57.220:9669/STARRISM-MALL?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/STARRISM-MALL?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
     username: root
-    password: 166Me2431...
+    password: 123456
     druid:
       initial-size: 5 #连接池初始化大小
       min-idle: 10 #最小空闲连接数
@@ -23,9 +23,10 @@ spring:
       max-file-size: 10MB #限制文件上传大小为10M
   redis:
     database: 0
-    host: 1.15.57.220
+    host: 127.0.0.1
+    #    host: 1.15.57.220
     port: 6379
-    password: Redis.166Gcq2431
+    #    password: Redis.166Gcq2431
   cache:
     type: redis
     redis:

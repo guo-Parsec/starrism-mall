@@ -28,6 +28,8 @@ public class ParamConverters implements BaseConverters {
                 .with(BmsParamVo::setParamCode, bmsParam.getParamCode())
                 .with(BmsParamVo::setParamValue, bmsParam.getParamValue())
                 .with(BmsParamVo::setParamName, bmsParam.getParamName())
+                .with(BmsParamVo::setGroupCode, bmsParam.getGroupCode())
+                .with(BmsParamVo::setDescription, bmsParam.getDescription())
                 .build();
     }
 

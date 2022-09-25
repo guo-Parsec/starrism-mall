@@ -37,4 +37,9 @@ public class BmsParam extends BaseDataEntity {
      */
     private String paramName;
 
+    /**
+     * 备注
+     */
+    private String description;
+
 }

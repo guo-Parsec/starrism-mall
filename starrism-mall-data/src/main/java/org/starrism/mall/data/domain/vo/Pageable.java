@@ -45,15 +45,4 @@ public interface Pageable<E> {
      */
     List<E> getRecords();
 
-    /**
-     * <p>根据records和总条数组装分页数据</p>
-     *
-     * @param records 当前页所有记录
-     * @param total   总条数
-     * @return org.starrism.mall.data.domain.vo.Pageable<E>
-     * @author hedwing
-     * @since 2022/8/21
-     */
-    Pageable<E> of(List<E> records, Long total);
-
 }

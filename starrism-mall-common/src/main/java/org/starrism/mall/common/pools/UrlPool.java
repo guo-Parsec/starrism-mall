@@ -16,4 +16,6 @@ public interface UrlPool {
     String BMS_ROLE_PREFIX = BMS_PREFIX + "/role";
 
     String BMS_MENU_PREFIX = BMS_PREFIX + "/menu";
+
+    String BMS_PARAM_PREFIX = BMS_PREFIX + "/param";
 }

@@ -1,22 +1,23 @@
-package org.starrism.mall.base.domain.vo;
+package org.starrism.mall.admin.api.domain.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.starrism.mall.common.domain.Domainizable;
+import org.starrism.mall.data.domain.param.BasePageDto;
 
 /**
- * <p>参数数据展示</p>
+ * 系统参数表
  *
  * @author hedwing
- * @since 2022/8/29
- **/
+ * @TableName bms_param
+ */
 @Setter
 @Getter
-public class BmsParamVo implements Domainizable {
-    private static final long serialVersionUID = 700826017527327912L;
+public class BmsParamQueryDto extends BasePageDto implements Domainizable {
 
-    @ApiModelProperty(value = "主键")
+    private static final long serialVersionUID = -8861751454077998874L;
+    @ApiModelProperty(value = "系统参数表主键")
     private Long id;
 
     /**
@@ -43,9 +44,4 @@ public class BmsParamVo implements Domainizable {
     @ApiModelProperty(value = "参数名称")
     private String paramName;
 
-    /**
-     * 备注
-     */
-    @ApiModelProperty(value = "备注")
-    private String description;
 }
